@@ -260,6 +260,72 @@ main{padding-block:22px 80px;display:flex;flex-direction:column;gap:18px}
 .empty{border:2px dashed var(--line);border-radius:var(--r);padding:28px;text-align:center;color:var(--muted)}
 .toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom));transform:translateX(-50%);background:var(--ink);color:#fff;padding:12px 18px;border-radius:999px;font-size:14px;z-index:50;max-width:calc(100% - 32px);text-align:center}
 
+/* quick add panel */
+.addpanel{background:var(--blue);color:#fff;border-radius:var(--r);padding:24px;display:flex;flex-direction:column;gap:16px}
+.addpanel h2{font-size:28px}
+.sub{font-size:14px;color:#d6ddff}
+.ag3{display:grid;grid-template-columns:2fr 1fr 1fr;gap:12px}
+@media (max-width:760px){.ag3{grid-template-columns:minmax(0,1fr)}}
+.addpanel .lf input,.addpanel .lf select{height:50px;font-size:16px}
+.crow{display:flex;gap:8px;align-items:center}
+.crow .n{width:24px;text-align:right;font-size:13px;color:#d6ddff;flex:0 0 auto}
+.crow input{flex:1;min-width:0;height:46px;border:none;border-radius:12px;padding:0 14px;background:#fff;color:var(--ink)}
+.xbtn{width:46px;height:46px;border-radius:12px;border:1px solid #8fa0ef;background:transparent;color:#fff;cursor:pointer;flex:0 0 auto;font-size:18px}
+.addmore{min-height:40px;padding:0 16px;border-radius:999px;border:2px dashed #fff;background:transparent;color:#fff;cursor:pointer}
+.warnbox{background:#fff;color:var(--ink);border-radius:14px;padding:12px 14px;display:flex;gap:10px;align-items:center;flex-wrap:wrap;font-size:14px}
+.warnbox strong{color:#7a3a0c}
+.formfoot{display:flex;gap:12px;flex-wrap:wrap;align-items:stretch}
+.photo{flex:1 1 260px;border:2px dashed #fff;border-radius:14px;padding:14px;font-size:14px;cursor:pointer;display:flex;align-items:center}
+.addpanel .drop.over{background:rgba(255,255,255,.2)!important;outline-color:#fff}
+.up{text-transform:uppercase}
+
+/* competitors */
+.caddbar{display:flex;gap:8px;flex-wrap:wrap}
+.caddbar label{flex:1 1 380px;display:flex;align-items:center;background:var(--bg);border-radius:999px;padding:0 18px;min-height:50px}
+.caddbar input{border:none;outline:none;width:100%;background:transparent}
+.cstats{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px}
+@media (max-width:900px){.cstats{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.cstat{background:var(--bg);border-radius:18px;padding:12px 14px}
+.cstat span{font-size:13px;color:var(--muted)}
+.cstat b{display:block;font-size:26px;line-height:1.15;font-variant-numeric:tabular-nums}
+.cstat.or{background:var(--orange)}.cstat.or span{color:#3b2410}
+.ins{background:var(--bg);border-radius:18px;padding:16px;display:flex;flex-direction:column;gap:8px}
+.ins h3{font-size:17px}
+.ins ul{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:8px}
+.ins li{display:flex;gap:10px;align-items:flex-start;font-size:14px;background:#fff;border-radius:12px;padding:10px 12px}
+.ins li .k{flex:0 0 auto;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;padding:3px 8px;border-radius:999px}
+.k-good{background:var(--green-soft);color:var(--green)}.k-warn{background:var(--orange-soft);color:#7a3a0c}.k-info{background:var(--soft);color:var(--ink)}.k-todo{background:var(--blue-soft);color:var(--blue-d)}
+.ccards{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:14px}
+.cc{background:var(--bg);border-radius:22px;padding:16px;display:flex;flex-direction:column;gap:12px}
+.cctop{display:flex;gap:12px}
+.cimg{width:96px;height:96px;flex:0 0 96px;border-radius:14px;background:#fff;border:2px dashed var(--line);display:flex;align-items:center;justify-content:center;text-align:center;font-size:11px;color:var(--muted);padding:6px;overflow:hidden;cursor:pointer;position:relative}
+.cimg img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;background:#fff}
+.ccinfo{display:flex;flex-direction:column;gap:4px;min-width:0;flex:1}
+.ccinfo small{font-size:12px;color:var(--muted)}
+.ctitle{border:1px solid transparent;border-radius:8px;font-weight:700;font-size:17px;padding:2px 5px;margin-left:-6px;background:transparent;width:100%}
+.ctitle:hover,.ctitle:focus{border-color:var(--line);background:#fff;outline:none}
+.iq{align-self:flex-start;font-size:12px;padding:4px 10px;border-radius:999px;border:none;cursor:pointer;min-height:28px}
+.iq-Poor{background:var(--orange-soft);color:#7a3a0c}.iq-Fair{background:var(--soft);color:var(--ink)}.iq-Good{background:var(--green-soft);color:var(--green)}.iq-none{background:#fff;color:var(--muted);border:1px dashed var(--line)}
+.cn3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.cn3.two{grid-template-columns:repeat(2,minmax(0,1fr))}
+.cn3 label{background:#fff;border-radius:12px;padding:8px 10px;font-size:12px;color:var(--muted);display:flex;flex-direction:column}
+.cn3 input{border:none;background:transparent;font-size:18px;font-weight:700;color:var(--ink);width:100%;padding:0;outline:none;font-variant-numeric:tabular-nums}
+.avgbox{background:var(--ink);color:#fff;border-radius:12px;padding:8px 10px;font-size:12px;display:flex;flex-direction:column}
+.avgbox span{color:#cfccc6}.avgbox b{font-size:18px;font-variant-numeric:tabular-nums}
+.tf{display:flex;flex-direction:column;gap:4px;font-size:12px;color:var(--muted)}
+.tf textarea,.tf input{border:1px solid var(--line);border-radius:12px;padding:10px 12px;font-size:14px;line-height:1.55;color:var(--ink);background:#fff;width:100%}
+textarea.bul{min-height:44px;resize:none;overflow:hidden}
+.tf.beat textarea{border-color:#b9c6ff;background:#f7f9ff}
+.ccfoot{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.ccfoot .spacer{flex:1}
+.ctable{overflow-x:auto;border-radius:16px;border:1px solid var(--soft)}
+.ctable table{border-collapse:collapse;width:100%;min-width:1040px;font-size:14px}
+.ctable th{text-align:left;font-size:12px;color:var(--muted);font-weight:500;padding:12px;background:var(--soft)}
+.ctable td{padding:12px;border-top:1px solid var(--soft);vertical-align:top}
+.ctable td.num{font-variant-numeric:tabular-nums;white-space:nowrap}
+.ctable td.pl{white-space:pre-line;min-width:180px}
+.ctable tr.me td{background:var(--blue-soft);font-weight:700}
+
 /* login */
 .login{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px 16px}
 .logincard{width:100%;max-width:400px;background:var(--blue);color:#fff;border-radius:28px;padding:32px;display:flex;flex-direction:column;gap:14px}
@@ -325,7 +391,8 @@ const TABLES = ["categories","products","suppliers","samples","thoughts"];
 const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 const D = {categories:[],products:[],suppliers:[],samples:[],thoughts:[]};
 const ui = {route:"dashboard",id:null,tab:"competitors",q:"",cat:"",stage:"",sstatus:"",sprod:"",ssrc:"",tcat:"",
-            openSup:null,editSample:null,confirm:null,manageCats:false,pending:[],newSup:null,busy:false};
+            openSup:null,editSample:null,confirm:null,manageCats:false,pending:[],newSup:null,busy:false,
+            addOpen:false,add:{name:"",asin:"",cat:"",rows:["",""],files:[]},cmode:"cards"};
 let user=null, loaded=false, lastLoad=0, pendingRender=false;
 const $ = s => document.querySelector(s);
 const view = $("#view");
@@ -413,9 +480,13 @@ async function uploadFiles(list){
   return paths;
 }
 function removeFiles(paths){paths=(paths||[]).filter(Boolean);if(paths.length)sb.storage.from(BUCKET).remove(paths).catch(()=>{})}
-async function handleFiles(kind,id,files){
+async function handleFiles(kind,id,files,idx){
   files=[...(files||[])];
   if(kind==="pending"){ui.pending.push(...files.filter(f=>/^image\//.test(f.type)));const l=$("#pendinglabel");if(l)l.textContent=pendingText();return}
+  if(kind==="addphoto"){const f=files.find(x=>/^image\//.test(x.type));if(f)ui.add.files=[f];const l=$("#addphotolabel");if(l)l.textContent=addPhotoText();return}
+  if(kind==="cimg"){const p=byId("products",id);if(!p)return;const paths=await uploadFiles(files.slice(0,1));if(!paths.length)return;
+    const arr=(p.competitors||[]).map(x=>({...x}));const c=arr[+idx];if(!c)return;const old=c.image;c.image=paths[0];
+    await upd("products",id,{competitors:arr});removeFiles([old]);toast("Competitor image added");render();return}
   const paths = await uploadFiles(files); if(!paths.length) return;
   const asMocks = arr => arr.map(path=>({path,caption:""}));
   if(kind==="pmain"){const p=byId("products",id);if(!p)return;const old=p.image_path;await upd("products",id,{image_path:paths[0]});if(paths.length>1)await upd("products",id,{mockups:[...(p.mockups||[]),...asMocks(paths.slice(1))]});removeFiles([old])}
@@ -428,8 +499,13 @@ const pendingText = () => ui.pending.length ? `${ui.pending.length} photo${ui.pe
 
 /* ===== rendering ===== */
 function editing(){const a=document.activeElement;return !!(a&&view.contains(a)&&a.matches("input:not([type=file]):not([type=date]):not([type=checkbox]),textarea"))}
-function requestRender(){if(editing()){pendingRender=true;return}render()}
-view.addEventListener("focusout",()=>{if(pendingRender)setTimeout(()=>{if(!editing()){pendingRender=false;render()}},0)});
+let pointerDown=false;
+function requestRender(){if(editing()||pointerDown){pendingRender=true;return}render()}
+function tryPending(){setTimeout(()=>{if(pendingRender&&!editing()&&!pointerDown){pendingRender=false;render()}},0)}
+view.addEventListener("focusout",tryPending);
+document.addEventListener("pointerdown",()=>{pointerDown=true},true);
+document.addEventListener("pointerup",()=>{pointerDown=false;tryPending();setTimeout(()=>{if(pendingSummary)refreshSummary()},0)},true);
+document.addEventListener("pointercancel",()=>{pointerDown=false;tryPending()},true);
 
 function route(){
   const h = decodeURIComponent((location.hash||"").slice(1)) || "dashboard";
@@ -440,6 +516,7 @@ function route(){
 window.addEventListener("hashchange",route);
 
 function render(){
+  flushSaves();
   const navKey = ui.route==="product" ? "products" : ui.route;
   document.querySelectorAll("[data-nav]").forEach(a=>{if(a.dataset.nav===navKey)a.setAttribute("aria-current","page");else a.removeAttribute("aria-current")});
   const arrived = D.samples.filter(s=>s.status==="Arrived").length;
@@ -447,6 +524,7 @@ function render(){
   if(!loaded){view.innerHTML=`<div class="loading">Loading your research…</div>`;return}
   const fn={dashboard:vDashboard,products:vProducts,product:vProduct,samples:vSamples,suppliers:vSuppliers,thoughts:vThoughts}[ui.route];
   view.innerHTML = fn();
+  growAll();
 }
 
 /* shared bits */
@@ -461,7 +539,45 @@ function pcard(p){
     : `<label class="pimg drop" data-drop="pmain" data-id="${p.id}"><span class="ph">Drop product photo<br><small>or click to upload</small></span><input type="file" accept="image/*" class="sr" data-upload="pmain" data-id="${p.id}"></label>`;
   return `<article class="pcard">${img}<a class="pbody" href="#p/${p.id}"><div class="row gap8" style="justify-content:space-between;align-items:flex-start"><strong>${esc(pname(p))}</strong>${tag(p.status)}</div><span class="meta">${bits.join(" · ")}</span></a></article>`;
 }
-function addProductForm(){return `<form class="addform" data-form="addprod" autocomplete="off"><label class="addinput"><span class="sr">ASIN, Amazon link or name</span><input name="q" placeholder="Paste ASIN, Amazon link or a name"></label><button class="pill blue" type="submit">Add product</button></form>`}
+/* ----- Quick add product ----- */
+const splitLinks = t => String(t||"").split(/[\s,]+/).map(x=>x.trim()).filter(Boolean);
+function dupHtml(){
+  const a=ui.add, out=[]; const asin=parseAsin(a.asin);
+  const own=asin&&D.products.find(p=>p.asin===asin);
+  if(own) out.push(`<div class="warnbox"><strong>You already have this ASIN:</strong> ${esc(pname(own))} <a class="pill sm outline" href="#p/${own.id}">Open it instead</a></div>`);
+  const seen={};
+  a.rows.forEach(r=>{const x=parseAsin(r);if(!x)return;
+    if(seen[x]===1) out.push(`<div class="warnbox"><strong>Listed twice:</strong> ${esc(x)} is in your competitor list more than once.</div>`);
+    seen[x]=(seen[x]||0)+1;
+    const mine=D.products.find(p=>p.asin===x);
+    if(mine&&seen[x]===1) out.push(`<div class="warnbox"><strong>Heads up:</strong> competitor ${esc(x)} is one of your own products (${esc(pname(mine))}).</div>`);
+  });
+  return out.join("");
+}
+function rowsHtml(){return ui.add.rows.map((v,i)=>`<div class="crow"><span class="n">${i+1}</span><label class="sr" for="ar${i}">Competitor ${i+1}</label><input id="ar${i}" data-add="row" data-i="${i}" value="${esc(v)}" placeholder="Paste a competitor link or ASIN"><button type="button" class="xbtn" data-act="rmrow" data-v="${i}" aria-label="Remove competitor ${i+1}">×</button></div>`).join("")}
+const addPhotoText = () => ui.add.files.length ? "Photo ready ✓ (click to change)" : "Photo (optional): drop it here or click";
+function addPanel(){
+  const a=ui.add;
+  return `<form class="addpanel" data-form="quickadd" autocomplete="off" novalidate>
+    <div class="row wrapflex gap8"><h2>Add a product</h2><span class="spacer"></span><span class="sub">Only the name is needed. Everything else can wait.</span></div>
+    <div class="ag3">
+      <label class="lf">Product name *<input id="addname" data-add="name" value="${esc(a.name)}" placeholder="e.g. Silicone utensil set"></label>
+      <label class="lf">ASIN<input class="up" data-add="asin" value="${esc(a.asin)}" placeholder="B0XXXXXXXX"></label>
+      <label class="lf">Category<select data-add="cat">${catOptions(a.cat||((ui.cat&&ui.cat!=="none")?ui.cat:""))}</select></label>
+    </div>
+    <div id="dupwarn" style="display:flex;flex-direction:column;gap:8px">${dupHtml()}</div>
+    <div class="lf" style="gap:8px"><span>Competitor links or ASINs</span>
+      <div id="addrows" style="display:flex;flex-direction:column;gap:8px">${rowsHtml()}</div>
+      <div class="crow wrapflex"><span class="n"></span><button type="button" class="addmore" data-act="addrow">+ Add another competitor</button><span class="sub">Tip: paste several links at once and each gets its own row</span></div>
+    </div>
+    <div class="formfoot">
+      <label class="photo drop" data-drop="addphoto"><span id="addphotolabel">${addPhotoText()}</span><input type="file" accept="image/*" class="sr" data-upload="addphoto"></label>
+      <button type="submit" class="pill outline-white" value="again">Add &amp; add another</button>
+      <button type="submit" class="pill white big" value="open">Add &amp; open product →</button>
+    </div>
+  </form>`;
+}
+const newComp = q => ({link:q,asin:parseAsin(q),title:"",list:"",sell:"",rating:"",reviews:"",imgq:"—",weak:"",beat:"",image:null});
 
 /* ----- Dashboard ----- */
 function vDashboard(){
@@ -509,7 +625,8 @@ function gridHtml(){
 function vProducts(){
   const cats=S.categories(), unc=D.products.filter(p=>!p.category_id).length;
   return `
-  <div class="headline"><h1>Products <span class="blue-t">${D.products.length}</span></h1>${addProductForm()}</div>
+  <div class="headline"><h1>Products <span class="blue-t">${D.products.length}</span></h1>${ui.addOpen?`<button type="button" class="pill" data-act="closeadd">× Close</button>`:`<button type="button" class="pill blue big" data-act="openadd">+ Add product</button>`}</div>
+  ${ui.addOpen?addPanel():""}
   <div class="chips" role="group" aria-label="Category">
     <button type="button" class="chip" data-act="cat" data-v="" aria-pressed="${ui.cat===""}">All</button>
     ${cats.map(c=>`<button type="button" class="chip" data-act="cat" data-v="${c.id}" aria-pressed="${ui.cat===c.id}">${esc(c.name)} · ${D.products.filter(p=>p.category_id===c.id).length}</button>`).join("")}
@@ -592,19 +709,15 @@ function tabBody(p,samples){
   switch(ui.tab){
   case "competitors":{
     const cs=p.competitors||[];
-    return `<form class="grid-f" data-form="addcomp" data-id="${p.id}" autocomplete="off" style="align-items:end">
-      <label class="field" style="grid-column:span 2"><span>Competitor link or ASIN</span><input name="link" placeholder="https://www.amazon.co.uk/dp/…" required></label>
-      <label class="field"><span>Price £</span><input name="price" inputmode="decimal"></label>
-      <label class="field"><span>Reviews</span><input name="reviews" inputmode="numeric"></label>
-      <label class="field"><span>Their images</span><select name="imgq">${IMGQ.map(q=>`<option>${q}</option>`).join("")}</select></label>
-      <button class="pill blue" type="submit">Add competitor</button></form>
-      ${cs.length?cs.map((c,i)=>{const href=c.link?(isUrl(c.link)?c.link:amz(c.link)):"";return `<div class="comp">
-        <label class="field wide"><span>Link / ASIN</span><input value="${esc(c.link)}" data-arr="competitors" data-id="${p.id}" data-i="${i}" data-f="link"></label>
-        <label class="field"><span>Price £</span><input value="${esc(c.price)}" data-arr="competitors" data-id="${p.id}" data-i="${i}" data-f="price"></label>
-        <label class="field"><span>Reviews</span><input value="${esc(c.reviews)}" data-arr="competitors" data-id="${p.id}" data-i="${i}" data-f="reviews"></label>
-        <label class="field"><span>Images</span><select data-arr="competitors" data-id="${p.id}" data-i="${i}" data-f="imgq">${IMGQ.map(q=>`<option${(c.imgq||"—")===q?" selected":""}>${q}</option>`).join("")}</select></label>
-        <label class="field wide"><span>Weak spots</span><input value="${esc(c.notes)}" placeholder="e.g. white background only, no size guide" data-arr="competitors" data-id="${p.id}" data-i="${i}" data-f="notes"></label>
-        <div class="row gap8">${href?`<a class="pill outline sm" href="${esc(href)}" target="_blank" rel="noopener" aria-label="Open competitor listing">↗</a>`:""}${delBtn(`comp:${p.id}:${i}`,"Remove")}</div></div>`}).join(""):`<div class="empty">No competitors yet. Paste the top listings you're up against.</div>`}`;}
+    return `<form class="caddbar" data-form="addcomp" data-id="${p.id}" autocomplete="off">
+        <label><span class="sr">Competitor link or ASIN</span><input name="q" placeholder="Paste a competitor link or ASIN (paste several to add them all)"></label>
+        <button class="pill blue" type="submit">+ Add competitor</button></form>
+      ${cs.length?`<div id="compsummary" data-id="${p.id}" style="display:flex;flex-direction:column;gap:14px">${summaryHtml(p)}</div>
+      <div class="sectionhead"><h2 style="font-size:20px">All competitors</h2><div class="row gap8">
+        <button type="button" class="pill sm ${ui.cmode==="cards"?"":"outline"}" data-act="cmode" data-v="cards">Cards</button>
+        <button type="button" class="pill sm ${ui.cmode==="table"?"":"outline"}" data-act="cmode" data-v="table">Table</button></div></div>
+      ${ui.cmode==="table"?compTable(p,cs):`<div class="ccards">${cs.map((c,i)=>compCard(p,c,i)).join("")}</div>`}`
+      :`<div class="empty">No competitors yet. Paste the top listings you're up against in the bar above.</div>`}`;}
   case "standout":
     return `<div class="grid-f">${TA("standout","What I'll do to stand out","Better photos, infographics, bundle, size guide, gift box…",12)}${TA("weaknesses","What competitors get wrong","Common complaints in reviews, weak images, missing info…",12)}</div>`;
   case "mockups":{
@@ -624,6 +737,93 @@ function tabBody(p,samples){
     return TA("notes","Notes","Anything else about this product…",16);
   }
   return "";
+}
+
+/* ----- Competitor helpers ----- */
+const numv = v => {if(v==null||v==="")return null;const n=parseFloat(String(v).replace(/[£$,\s]/g,""));return isNaN(n)?null:n};
+const mean = a => a.reduce((x,y)=>x+y,0)/a.length;
+const cleanTxt = t => String(t||"").replace(/[•\s]/g,"");
+function cAvg(c){const a=numv(c.list),b=numv(c.sell!=null&&c.sell!==""?c.sell:c.price);if(a!=null&&b!=null)return(a+b)/2;return a!=null?a:b}
+const avgText = c => {const v=cAvg(c);return v==null?"—":gbp(v)};
+const isWeak = c => c.imgq==="Poor"||c.imgq==="Fair";
+function compStats(cs){
+  const pr=cs.map(cAvg).filter(v=>v!=null), rv=cs.map(c=>numv(c.reviews)).filter(v=>v!=null);
+  return {n:cs.length, range:pr.length?`£${Math.min(...pr).toFixed(0)}–£${Math.max(...pr).toFixed(0)}`:"—",
+    avgP:pr.length?gbp(mean(pr)):"—", avgR:rv.length?Math.round(mean(rv)).toLocaleString("en-GB"):"—", weak:cs.filter(isWeak).length};
+}
+/* simple built-in rules, no AI */
+function insights(p){
+  const cs=p.competitors||[], out=[]; if(!cs.length) return out;
+  const nm = c => c.title || c.asin || parseAsin(c.link) || "A competitor";
+  const avgs=cs.map(cAvg).filter(v=>v!=null), weak=cs.filter(isWeak).length, rated=cs.filter(c=>c.imgq&&c.imgq!=="—").length;
+  if(weak && weak>=Math.ceil(cs.length/2)) out.push(["good",`${weak} of ${cs.length} competitors have weak images. Strong photos, infographics and A+ content are your easiest win here.`]);
+  else if(cs.length>=2 && rated===cs.length && weak===0) out.push(["warn","Every competitor has good images, so photos alone won't set you apart. Look for another angle: bundle, pack size, quality or a feature they're missing."]);
+  if(avgs.length>=2){
+    const avg=mean(avgs), mn=Math.min(...avgs), mx=Math.max(...avgs);
+    if(p.price!=null){
+      const d=p.price-avg, pct=Math.round(Math.abs(d)/avg*100);
+      if(Math.abs(d)<0.01) out.push(["info",`Your sell price matches the competitor average (${gbp(avg)}).`]);
+      else out.push([d>avg*0.15?"warn":"info",`Your sell price (${gbp(p.price)}) is ${gbp(Math.abs(d))} ${d<0?"below":"above"} the competitor average of ${gbp(avg)} (${pct}%).${d>avg*0.15?" You'll need clearly better images or features to justify that.":""}`]);
+    } else out.push(["info",`Competitors average ${gbp(avg)}. Add your sell price at the top of this page to compare.`]);
+    if(mx-mn>avg*0.3) out.push(["info",`Prices range from ${gbp(mn)} to ${gbp(mx)}, so there's room for a budget version or a premium version.`]);
+  }
+  const disc=cs.filter(c=>{const l=numv(c.list),s=numv(c.sell);return l!=null&&s!=null&&s<l});
+  if(disc.length){const pct=Math.round(mean(disc.map(c=>(numv(c.list)-numv(c.sell))/numv(c.list)*100)));out.push(["info",`${disc.length} competitor${disc.length>1?"s are":" is"} selling below list price (about ${pct}% off). Shoppers here may be price-sensitive.`])}
+  const low=cs.filter(c=>{const r=numv(c.rating);return r!=null&&r<4.0});
+  if(low.length) out.push(["good",`${low.slice(0,3).map(nm).join(", ")} ${low.length>1?"are":"is"} rated under 4.0. Read their 1–3★ reviews: their complaints are your product spec.`]);
+  const rv=cs.map(c=>numv(c.reviews)).filter(v=>v!=null);
+  if(rv.length){ if(Math.min(...rv)<300) out.push(["good","At least one competitor has under 300 reviews, so a new listing can still break in."]);
+    if(mean(rv)>3000) out.push(["warn",`Competitors average ${Math.round(mean(rv)).toLocaleString("en-GB")} reviews. Expect a slower start and budget for launch ads.`]); }
+  const noPrice=cs.length-avgs.length; if(noPrice) out.push(["todo",`${noPrice} competitor${noPrice>1?"s have":" has"} no price yet. Add prices for better price insights.`]);
+  const noRate=cs.length-rated; if(noRate) out.push(["todo",`Rate the images for ${noRate} competitor${noRate>1?"s":""}: tap the "Images" badge on the card.`]);
+  const noPlan=cs.filter(c=>(isWeak(c)||cleanTxt(c.weak))&&!cleanTxt(c.beat)).length;
+  if(noPlan) out.push(["todo",`No "How I beat them" plan yet for ${noPlan} competitor${noPlan>1?"s":""}.`]);
+  return out;
+}
+function summaryHtml(p){
+  const cs=p.competitors||[], s=compStats(cs), ins=insights(p);
+  return `<div class="cstats">
+      <div class="cstat"><span>Competitors</span><b>${s.n}</b></div>
+      <div class="cstat"><span>Price range</span><b>${s.range}</b></div>
+      <div class="cstat"><span>Average price</span><b>${s.avgP}</b></div>
+      <div class="cstat"><span>Average reviews</span><b>${s.avgR}</b></div>
+      <div class="cstat or"><span>Weak images</span><b>${s.weak} of ${s.n}</b></div>
+    </div>
+    ${ins.length?`<div class="ins"><h3>Quick insights</h3><ul>${ins.map(([k,t])=>`<li><span class="k k-${k}">${{good:"Opportunity",warn:"Watch out",info:"Note",todo:"To do"}[k]}</span><span>${esc(t)}</span></li>`).join("")}</ul></div>`:""}`;
+}
+let pendingSummary=false;
+function refreshSummarySoon(){if(pointerDown){pendingSummary=true;return}refreshSummary()}
+function refreshSummary(){pendingSummary=false;const box=$("#compsummary");if(!box)return;const p=byId("products",box.dataset.id);if(p)box.innerHTML=summaryHtml(p)}
+function compCard(p,c,i){
+  const asin=c.asin||parseAsin(c.link), href=c.link&&isUrl(c.link)?c.link:(asin?amz(asin):"");
+  const A=f=>`data-arr="competitors" data-id="${p.id}" data-i="${i}" data-f="${f}"`;
+  const N=(f,l)=>`<label><span>${l}</span><input inputmode="decimal" value="${esc(f==="sell"&&(c.sell==null||c.sell==="")?(c.price||""):c[f])}" placeholder="—" ${A(f)}></label>`;
+  const q=c.imgq&&c.imgq!=="—"?c.imgq:"none";
+  return `<article class="cc">
+    <div class="cctop">
+      <label class="cimg drop" data-drop="cimg" data-id="${p.id}" data-i="${i}">${c.image?`<img src="${imgUrl(c.image)}" alt="">`:`<span>Drop their main image</span>`}<input type="file" accept="image/*" class="sr" data-upload="cimg" data-id="${p.id}" data-i="${i}"></label>
+      <div class="ccinfo"><small>#${i+1}${asin?" · "+esc(asin):""}</small>
+        <label class="sr" for="ct-${i}">Competitor name</label><input id="ct-${i}" class="ctitle" value="${esc(c.title)}" placeholder="Competitor name" ${A("title")}>
+        <button type="button" class="iq iq-${q}" data-act="iq" data-id="${p.id}" data-v="${i}" title="Tap to change">Images: ${q==="none"?"not rated":q}</button>
+      </div>
+    </div>
+    <div class="cn3">${N("list","List price £")}${N("sell","Selling price £")}<div class="avgbox"><span>Average</span><b data-avg>${avgText(c)}</b></div></div>
+    <div class="cn3 two">${N("rating","Rating")}${N("reviews","Reviews")}</div>
+    <label class="tf"><span>Weak spots</span><textarea class="bul" rows="1" placeholder="• Press Enter for a new point" ${A("weak")}>${esc(c.weak||c.notes||"")}</textarea></label>
+    <label class="tf beat"><span>How I beat them</span><textarea class="bul" rows="1" placeholder="• Press Enter for a new point" ${A("beat")}>${esc(c.beat)}</textarea></label>
+    <label class="tf"><span>Link or ASIN</span><input value="${esc(c.link||c.asin||"")}" placeholder="https://www.amazon.co.uk/dp/…" ${A("link")}></label>
+    <div class="ccfoot">${href?`<a class="pill outline sm" href="${esc(href)}" target="_blank" rel="noopener">Amazon ↗</a>`:""}${asin?`<a class="pill outline sm" href="https://keepa.com/#!product/2-${esc(asin)}" target="_blank" rel="noopener">Keepa ↗</a>`:""}<span class="spacer"></span>${delBtn(`comp:${p.id}:${i}`,"Remove")}</div>
+  </article>`;
+}
+function compTable(p,cs){
+  const n=v=>v==null||v===""?"—":esc(v);
+  return `<div class="ctable"><table><thead><tr><th>#</th><th>Competitor</th><th>ASIN</th><th>List price</th><th>Selling price</th><th>Average</th><th>Rating</th><th>Reviews</th><th>Images</th><th>Weak spots</th><th>How I beat them</th></tr></thead><tbody>
+    ${cs.map((c,i)=>{const asin=c.asin||parseAsin(c.link);const href=c.link&&isUrl(c.link)?c.link:(asin?amz(asin):"");return `<tr><td class="num">${i+1}</td><td>${href?`<a href="${esc(href)}" target="_blank" rel="noopener">${esc(c.title||asin||"Competitor")}</a>`:esc(c.title||"—")}</td><td class="num">${esc(asin||"—")}</td>
+      <td class="num">${numv(c.list)!=null?gbp(numv(c.list)):"—"}</td><td class="num">${numv(c.sell||c.price)!=null?gbp(numv(c.sell||c.price)):"—"}</td><td class="num"><b>${avgText(c)}</b></td>
+      <td class="num">${n(c.rating)}</td><td class="num">${numv(c.reviews)!=null?numv(c.reviews).toLocaleString("en-GB"):"—"}</td><td><span class="iq iq-${c.imgq&&c.imgq!=="—"?c.imgq:"none"}" style="cursor:default">${c.imgq&&c.imgq!=="—"?c.imgq:"—"}</span></td>
+      <td class="pl">${n(c.weak||c.notes)}</td><td class="pl">${n(c.beat)}</td></tr>`}).join("")}
+    <tr class="me"><td></td><td>${esc(pname(p))} (me)</td><td class="num">${esc(p.asin||"—")}</td><td class="num">—</td><td class="num">${gbp(p.price)}</td><td class="num">${gbp(p.price)}</td><td>—</td><td>—</td><td>—</td><td colspan="2">Target</td></tr>
+  </tbody></table></div>`;
 }
 
 /* ----- Samples ----- */
@@ -817,7 +1017,25 @@ document.addEventListener("submit",async e=>{
       else{const t=await ins("thoughts",{text,category_id:d.category_id||null});if(t){f.reset();toast("Thought saved");render()}}}
     if(k==="addprod"){const q=(d.q||"").trim();const p=await productFromText(q,(ui.cat&&ui.cat!=="none")?ui.cat:null);if(p)location.hash="p/"+p.id}
     if(k==="addcat"){const name=(d.name||"").trim();if(!name)return;const mx=Math.max(0,...D.categories.map(c=>c.sort||0));const c=await ins("categories",{name,sort:mx+1});if(c){toast("Category added");render()}}
-    if(k==="addcomp"){const p=byId("products",f.dataset.id);if(!p)return;await upd("products",p.id,{competitors:[...(p.competitors||[]),{link:(d.link||"").trim(),price:d.price||"",reviews:d.reviews||"",imgq:d.imgq||"—",notes:""}]});render()}
+    if(k==="addcomp"){const p=byId("products",f.dataset.id);if(!p)return;
+      const have=new Set((p.competitors||[]).map(c=>c.asin||parseAsin(c.link)).filter(Boolean));
+      const parts=splitLinks(d.q); if(!parts.length) return; const add=[], skipped=[];
+      parts.forEach(q=>{const a=parseAsin(q);if(a&&have.has(a)){skipped.push(a);return}if(a)have.add(a);add.push(newComp(q))});
+      if(add.length) await upd("products",p.id,{competitors:[...(p.competitors||[]),...add]});
+      toast(skipped.length?`${add.length} added. Already listed: ${skipped.join(", ")}`:`${add.length} competitor${add.length>1?"s":""} added`); render()}
+    if(k==="quickadd"){
+      const a=ui.add, name=a.name.trim();
+      if(!name){toast("Add a product name first.");const n=$("#addname");if(n)n.focus();return}
+      const asin=parseAsin(a.asin)||a.asin.trim().toUpperCase();
+      const seen=new Set(); const comps=a.rows.map(r=>r.trim()).filter(Boolean).filter(r=>{const x=parseAsin(r);if(!x)return true;if(seen.has(x))return false;seen.add(x);return true}).map(newComp);
+      const photo=a.files.length?(await uploadFiles(a.files))[0]:null;
+      const cat=a.cat||((ui.cat&&ui.cat!=="none")?ui.cat:"");
+      const p=await ins("products",{name,asin,category_id:cat||null,competitors:comps,image_path:photo||null});
+      if(!p) return;
+      ui.add={name:"",asin:"",cat:a.cat,rows:["",""],files:[]};
+      if(as==="again"){render();toast(`${name} added. Ready for the next one.`);const n=$("#addname");if(n)n.focus()}
+      else{ui.addOpen=false;ui.tab="competitors";location.hash="p/"+p.id;toast(`${name} added with ${comps.length} competitor${comps.length===1?"":"s"}`)}
+    }
     if(k==="addsup"){const name=(d.name||"").trim();if(!name)return;const s=await ins("suppliers",{name,source:d.source,wechat:d.wechat||"",alibaba:d.alibaba||"",contact:d.contact||""});if(s){ui.openSup=s.id;toast("Supplier added");render()}}
     if(k==="logsample"){
       let supplier_id=d.supplier_id;
@@ -841,10 +1059,18 @@ document.addEventListener("click",e=>{
   const a=e.target.closest("[data-act]");
   if(!a){ if(ui.confirm&&view.contains(e.target)){ui.confirm=null;render()} return }
   const act=a.dataset.act, v=a.dataset.v, id=a.dataset.id;
+  flushSaves();
   if(act!=="del"&&ui.confirm) ui.confirm=null;
   const sameHash = h => (location.hash||"#dashboard")==="#"+h;
   switch(act){
     case "tab": ui.tab=v; render(); break;
+    case "openadd": ui.addOpen=true; render(); {const n=$("#addname"); if(n) n.focus();} break;
+    case "closeadd": ui.addOpen=false; render(); break;
+    case "addrow": ui.add.rows.push(""); refreshRows(); {const n=$("#ar"+(ui.add.rows.length-1)); if(n) n.focus();} break;
+    case "rmrow": ui.add.rows.splice(+v,1); if(!ui.add.rows.length) ui.add.rows=[""]; refreshRows(); break;
+    case "cmode": ui.cmode=v; render(); break;
+    case "iq": {const p=byId("products",id); if(!p) break; const arr=(p.competitors||[]).map(x=>({...x})); const c=arr[+v]; if(!c) break;
+      const o=["—","Poor","Fair","Good"]; c.imgq=o[(o.indexOf(c.imgq||"—")+1)%o.length]; upd("products",id,{competitors:arr}); render(); break;}
     case "cat": ui.cat=v; render(); break;
     case "gocat": ui.cat=v||""; ui.stage=""; ui.q=""; if(sameHash("products")) render(); break;
     case "managecats": ui.manageCats=!ui.manageCats; render(); break;
@@ -865,31 +1091,55 @@ document.addEventListener("click",e=>{
   }
 });
 
-const timers=new WeakMap();
+function refreshRows(){const r=$("#addrows");if(r)r.innerHTML=rowsHtml();const w=$("#dupwarn");if(w)w.innerHTML=dupHtml()}
+function grow(t){t.style.height="auto";t.style.height=(t.scrollHeight+2)+"px"}
+function growAll(){document.querySelectorAll("textarea.bul").forEach(grow)}
+const timers=new WeakMap(), pendingEls=new Set();
+function flushSaves(){pendingEls.forEach(el=>{clearTimeout(timers.get(el));if(document.contains(el))saveField(el)});pendingEls.clear()}
 document.addEventListener("input",e=>{
   const el=e.target;
   if(el.id==="psearch"){ui.q=el.value;const g=$("#pgrid");if(g)g.innerHTML=gridHtml();return}
+  if(el.dataset.add){
+    if(el.dataset.add==="row") ui.add.rows[+el.dataset.i]=el.value; else ui.add[el.dataset.add]=el.value;
+    if(el.dataset.add==="asin"||el.dataset.add==="row"){const w=$("#dupwarn");if(w)w.innerHTML=dupHtml()}
+    return;
+  }
+  if(el.classList.contains("bul")) grow(el);
+  if(el.dataset.arr==="competitors"&&(el.dataset.f==="list"||el.dataset.f==="sell")){
+    const card=el.closest(".cc"); if(card){const L=card.querySelector('[data-f="list"]').value,S2=card.querySelector('[data-f="sell"]').value;const b=card.querySelector("[data-avg]");if(b)b.textContent=avgText({list:L,sell:S2})}
+  }
   if(el.matches("[data-t],[data-arr]")&&el.matches("input:not([type=date]):not([type=file]),textarea")){
-    clearTimeout(timers.get(el)); timers.set(el,setTimeout(()=>saveField(el),800));
+    clearTimeout(timers.get(el)); pendingEls.add(el); timers.set(el,setTimeout(()=>{pendingEls.delete(el);saveField(el)},800));
   }
 });
 document.addEventListener("change",e=>{
   const el=e.target;
   if(el.id==="sprodfilter"){ui.sprod=el.value;render();return}
   if(el.id==="stagefilter"){ui.stage=el.value;render();return}
+  if(el.dataset.add==="cat"){ui.add.cat=el.value;return}
   if(el.dataset.role==="supsel"){ui.newSup=el.value==="__new";const g=el.closest("form").querySelector('[data-role="newsup"]');if(g)g.hidden=!ui.newSup;return}
-  if(el.matches("[data-upload]")){const files=[...el.files];el.value="";handleFiles(el.dataset.upload,el.dataset.id,files);return}
+  if(el.matches("[data-upload]")){const files=[...el.files];el.value="";handleFiles(el.dataset.upload,el.dataset.id,files,el.dataset.i);return}
   if(el.matches("[data-t],[data-arr]")){
-    clearTimeout(timers.get(el));
-    saveField(el).then(ch=>{ if(ch && (el.tagName==="SELECT"||el.dataset.num||el.type==="date")) requestRender(); });
+    clearTimeout(timers.get(el)); pendingEls.delete(el);
+    saveField(el).then(ch=>{ if(ch && el.dataset.arr==="competitors") refreshSummarySoon(); else if(ch && (el.tagName==="SELECT"||el.dataset.num||el.type==="date")) requestRender();
+      if(ch && el.dataset.f==="asin" && el.dataset.t==="products"){const dup=D.products.find(x=>x.id!==el.dataset.id&&x.asin&&x.asin===el.value.trim().toUpperCase());if(dup)toast(`Heads up: ${pname(dup)} already uses this ASIN.`)} });
   }
 });
+/* bullet-point boxes: start with a bullet, Enter adds the next one */
+document.addEventListener("focusin",e=>{const t=e.target;if(t.classList&&t.classList.contains("bul")&&!t.value){t.value="• ";t.setSelectionRange(2,2)}});
+document.addEventListener("focusout",e=>{const t=e.target;if(t.classList&&t.classList.contains("bul")&&t.value.trim()==="•"){t.value="";grow(t);t.dispatchEvent(new Event("change",{bubbles:true}))}},true);
+document.addEventListener("keydown",e=>{const t=e.target;if(!(t.classList&&t.classList.contains("bul"))||e.key!=="Enter"||e.shiftKey||e.isComposing)return;
+  e.preventDefault();const s=t.selectionStart,en=t.selectionEnd;t.value=t.value.slice(0,s)+"\n• "+t.value.slice(en);t.selectionStart=t.selectionEnd=s+3;t.dispatchEvent(new Event("input",{bubbles:true}))});
+/* paste several competitor links into one row → one row each */
+document.addEventListener("paste",e=>{const el=e.target;if(!(el.dataset&&el.dataset.add==="row"))return;
+  const t=(e.clipboardData&&e.clipboardData.getData("text"))||"";const parts=splitLinks(t);if(parts.length<2)return;
+  e.preventDefault();const i=+el.dataset.i;const cur=ui.add.rows[i].trim();ui.add.rows.splice(i,1,...(cur?[cur]:[]),...parts);refreshRows();toast(`${parts.length} competitors added as separate rows`)},true);
 
 /* drag & drop + paste */
 const hasFiles = e => e.dataTransfer && [...(e.dataTransfer.types||[])].includes("Files");
 document.addEventListener("dragover",e=>{if(!hasFiles(e))return;e.preventDefault();const z=e.target.closest("[data-drop]");document.querySelectorAll(".drop.over").forEach(x=>{if(x!==z)x.classList.remove("over")});if(z)z.classList.add("over")});
 document.addEventListener("dragleave",e=>{const z=e.target.closest("[data-drop]");if(z&&!z.contains(e.relatedTarget))z.classList.remove("over")});
-document.addEventListener("drop",e=>{if(!hasFiles(e))return;e.preventDefault();const z=e.target.closest("[data-drop]");document.querySelectorAll(".drop.over").forEach(x=>x.classList.remove("over"));if(!z)return;handleFiles(z.dataset.drop,z.dataset.id,e.dataTransfer.files)});
+document.addEventListener("drop",e=>{if(!hasFiles(e))return;e.preventDefault();const z=e.target.closest("[data-drop]");document.querySelectorAll(".drop.over").forEach(x=>x.classList.remove("over"));if(!z)return;handleFiles(z.dataset.drop,z.dataset.id,e.dataTransfer.files,z.dataset.i)});
 document.addEventListener("paste",e=>{
   if(!user||editing()) return;
   const files=[...((e.clipboardData&&e.clipboardData.files)||[])].filter(f=>/^image\//.test(f.type)); if(!files.length) return;
@@ -905,7 +1155,7 @@ function exportXlsx(){
   const products=S.products().map(p=>({"Product":pname(p),"Category":cat(p.category_id),"Stage":p.status,"ASIN":p.asin,"Link":p.url,"Sell price £":p.price,"Unit cost £":p.cost,"Amazon fees £":p.fees,"Est. sales / month":p.sales,
     "Stand out":p.standout,"Competitor weak spots":p.weaknesses,"Title":p.title,"Bullet 1":p.bullet1,"Bullet 2":p.bullet2,"Bullet 3":p.bullet3,"Bullet 4":p.bullet4,"Bullet 5":p.bullet5,"Description":p.description,"Keywords":p.keywords,"Notes":p.notes,
     "Main photo":imgUrl(p.image_path),"Mockups":(p.mockups||[]).map(m=>imgUrl(m.path)).join("\n"),"Added":dmy(p.created_at)}));
-  const comps=S.products().flatMap(p=>(p.competitors||[]).map(c=>({"Product":pname(p),"Competitor":c.link,"Price £":c.price,"Reviews":c.reviews,"Their images":c.imgq,"Weak spots":c.notes})));
+  const comps=S.products().flatMap(p=>(p.competitors||[]).map(c=>({"Product":pname(p),"Competitor":c.title,"ASIN":c.asin||parseAsin(c.link),"Link":c.link,"List price £":numv(c.list),"Selling price £":numv(c.sell||c.price),"Average £":cAvg(c)==null?null:Number(cAvg(c).toFixed(2)),"Rating":numv(c.rating),"Reviews":numv(c.reviews),"Their images":c.imgq,"Weak spots":c.weak||c.notes||"","How I beat them":c.beat||"","Image":imgUrl(c.image)})));
   const samples=S.samples().map(s=>({"Product":pname(byId("products",s.product_id)),"Supplier":sup(s.supplier_id),"Where found":(supOf(s.supplier_id)||{}).source||"","Status":s.status,"Sample cost":s.sample_cost,"Unit price":s.unit_price,"MOQ":s.moq,"Quality /5":s.quality,"Tracking":s.tracking,"ETA":dmy(s.eta),"Arrived":dmy(s.arrived_on),"Decided":dmy(s.decided_on),"Notes":s.notes,"Photos":(s.photos||[]).map(imgUrl).join("\n"),"Logged":dmy(s.created_at)}));
   const sups=S.suppliers().map(s=>({"Supplier":s.name,"Where found":s.source,"WeChat":s.wechat,"Alibaba":s.alibaba,"Contact":s.contact,"Phone / email":s.phone,"Notes":s.notes,"Added":dmy(s.created_at)}));
   const thoughts=S.thoughts().map(t=>({"Thought":t.text,"Category":t.category_id?cat(t.category_id):"","Added":dmy(t.created_at)}));
