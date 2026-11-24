@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>PL Hub</title>
 <meta name="robots" content="noindex,nofollow">
+<meta name="referrer" content="no-referrer">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='9' fill='%231e3fd8'/%3E%3Cpath d='M9 23V9h6a4 4 0 0 1 0 8h-6M19 9v14h5' fill='none' stroke='white' stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -108,7 +109,7 @@ main{padding-block:22px 80px;display:flex;flex-direction:column;gap:18px}
 .pcard{background:#fff;border-radius:var(--r);overflow:hidden;display:flex;flex-direction:column;border:2px solid transparent}
 .pcard:hover{border-color:var(--ink)}
 .pimg{aspect-ratio:4/3;background:var(--blue-soft);display:flex;align-items:center;justify-content:center;position:relative;cursor:pointer;text-decoration:none;color:var(--blue);text-align:center;overflow:hidden}
-.pimg img{width:100%;height:100%;object-fit:contain;background:#fff}
+.pimg img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;background:#fff}
 .ph{font-size:14px;font-weight:500;padding:12px}
 .ph small{font-weight:400;color:var(--muted)}
 .pbody{padding:16px 18px 18px;display:flex;flex-direction:column;gap:8px;text-decoration:none;color:var(--ink);flex:1}
@@ -154,7 +155,7 @@ main{padding-block:22px 80px;display:flex;flex-direction:column;gap:18px}
 .gcol{flex:1 1 380px;max-width:520px;display:flex;flex-direction:column;gap:10px;min-width:0}
 .icol{flex:999 1 560px;min-width:0;display:flex;flex-direction:column;gap:14px}
 .hero{aspect-ratio:1/1;max-width:100%;background:var(--blue-soft);border-radius:var(--r);display:flex;align-items:center;justify-content:center;position:relative;cursor:pointer;overflow:hidden;text-align:center;color:var(--blue)}
-.hero img{width:100%;height:100%;object-fit:contain;background:#fff}
+.hero img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;background:#fff}
 .hero .corner{position:absolute;right:14px;bottom:14px;box-shadow:0 2px 8px rgba(0,0,0,.12)}
 .thumbs{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
 .thumb{aspect-ratio:1/1;border-radius:var(--r-sm);background:#fff;border:1px solid var(--line);overflow:hidden;padding:0;cursor:pointer;display:flex;align-items:center;justify-content:center}
@@ -326,6 +327,109 @@ textarea.bul{min-height:44px;resize:none;overflow:hidden}
 .ctable td.pl{white-space:pre-line;min-width:180px}
 .ctable tr.me td{background:var(--blue-soft);font-weight:700}
 
+
+/* ASIN pull, added date, shimmer */
+.sh{background:linear-gradient(90deg,var(--blue-soft) 25%,#fff 50%,var(--blue-soft) 75%)!important;background-size:200% 100%;animation:shim 1s linear infinite}
+@keyframes shim{to{background-position:-200% 0}}
+.pbody .added{font-size:12px;color:var(--muted);text-align:right;margin-top:auto}
+.cbrand{border:1px solid transparent;border-radius:8px;font-size:13px;color:var(--muted);padding:1px 5px;margin-left:-6px;background:transparent;width:100%}
+.cbrand:hover,.cbrand:focus{border-color:var(--line);background:#fff;outline:none}
+.brandrow{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.brandrow .asin input{text-transform:none;width:170px}
+.note-lk{background:rgba(255,255,255,.14);border-radius:12px;padding:8px 12px;font-size:13px}
+
+/* My listing */
+.lsec{display:flex;flex-direction:column;gap:10px;background:var(--bg);border-radius:20px;padding:16px}
+.lsec h3{font-size:19px;display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap}
+.lsec .meta b{color:var(--ink)}
+.lbar{height:10px;border-radius:99px;background:#fff;overflow:hidden}
+.lbar i{display:block;height:100%;background:var(--blue);border-radius:99px;transition:width .3s}
+.lchk{display:flex;gap:6px;flex-wrap:wrap}
+.lchk span{font-size:12px;padding:4px 10px;border-radius:999px;background:#fff;color:var(--muted)}
+.lchk span.y{background:var(--green-soft);color:var(--green)}
+.lslots{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:8px}
+.lslot{aspect-ratio:1/1;border-radius:14px;border:2px dashed var(--line);background:#fff;position:relative;overflow:hidden;min-width:0}
+.lslot.f{border:2px solid #fff}
+.lslot>label{position:absolute;inset:0;cursor:pointer;display:flex;align-items:flex-end;justify-content:center;padding:6px}
+.lslot img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.lslot .plus{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:28px;color:#b6b2a9}
+.lslot .lab{position:relative;background:#fff;color:var(--ink);font-size:11px;padding:2px 8px;border-radius:99px;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;box-shadow:0 1px 4px rgba(0,0,0,.12)}
+.lslot .lx{position:absolute;right:6px;top:6px;width:26px;height:26px;border-radius:50%;border:none;background:var(--ink);color:#fff;cursor:pointer;line-height:1;font-size:16px;z-index:2}
+.lslot.over,.lslot .drop.over{outline:3px dashed var(--blue);outline-offset:-6px}
+.lcnt{font-size:12px;color:var(--muted);text-align:right}
+.lcnt.ok{color:var(--green)}.lcnt.bad{color:var(--red)}
+textarea.agrow{width:100%;min-height:46px;resize:none;overflow:hidden;line-height:1.5;border:1px solid var(--line);border-radius:12px;padding:10px 12px;background:#fff;display:block}
+textarea.agrow:focus{border-color:var(--ink);outline:none}
+.lbl{display:flex;gap:8px;align-items:flex-start}
+.lbl .n{width:26px;height:26px;border-radius:50%;background:var(--blue-soft);color:var(--blue);font-size:12px;display:flex;align-items:center;justify-content:center;flex:0 0 26px;margin-top:9px}
+.lbl>div{flex:1;min-width:0}
+.apmod{display:grid;grid-template-columns:150px minmax(0,1fr);gap:12px;align-items:start;background:#fff;border-radius:16px;padding:10px}
+@media(max-width:560px){.apmod{grid-template-columns:minmax(0,1fr)}}
+.apmod .lslot{aspect-ratio:auto;height:96px}
+.apmod select,.apmod input.inp{min-height:42px}
+.vbtn{min-height:46px;padding:0 22px}
+.fabwrap{position:sticky;bottom:max(14px,env(safe-area-inset-bottom));display:flex;justify-content:flex-end;pointer-events:none;z-index:15}
+.fabwrap .pill{pointer-events:auto;box-shadow:0 6px 24px rgba(0,0,0,.25)}
+
+/* Listing preview (product-page look) */
+.ov{position:fixed;inset:0;background:#fff;color:#0f1111;z-index:60;overflow:auto}
+.ovbar{position:sticky;top:0;background:#111;color:#fff;display:flex;gap:12px;align-items:center;justify-content:space-between;flex-wrap:wrap;padding:10px max(16px,env(safe-area-inset-left));z-index:2}
+.ovbar b{font-size:14px}
+.ovbar button{height:36px;padding:0 16px;border-radius:999px;border:none;background:#fff;color:#111;font-weight:700;cursor:pointer}
+.lp{max-width:1500px;margin:0 auto;background:#fff;color:#0f1111;font-family:Arial,Helvetica,sans-serif;font-size:14px;line-height:1.4}
+.lp *{box-sizing:border-box}
+.azh{background:#1b2330;color:#fff;display:flex;gap:14px;align-items:center;padding:8px 16px;flex-wrap:wrap}
+.azh .tag2{font-weight:700;font-size:15px;white-space:nowrap}
+.azh input{flex:1 1 240px;height:38px;border-radius:6px;border:none;padding:0 12px;background:#fff;color:#0f1111;min-width:0}
+.azh .bk{font-size:13px;white-space:nowrap}
+.azn{background:#2c3a4d;color:#fff;padding:6px 16px;font-size:12px}
+.azb{padding:12px 20px 48px;display:flex;flex-direction:column;gap:16px}
+.crumb{font-size:12px;color:#565959}
+.azm{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr) 270px;gap:24px;align-items:start}
+@media(max-width:1000px){.azm{grid-template-columns:minmax(0,1fr)}}
+.gal{display:flex;gap:12px;min-width:0}
+.gal .th{display:flex;flex-direction:column;gap:8px;flex:0 0 46px}
+.gal .th i{width:46px;height:46px;border:1px solid #d5d9d9;border-radius:6px;background-size:cover;background-position:center;background-color:#f7f7f7;cursor:pointer;display:block}
+.gal .th i.on{border-color:#e77600;box-shadow:0 0 3px 2px rgba(228,121,17,.5)}
+.gal .mainimg{flex:1;min-width:0;aspect-ratio:1;max-height:560px;background-color:#fff;background-size:contain;background-repeat:no-repeat;background-position:center;display:flex;align-items:center;justify-content:center;color:#565959;text-align:center;padding:10px;cursor:zoom-in}
+@media(max-width:600px){.gal{flex-direction:column-reverse}.gal .th{flex-direction:row;flex-wrap:wrap;flex:none}}
+.azt{font-size:24px;font-weight:400;line-height:32px;margin:0}
+.lnk{color:#007185;text-decoration:none;font-size:14px;cursor:pointer}
+.lnk:hover{color:#c45500;text-decoration:underline}
+.rt{display:flex;gap:6px;align-items:center;font-size:14px;margin-top:4px}
+.stars{background:linear-gradient(90deg,#de7921 92%,#d5d9d9 92%);-webkit-background-clip:text;background-clip:text;color:transparent;font-size:18px;letter-spacing:1px}
+.lp hr{border:0;border-top:1px solid #e7e7e7;margin:10px 0;width:100%}
+.pw{font-size:28px;font-weight:400;display:inline-flex;align-items:flex-start;line-height:1.1}
+.pw sup{font-size:13px;margin-top:4px}
+.ovt{border-collapse:collapse;font-size:14px}
+.ovt td{padding:3px 14px 3px 0;vertical-align:top}
+.ovt td:first-child{font-weight:700;white-space:nowrap}
+.lp h3{font-size:16px;font-weight:700;margin:0 0 6px;display:block}
+.lp ul{margin:0;padding-left:20px;display:flex;flex-direction:column;gap:5px;font-size:14px;line-height:20px}
+.lp .ghost{color:#565959;font-style:italic}
+.buy{border:1px solid #d5d9d9;border-radius:8px;padding:14px;display:flex;flex-direction:column;gap:9px}
+.buy select{height:30px;border-radius:8px;border:1px solid #d5d9d9;background:#f0f2f2;padding:0 8px;width:max-content;color:#0f1111}
+.buy button{height:34px;border-radius:999px;cursor:pointer;font-size:13px;color:#0f1111}
+.buy .b1{background:#ffd814;border:1px solid #fcd200}.buy .b2{background:#ffa41c;border:1px solid #ff8f00}
+.buy .b3{background:#fff;border:1px solid #d5d9d9}
+.buy .ft{display:grid;grid-template-columns:auto 1fr;gap:3px 10px;font-size:12px;color:#565959}
+.buy .ft span+span{color:#0f1111}
+.stock{color:#007600;font-size:18px}
+#azmsg{font-size:12px;color:#565959;min-height:16px}
+.sect h2{font-size:21px;font-weight:700;margin:0 0 10px;line-height:1.2}
+.sect .desc{font-size:14px;line-height:20px;white-space:pre-wrap;margin:0;max-width:970px}
+.apw{display:flex;flex-direction:column;max-width:970px}
+.apm{aspect-ratio:970/300;background-size:cover;background-position:center;background-color:#f7f7f7;display:flex;align-items:center;justify-content:center;font-size:12px;color:#565959;border:1px dashed #d5d9d9}
+.apm.f{border:none}
+.pit{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px;max-width:1000px}
+.pit table{border-collapse:collapse;width:100%;font-size:13px}
+.pit td{padding:6px 10px;border-bottom:1px solid #e7e7e7;vertical-align:top}
+.pit td:first-child{background:#f3f3f3;font-weight:700;width:45%}
+.lb{position:fixed;inset:0;background:rgba(0,0,0,.88);z-index:70;display:flex;align-items:center;justify-content:center;padding:20px;cursor:zoom-out}
+.lb .lbi{width:min(80vw,900px);height:min(86vh,900px);background-size:contain;background-repeat:no-repeat;background-position:center}
+.lbn{position:relative;z-index:1;width:48px;height:48px;border-radius:50%;border:none;background:#fff;color:#111;font-size:28px;line-height:1;cursor:pointer;flex:0 0 48px;margin:0 8px}
+#lbc{position:absolute;bottom:max(16px,env(safe-area-inset-bottom));left:50%;transform:translateX(-50%);color:#fff;font-size:14px;font-family:Arial,sans-serif}
+
 /* login */
 .login{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px 16px}
 .logincard{width:100%;max-width:400px;background:var(--blue);color:#fff;border-radius:28px;padding:32px;display:flex;flex-direction:column;gap:14px}
@@ -369,6 +473,8 @@ textarea.bul{min-height:44px;resize:none;overflow:hidden}
 </div>
 
 <div id="toast" class="toast" role="status" hidden></div>
+<div class="lb" id="lb" hidden><button class="lbn" type="button" data-lb="-1" aria-label="Previous picture">‹</button><div class="lbi" id="lbi"></div><button class="lbn" type="button" data-lb="1" aria-label="Next picture">›</button><span id="lbc"></span></div>
+<div class="ov" id="ov" hidden><div class="ovbar"><b>Listing preview · built from what you typed</b><span style="display:flex;gap:14px;align-items:center"><label style="font-size:13px"><input type="checkbox" id="srate" checked> Sample ratings</label><button type="button" id="ovx">Close ✕</button></span></div><div class="lp" id="pvp"></div></div>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.49.4/dist/umd/supabase.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js" defer></script>
@@ -392,7 +498,8 @@ const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 const D = {categories:[],products:[],suppliers:[],samples:[],thoughts:[]};
 const ui = {route:"dashboard",id:null,tab:"competitors",q:"",cat:"",stage:"",sstatus:"",sprod:"",ssrc:"",tcat:"",
             openSup:null,editSample:null,confirm:null,manageCats:false,pending:[],newSup:null,busy:false,
-            addOpen:false,add:{name:"",asin:"",cat:"",rows:["",""],files:[]},cmode:"cards"};
+            addOpen:false,add:{name:"",asin:"",cat:"",rows:["",""],files:[]},cmode:"cards",loading:new Set(),srate:true};
+const lookup={ok:null,warned:false};
 let user=null, loaded=false, lastLoad=0, pendingRender=false;
 const $ = s => document.querySelector(s);
 const view = $("#view");
@@ -400,11 +507,14 @@ const view = $("#view");
 /* ===== helpers ===== */
 const esc = s => String(s==null?"":s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const byId = (t,id) => D[t].find(x=>x.id===id);
-const imgUrl = p => p ? `${SUPABASE_URL}/storage/v1/object/public/${BUCKET}/${p}` : "";
+const imgUrl = p => !p ? "" : /^https?:\/\//i.test(p) ? p : `${SUPABASE_URL}/storage/v1/object/public/${BUCKET}/${p}`;
 const pname = p => p ? (p.name || (p.asin ? "ASIN "+p.asin : "Untitled product")) : "Deleted product";
 const catName = id => (byId("categories",id)||{}).name || "Uncategorised";
 const supOf = id => byId("suppliers",id);
 const today = () => {const d=new Date();return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`};
+const MON=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+const fmtAdded = ts => {if(!ts)return "";const d=new Date(ts);if(isNaN(d))return "";return `${d.getDate()} ${MON[d.getMonth()]} ${d.getFullYear()}, ${String(d.getHours()).padStart(2,"0")}:${String(d.getMinutes()).padStart(2,"0")}`};
+const clone = o => JSON.parse(JSON.stringify(o==null?{}:o));
 const dmy = d => {if(!d)return "";const [y,m,dd]=String(d).slice(0,10).split("-");return `${dd}/${m}/${y}`};
 const gbp = v => (v==null||v==="") ? "—" : "£"+Number(v).toFixed(2);
 const isUrl = q => /^https?:\/\//i.test((q||"").trim());
@@ -479,7 +589,7 @@ async function uploadFiles(list){
   }
   return paths;
 }
-function removeFiles(paths){paths=(paths||[]).filter(Boolean);if(paths.length)sb.storage.from(BUCKET).remove(paths).catch(()=>{})}
+function removeFiles(paths){paths=(paths||[]).filter(x=>x&&!/^https?:\/\//i.test(x));if(paths.length)sb.storage.from(BUCKET).remove(paths).catch(()=>{})}
 async function handleFiles(kind,id,files,idx){
   files=[...(files||[])];
   if(kind==="pending"){ui.pending.push(...files.filter(f=>/^image\//.test(f.type)));const l=$("#pendinglabel");if(l)l.textContent=pendingText();return}
@@ -487,6 +597,20 @@ async function handleFiles(kind,id,files,idx){
   if(kind==="cimg"){const p=byId("products",id);if(!p)return;const paths=await uploadFiles(files.slice(0,1));if(!paths.length)return;
     const arr=(p.competitors||[]).map(x=>({...x}));const c=arr[+idx];if(!c)return;const old=c.image;c.image=paths[0];
     await upd("products",id,{competitors:arr});removeFiles([old]);toast("Competitor image added");render();return}
+  if(kind==="lpic"||kind==="lbox"){
+    const p=byId("products",id);if(!p)return;const key=kind==="lpic"?"pics":"box",N=kind==="lpic"?7:6;
+    const L=clone(p.listing);const arr=Array.from({length:N},(_,i)=>(L[key]||[])[i]||null);
+    const first=Math.max(0,Math.min(N-1,+idx||0)),targets=[first];
+    for(let k=1;k<N&&targets.length<files.length;k++){const j=(first+k)%N;if(!arr[j])targets.push(j)}
+    const use=files.slice(0,targets.length);const paths=await uploadFiles(use);if(!paths.length)return;
+    const olds=[];paths.forEach((path,k)=>{const j=targets[k];if(arr[j]&&k===0)olds.push(arr[j]);arr[j]=path});
+    L[key]=arr;await upd("products",id,{listing:L});removeFiles(olds);
+    if(files.length>targets.length)toast(`${targets.length} added. No empty slots left for the other ${files.length-targets.length}.`);else toast(paths.length>1?`${paths.length} pictures added`:"Picture added");
+    render();return}
+  if(kind==="lap"){
+    const p=byId("products",id);if(!p)return;const paths=await uploadFiles(files.slice(0,1));if(!paths.length)return;
+    const L=clone(p.listing);if(!L.aplus)L.aplus=DEFAULT_AP.map(x=>({...x}));const m=L.aplus[+idx];if(!m)return;const old=m.path;m.path=paths[0];
+    await upd("products",id,{listing:L});removeFiles([old]);toast("A+ design added");render();return}
   const paths = await uploadFiles(files); if(!paths.length) return;
   const asMocks = arr => arr.map(path=>({path,caption:""}));
   if(kind==="pmain"){const p=byId("products",id);if(!p)return;const old=p.image_path;await upd("products",id,{image_path:paths[0]});if(paths.length>1)await upd("products",id,{mockups:[...(p.mockups||[]),...asMocks(paths.slice(1))]});removeFiles([old])}
@@ -496,6 +620,64 @@ async function handleFiles(kind,id,files,idx){
   toast(paths.length>1?`${paths.length} photos added`:"Photo added"); render();
 }
 const pendingText = () => ui.pending.length ? `${ui.pending.length} photo${ui.pending.length>1?"s":""} ready ✓ (drop more or click)` : "Drop sample photos here or click";
+
+
+/* ===== Pull image, title and brand from an ASIN ===== */
+const AMZ_IMG = a => [`https://m.media-amazon.com/images/P/${a}.01._SCLZZZZZZZ_.jpg`,`https://m.media-amazon.com/images/P/${a}.02._SCLZZZZZZZ_.jpg`];
+function probeImg(url){return new Promise(res=>{const i=new Image();i.referrerPolicy="no-referrer";let done=false;const fin=v=>{if(!done){done=true;res(v)}};i.onload=()=>fin(i.naturalWidth>20?url:null);i.onerror=()=>fin(null);setTimeout(()=>fin(null),8000);i.src=url})}
+async function lookupAsin(asin){
+  if(lookup.ok===false) return null;
+  try{
+    const {data,error}=await sb.functions.invoke("asin-lookup",{body:{asin}});
+    if(error||!data){throw error||new Error("no data")}
+    if(data.error==="not_found"){lookup.ok=true;return null}
+    if(data.error){throw new Error(data.error)}
+    lookup.ok=true; return data;
+  }catch(e){
+    lookup.ok=false;
+    if(!lookup.warned){lookup.warned=true;toast("Title and brand need Keepa connected (see README). Type them in for now.")}
+    return null;
+  }
+}
+async function pullInfo(asin){
+  const out={title:"",brand:"",image:""};
+  const d=await lookupAsin(asin);
+  if(d){out.title=d.title||"";out.brand=d.brand||"";out.image=d.image||""}
+  let img=null;
+  for(const u of [out.image,...AMZ_IMG(asin)].filter(Boolean)){img=await probeImg(u);if(img)break}
+  out.image=img||"";
+  return out;
+}
+function softRefresh(){if(ui.route==="products"){const g=$("#pgrid");if(g){g.innerHTML=gridHtml();return}}requestRender()}
+async function pullProduct(id){
+  const p=byId("products",id); const asin=p&&parseAsin(p.asin); if(!asin) return;
+  ui.loading.add("p:"+id); softRefresh();
+  let info; try{info=await pullInfo(asin)}finally{ui.loading.delete("p:"+id)}
+  const q=byId("products",id); if(!q){softRefresh();return}
+  const patch={};
+  if(info.image&&!q.image_path) patch.image_path=info.image;
+  if(info.title&&!q.name) patch.name=info.title.slice(0,140);
+  if(info.brand&&!q.brand) patch.brand=info.brand;
+  if(Object.keys(patch).length) await upd("products",id,patch);
+  softRefresh();
+}
+async function pullComps(pid){
+  const p0=byId("products",pid); if(!p0) return;
+  const asins=[...new Set((p0.competitors||[]).filter(c=>!(c.title&&c.image)).map(c=>c.asin||parseAsin(c.link)).filter(Boolean))];
+  if(!asins.length) return;
+  asins.forEach(a=>ui.loading.add(`c:${pid}:${a}`)); softRefresh();
+  for(const a of asins){
+    let info; try{info=await pullInfo(a)}finally{ui.loading.delete(`c:${pid}:${a}`)}
+    const p=byId("products",pid); if(!p){softRefresh();return}
+    const arr=(p.competitors||[]).map(x=>({...x})); let ch=false;
+    arr.forEach(c=>{if((c.asin||parseAsin(c.link))!==a)return;
+      if(info.title&&!c.title){c.title=info.title.slice(0,140);ch=true}
+      if(info.brand&&!c.brand){c.brand=info.brand;ch=true}
+      if(info.image&&!c.image){c.image=info.image;ch=true}});
+    if(ch) await upd("products",pid,{competitors:arr});
+    softRefresh();
+  }
+}
 
 /* ===== rendering ===== */
 function editing(){const a=document.activeElement;return !!(a&&view.contains(a)&&a.matches("input:not([type=file]):not([type=date]):not([type=checkbox]),textarea"))}
@@ -532,12 +714,15 @@ const tag = s => `<span class="tag st-${esc(s||"Idea")}">${esc(s||"Idea")}</span
 function catOptions(sel,blank){return `<option value="">${esc(blank||"Uncategorised")}</option>`+S.categories().map(c=>`<option value="${c.id}"${c.id===sel?" selected":""}>${esc(c.name)}</option>`).join("")}
 function delBtn(key,label,extra){const armed=ui.confirm===key;return `<button type="button" class="pill sm danger${armed?" armed":""}" data-act="del" data-key="${esc(key)}" ${extra||""}>${armed?"Tap again to delete":esc(label||"Delete")}</button>`}
 function pcard(p){
-  const ns=D.samples.filter(s=>s.product_id===p.id).length, nc=(p.competitors||[]).length, nm=(p.mockups||[]).length;
-  const bits=[esc(catName(p.category_id))]; if(nc)bits.push(`${nc} competitor${nc>1?"s":""}`); if(ns)bits.push(`${ns} sample${ns>1?"s":""}`); if(nm)bits.push(`${nm} mockup${nm>1?"s":""}`);
-  const img = p.image_path
-    ? `<a class="pimg drop" href="#p/${p.id}" data-drop="pmain" data-id="${p.id}"><img src="${imgUrl(p.image_path)}" alt="" loading="lazy"></a>`
-    : `<label class="pimg drop" data-drop="pmain" data-id="${p.id}"><span class="ph">Drop product photo<br><small>or click to upload</small></span><input type="file" accept="image/*" class="sr" data-upload="pmain" data-id="${p.id}"></label>`;
-  return `<article class="pcard">${img}<a class="pbody" href="#p/${p.id}"><div class="row gap8" style="justify-content:space-between;align-items:flex-start"><strong>${esc(pname(p))}</strong>${tag(p.status)}</div><span class="meta">${bits.join(" · ")}</span></a></article>`;
+  const ns=D.samples.filter(s=>s.product_id===p.id).length, nc=(p.competitors||[]).length;
+  const bits=[]; if(p.brand)bits.push(esc(p.brand)); bits.push(esc(catName(p.category_id))); if(nc)bits.push(`${nc} competitor${nc>1?"s":""}`); if(ns)bits.push(`${ns} sample${ns>1?"s":""}`);
+  const loading=ui.loading.has("p:"+p.id)&&!p.image_path;
+  const img = loading
+    ? `<a class="pimg sh" href="#p/${p.id}"><span class="ph">Fetching from ASIN…</span></a>`
+    : p.image_path
+    ? `<a class="pimg drop" href="#p/${p.id}" data-drop="pmain" data-id="${p.id}"><span class="ph">Photo not found<br><small>open to drop one</small></span><img src="${imgUrl(p.image_path)}" alt="" loading="lazy"></a>`
+    : `<label class="pimg drop" data-drop="pmain" data-id="${p.id}"><span class="ph">${p.asin?"No photo found for this ASIN":"Drop product photo"}<br><small>or click to upload</small></span><input type="file" accept="image/*" class="sr" data-upload="pmain" data-id="${p.id}"></label>`;
+  return `<article class="pcard">${img}<a class="pbody" href="#p/${p.id}"><div class="row gap8" style="justify-content:space-between;align-items:flex-start"><strong>${esc(pname(p))}</strong>${tag(p.status)}</div><span class="meta">${bits.join(" · ")}</span><span class="added">Added ${esc(fmtAdded(p.created_at))}</span></a></article>`;
 }
 /* ----- Quick add product ----- */
 const splitLinks = t => String(t||"").split(/[\s,]+/).map(x=>x.trim()).filter(Boolean);
@@ -555,29 +740,29 @@ function dupHtml(){
   return out.join("");
 }
 function rowsHtml(){return ui.add.rows.map((v,i)=>`<div class="crow"><span class="n">${i+1}</span><label class="sr" for="ar${i}">Competitor ${i+1}</label><input id="ar${i}" data-add="row" data-i="${i}" value="${esc(v)}" placeholder="Paste a competitor link or ASIN"><button type="button" class="xbtn" data-act="rmrow" data-v="${i}" aria-label="Remove competitor ${i+1}">×</button></div>`).join("")}
-const addPhotoText = () => ui.add.files.length ? "Photo ready ✓ (click to change)" : "Photo (optional): drop it here or click";
+const addPhotoText = () => ui.add.files.length ? "Photo ready ✓ (click to change)" : "Photo (optional): the ASIN pulls one, or drop your own here";
 function addPanel(){
   const a=ui.add;
   return `<form class="addpanel" data-form="quickadd" autocomplete="off" novalidate>
-    <div class="row wrapflex gap8"><h2>Add a product</h2><span class="spacer"></span><span class="sub">Only the name is needed. Everything else can wait.</span></div>
+    <div class="row wrapflex gap8"><h2>Add a product</h2><span class="spacer"></span><span class="sub">Type the ASIN. The photo${lookup.ok===false?"":", title and brand"} fill in on their own.</span></div>
     <div class="ag3">
-      <label class="lf">Product name *<input id="addname" data-add="name" value="${esc(a.name)}" placeholder="e.g. Silicone utensil set"></label>
-      <label class="lf">ASIN<input class="up" data-add="asin" value="${esc(a.asin)}" placeholder="B0XXXXXXXX"></label>
+      <label class="lf">ASIN or Amazon link<input id="addasin" class="up" data-add="asin" value="${esc(a.asin)}" placeholder="B0XXXXXXXX"></label>
+      <label class="lf">Name (only if no ASIN)<input id="addname" data-add="name" value="${esc(a.name)}" placeholder="e.g. Silicone utensil set"></label>
       <label class="lf">Category<select data-add="cat">${catOptions(a.cat||((ui.cat&&ui.cat!=="none")?ui.cat:""))}</select></label>
     </div>
+    ${lookup.ok===false?`<div class="note-lk">The photo is pulled from the ASIN. Title and brand need Keepa connected (see README). Until then, type them in on the product.</div>`:""}
     <div id="dupwarn" style="display:flex;flex-direction:column;gap:8px">${dupHtml()}</div>
-    <div class="lf" style="gap:8px"><span>Competitor links or ASINs</span>
+    <div class="lf" style="gap:8px"><span>Competitor links or ASINs (optional)</span>
       <div id="addrows" style="display:flex;flex-direction:column;gap:8px">${rowsHtml()}</div>
       <div class="crow wrapflex"><span class="n"></span><button type="button" class="addmore" data-act="addrow">+ Add another competitor</button><span class="sub">Tip: paste several links at once and each gets its own row</span></div>
     </div>
     <div class="formfoot">
       <label class="photo drop" data-drop="addphoto"><span id="addphotolabel">${addPhotoText()}</span><input type="file" accept="image/*" class="sr" data-upload="addphoto"></label>
-      <button type="submit" class="pill outline-white" value="again">Add &amp; add another</button>
-      <button type="submit" class="pill white big" value="open">Add &amp; open product →</button>
+      <button type="submit" class="pill white big">Add product</button>
     </div>
   </form>`;
 }
-const newComp = q => ({link:q,asin:parseAsin(q),title:"",list:"",sell:"",rating:"",reviews:"",imgq:"—",weak:"",beat:"",image:null});
+const newComp = q => ({link:q,asin:parseAsin(q),title:"",brand:"",list:"",sell:"",rating:"",reviews:"",imgq:"—",weak:"",beat:"",image:null});
 
 /* ----- Dashboard ----- */
 function vDashboard(){
@@ -659,17 +844,18 @@ function vProduct(){
   const link=p.url||(p.asin?amz(p.asin):"");
   const mocks=p.mockups||[];
   const nf=(f,label)=>`<label class="numbox"><span>${label}</span><input inputmode="decimal" value="${p[f]==null?"":esc(p[f])}" placeholder="—" data-t="products" data-id="${p.id}" data-f="${f}" data-num="1"></label>`;
-  const tabs=[["competitors","Competitors",(p.competitors||[]).length],["standout","Stand out",null],["mockups","My mockups",mocks.length],["samples","Samples",samples.length],["listing","Listing copy",null],["notes","Notes",null]];
+  const tabs=[["competitors","Competitors",(p.competitors||[]).length],["standout","Stand out",null],["listing","My listing",null],["samples","Samples",samples.length],["notes","Notes",null]];
+  const pulling=ui.loading.has("p:"+p.id)&&!p.image_path;
   return `
   <div class="crumbs"><a class="pill outline sm" href="#products">← Products</a><span>${esc(catName(p.category_id))}</span></div>
   <div class="pwrap">
     <section class="gcol">
-      <label class="hero drop" data-drop="pmain" data-id="${p.id}">
-        ${p.image_path?`<img src="${imgUrl(p.image_path)}" alt="${esc(pname(p))}"><span class="pill white sm corner">Replace photo</span>`:`<span class="ph"><b>Drop the product photo here</b><br><small>or click to upload</small></span>`}
+      <label class="hero drop${pulling?" sh":""}" data-drop="pmain" data-id="${p.id}">
+        ${pulling?`<span class="ph"><b>Fetching from ASIN…</b></span>`:p.image_path?`<span class="ph"><b>Photo not found</b><br><small>click to replace it</small></span><img src="${imgUrl(p.image_path)}" alt="${esc(pname(p))}"><span class="pill white sm corner">Replace photo</span>`:`<span class="ph"><b>Drop the product photo here</b><br><small>or click to upload</small></span>`}
         <input type="file" accept="image/*" class="sr" data-upload="pmain" data-id="${p.id}">
       </label>
       <div class="thumbs">
-        ${mocks.slice(0,3).map(m=>`<button type="button" class="thumb" data-act="tab" data-v="mockups" aria-label="Open mockups"><img src="${imgUrl(m.path)}" alt="" loading="lazy"></button>`).join("")}
+        ${mocks.slice(0,3).map(m=>`<button type="button" class="thumb" data-act="tab" data-v="listing" aria-label="Open my listing"><img src="${imgUrl(m.path)}" alt="" loading="lazy"></button>`).join("")}
         <label class="thumb add drop" data-drop="pmock" data-id="${p.id}" aria-label="Add mockups">+<input type="file" accept="image/*" multiple class="sr" data-upload="pmock" data-id="${p.id}"></label>
       </div>
       <p class="hint">Tip: copy any image and press Ctrl+V (⌘+V on Mac) on this page to paste it in.</p>
@@ -685,6 +871,9 @@ function vProduct(){
         </div>
         <label class="sr" for="pname">Product name</label>
         <input id="pname" class="name-input" value="${esc(p.name)}" placeholder="Name this product" data-t="products" data-id="${p.id}" data-f="name">
+        <div class="brandrow"><label class="asin">Brand <input value="${esc(p.brand||"")}" placeholder="Brand" data-t="products" data-id="${p.id}" data-f="brand"></label>
+          ${p.asin?`<button type="button" class="pill outline sm" data-act="pullasin" data-id="${p.id}">↻ Fill missing from ASIN</button>`:""}
+          <span class="meta">Added ${esc(fmtAdded(p.created_at))}</span></div>
         <div class="nums">${nf("price","Sell price £")}${nf("cost","Unit cost £")}${nf("fees","Amazon fees £")}${nf("sales","Est. sales / month")}</div>
         <div class="nums three">
           <div class="numbox dark"><span>Profit per unit</span><b>${profit==null?"—":gbp(profit)}</b></div>
@@ -714,30 +903,129 @@ function tabBody(p,samples){
         <button class="pill blue" type="submit">+ Add competitor</button></form>
       ${cs.length?`<div id="compsummary" data-id="${p.id}" style="display:flex;flex-direction:column;gap:14px">${summaryHtml(p)}</div>
       <div class="sectionhead"><h2 style="font-size:20px">All competitors</h2><div class="row gap8">
+        ${cs.some(c=>!(c.title&&c.image)&&(c.asin||parseAsin(c.link)))?`<button type="button" class="pill sm outline" data-act="pullcomps" data-id="${p.id}">↻ Fill missing from ASINs</button>`:""}
         <button type="button" class="pill sm ${ui.cmode==="cards"?"":"outline"}" data-act="cmode" data-v="cards">Cards</button>
         <button type="button" class="pill sm ${ui.cmode==="table"?"":"outline"}" data-act="cmode" data-v="table">Table</button></div></div>
       ${ui.cmode==="table"?compTable(p,cs):`<div class="ccards">${cs.map((c,i)=>compCard(p,c,i)).join("")}</div>`}`
       :`<div class="empty">No competitors yet. Paste the top listings you're up against in the bar above.</div>`}`;}
   case "standout":
     return `<div class="grid-f">${TA("standout","What I'll do to stand out","Better photos, infographics, bundle, size guide, gift box…",12)}${TA("weaknesses","What competitors get wrong","Common complaints in reviews, weak images, missing info…",12)}</div>`;
-  case "mockups":{
-    const ms=p.mockups||[];
-    return `<label class="bigdrop drop" data-drop="pmock" data-id="${p.id}"><strong>Drop mockups, renders or image ideas here</strong><br><span class="meta">or click to choose. You can pick several at once.</span><input type="file" accept="image/*" multiple class="sr" data-upload="pmock" data-id="${p.id}"></label>
-      ${ms.length?`<div class="gallery">${ms.map((m,i)=>`<figure class="mock"><a href="${imgUrl(m.path)}" target="_blank" rel="noopener"><img src="${imgUrl(m.path)}" alt="${esc(m.caption||"Mockup "+(i+1))}" loading="lazy"></a>
-        <label class="sr" for="mc${i}">Caption</label><input id="mc${i}" class="inp" value="${esc(m.caption)}" placeholder="Caption, e.g. main image v2" data-arr="mockups" data-id="${p.id}" data-i="${i}" data-f="caption">
-        <div class="acts"><button type="button" class="pill outline sm" data-act="setmain" data-id="${p.id}" data-v="${i}">Make main photo</button>${delBtn(`mock:${p.id}:${i}`,"Remove")}</div></figure>`).join("")}</div>`:""}`;}
   case "samples":
     return `${samples.length?`<div class="slist" style="flex:none">${samples.map(s=>sampleCard(s,false)).join("")}</div>`:`<div class="empty">No samples logged for this product yet.</div>`}
       ${logForm(p.id,true)}`;
-  case "listing":
-    return `${IN("title","Listing title","Brand + product + key feature + size / quantity")}
-      <div class="grid-f">${[1,2,3,4,5].map(n=>IN("bullet"+n,"Bullet point "+n,"")).join("")}</div>
-      ${TA("description","Product description","",8)}${TA("keywords","Search terms / keywords","One per line or comma separated",4)}`;
+  case "listing": return listingTab(p);
   case "notes":
     return TA("notes","Notes","Anything else about this product…",16);
   }
   return "";
 }
+
+
+/* ----- My listing (listing builder) ----- */
+const DEFAULT_AP=[{type:"Hero banner"},{type:"Comparison chart"},{type:"Lifestyle image"}];
+const AP_TYPES=["Hero banner","Comparison chart","Lifestyle image","Brand story","Features","Size guide","FAQ"];
+const PIC_LABELS=["1 · Main","2 · Size guide","3 · Features","4 · Lifestyle","5 · Comparison","6 · In use","7 · Pack contents"];
+const BOX_LABELS=["Box front","Box back","Box side","Insert / leaflet","Barcode label","Box dieline"];
+const lcnt=(v,max)=>{const n=String(v||"").length;return `<div class="lcnt ${n>max?"bad":n?"ok":""}">${n} / ${max}</div>`};
+function lslot(p,kind,i,label,path){
+  return `<div class="lslot${path?" f":""} drop" data-drop="${kind}" data-id="${p.id}" data-i="${i}"><label>${path?`<img src="${imgUrl(path)}" alt="" loading="lazy">`:`<span class="plus">+</span>`}<span class="lab">${esc(label)}</span><input type="file" accept="image/*" ${kind==="lap"?"":"multiple "}class="sr" data-upload="${kind}" data-id="${p.id}" data-i="${i}"></label>${path?`<button type="button" class="lx" data-act="lclear" data-id="${p.id}" data-v="${kind}:${i}" aria-label="Remove picture">×</button>`:""}</div>`;
+}
+function lstItems(p){
+  const L=p.listing||{}, d=L.details||{};
+  const pics=(L.pics||[]).filter(Boolean).length, box=(L.box||[]).filter(Boolean).length, ap=(L.aplus||[]).filter(m=>m&&m.path).length;
+  const bl=[1,2,3,4,5].filter(n=>(p["bullet"+n]||"").trim()).length;
+  return [["Title",!!(p.title||"").trim()],["Main picture",!!(L.pics||[])[0]],["7 pictures",pics>=7],["5 bullets",bl>=5],["A+ designs",ap>=2],["Description",!!(p.description||"").trim()],["Keywords",!!(p.keywords||"").trim()],["Box images",box>=3],["Details",!!((p.brand||"").trim()&&(d.pack||"").trim())]];
+}
+function lstMetaHtml(p){
+  const it=lstItems(p), n=it.filter(x=>x[1]).length, pct=Math.round(n/it.length*100);
+  return `<div class="row gap8" style="justify-content:space-between"><h3>My listing</h3><span class="meta"><b>${pct}% ready</b></span></div><div class="lbar"><i style="width:${pct}%"></i></div><div class="lchk">${it.map(([l,y])=>`<span class="${y?"y":""}">${y?"✓ ":""}${l}</span>`).join("")}</div>`;
+}
+function refreshListingMeta(){const b=$("#lstmeta");if(!b)return;const p=byId("products",b.dataset.id);if(p)b.innerHTML=lstMetaHtml(p)}
+function updCount(el){const c=el.parentElement.querySelector(".lcnt");if(!c)return;const n=el.value.length,m=+el.dataset.max;c.textContent=`${n} / ${m}`;c.className="lcnt "+(n>m?"bad":n?"ok":"")}
+function listingTab(p){
+  const L=p.listing||{}, det=L.details||{}, pics=L.pics||[], box=L.box||[], ap=L.aplus||DEFAULT_AP, mocks=p.mockups||[];
+  const TA=(f,label,ph,max,min)=>`<label class="field">${label?`<span>${label}</span>`:""}<textarea class="agrow" rows="1"${min?` style="min-height:${min}px"`:""} placeholder="${esc(ph||"")}" data-max="${max}" data-t="products" data-id="${p.id}" data-f="${f}">${esc(p[f])}</textarea>${lcnt(p[f],max)}</label>`;
+  const DET=(k,label,ph)=>`<label class="field"><span>${label}</span><input value="${esc(det[k])}" placeholder="${esc(ph||"")}" data-lst="details.${k}" data-id="${p.id}"></label>`;
+  return `
+  <div class="lsec"><div id="lstmeta" data-id="${p.id}" style="display:flex;flex-direction:column;gap:10px">${lstMetaHtml(p)}</div>
+    <p class="hint">Your listing builder: everything that goes on Amazon, in one place. Drag pictures onto any box, drop several at once, or click a box.</p>
+    <div class="row gap8 wrapflex"><button type="button" class="pill blue vbtn" data-act="preview" data-id="${p.id}">View mockup listing</button></div></div>
+  <div class="lsec"><h3>Product pictures <span class="meta"><b>${pics.filter(Boolean).length}</b> of 7</span></h3><div class="lslots">${PIC_LABELS.map((l,i)=>lslot(p,"lpic",i,l,pics[i])).join("")}</div></div>
+  <div class="lsec"><h3>Box &amp; packaging images <span class="meta"><b>${box.filter(Boolean).length}</b> of 6</span></h3><p class="hint">For your supplier: box front, back, side, insert and barcode label. These stay out of the listing preview.</p><div class="lslots">${BOX_LABELS.map((l,i)=>lslot(p,"lbox",i,l,box[i])).join("")}</div></div>
+  <div class="lsec"><h3>Title</h3>${TA("title","","Brand + product + key feature + size / quantity",200)}</div>
+  <div class="lsec"><h3>Bullet points</h3>${[1,2,3,4,5].map(n=>`<div class="lbl"><span class="n">${n}</span><div><textarea class="agrow" rows="1" placeholder="Bullet ${n}" data-max="200" data-t="products" data-id="${p.id}" data-f="bullet${n}">${esc(p["bullet"+n])}</textarea>${lcnt(p["bullet"+n],200)}</div></div>`).join("")}</div>
+  <div class="lsec"><h3>A+ content <span class="meta"><b>${ap.filter(m=>m&&m.path).length}</b> of ${ap.length} designs</span></h3>
+    ${ap.map((m,i)=>`<div class="apmod">${lslot(p,"lap",i,"Drop design",m.path)}<div style="display:flex;flex-direction:column;gap:8px;min-width:0"><select class="inp" aria-label="Module type" data-lst="aplus.${i}.type" data-id="${p.id}">${[...new Set([...AP_TYPES,m.type])].filter(Boolean).map(t=>`<option${t===m.type?" selected":""}>${esc(t)}</option>`).join("")}</select><input class="inp" placeholder="Notes for this module" value="${esc(m.note)}" data-lst="aplus.${i}.note" data-id="${p.id}"><div class="row">${delBtn(`lap:${p.id}:${i}`,"Remove module")}</div></div></div>`).join("")}
+    <div><button type="button" class="addmore" style="border-color:#8a877f;color:var(--ink)" data-act="addmod" data-id="${p.id}">+ Add module</button></div></div>
+  <div class="lsec"><h3>Description</h3>${TA("description","","Product description",2000,110)}</div>
+  <div class="lsec"><h3>Backend keywords</h3>${TA("keywords","","Search terms, separated by spaces",249,60)}</div>
+  <div class="lsec"><h3>Details</h3><div class="grid-f">
+    <label class="field"><span>Brand</span><input value="${esc(p.brand||"")}" placeholder="Brand" data-t="products" data-id="${p.id}" data-f="brand"></label>
+    ${DET("pack","Pack size","100")}${DET("colour","Colour","Clear")}${DET("material","Material","")}${DET("size","Size","3.5 x 2.5 in")}${DET("ean","Barcode / EAN","Add later")}${DET("safety","Safety marks (UKCA / CE)","If needed")}${DET("origin","Country of origin","")}</div>
+    <p class="hint">The price in the preview is your Sell price £ at the top of this page (${gbp(p.price)}).</p></div>
+  <div class="lsec"><h3>Mockups &amp; ideas <span class="meta">${mocks.length}</span></h3>
+    <label class="bigdrop drop" data-drop="pmock" data-id="${p.id}" style="background:#fff"><strong>Drop mockups, renders or image ideas here</strong><br><span class="meta">Loose ideas that aren't in the listing yet. You can pick several at once.</span><input type="file" accept="image/*" multiple class="sr" data-upload="pmock" data-id="${p.id}"></label>
+    ${mocks.length?`<div class="gallery">${mocks.map((m,i)=>`<figure class="mock"><a href="${imgUrl(m.path)}" target="_blank" rel="noopener"><img src="${imgUrl(m.path)}" alt="${esc(m.caption||"Mockup "+(i+1))}" loading="lazy"></a>
+      <label class="sr" for="mc${i}">Caption</label><input id="mc${i}" class="inp" value="${esc(m.caption)}" placeholder="Caption, e.g. main image v2" data-arr="mockups" data-id="${p.id}" data-i="${i}" data-f="caption">
+      <div class="acts"><button type="button" class="pill outline sm" data-act="setmain" data-id="${p.id}" data-v="${i}">Make main photo</button>${delBtn(`mock:${p.id}:${i}`,"Remove")}</div></figure>`).join("")}</div>`:""}</div>
+  <div class="fabwrap"><button type="button" class="pill blue big" data-act="preview" data-id="${p.id}">View mockup listing</button></div>`;
+}
+
+/* ----- Listing preview (product-page look, private mockup) ----- */
+const pv={g:[],cur:0,bk:0,id:null};
+const money=v=>{if(v==null||isNaN(v))return "£—";const [w,c]=Number(v).toFixed(2).split(".");return `<span class="pw"><sup>£</sup>${w}<sup>${c}</sup></span>`};
+function openPreview(id,keep){
+  flushSaves(); const p=byId("products",id||pv.id); if(!p) return; pv.id=p.id;
+  const L=p.listing||{}, d=L.details||{};
+  pv.g=(L.pics||[]).filter(Boolean).map(imgUrl); if(!keep) pv.cur=0;
+  const bl=[1,2,3,4,5].map(n=>(p["bullet"+n]||"").trim()).filter(Boolean), title=(p.title||"").trim(), desc=(p.description||"").trim(), brand=(p.brand||"").trim(), price=(p.price==null||p.price==="")?null:Number(p.price);
+  const tech=[["Brand",brand],["Colour",d.colour],["Material",d.material],["Item dimensions",d.size],["Number of items",d.pack],["Barcode / EAN",d.ean],["Safety marks",d.safety],["Country of origin",d.origin]].map(r=>[r[0],(r[1]||"").trim()]).filter(r=>r[1]);
+  const ovr=tech.slice(0,5);
+  const mods=(L.aplus||DEFAULT_AP).map(m=>({n:m.type,u:m.path?imgUrl(m.path):""}));
+  const t=new Date(),today=t.toLocaleDateString("en-GB",{day:"numeric",month:"long",year:"numeric"});t.setDate(t.getDate()+2);const del=t.toLocaleDateString("en-GB",{weekday:"long",day:"numeric",month:"long"});
+  const rate=$("#srate").checked;
+  const cur=Math.min(pv.cur,Math.max(0,pv.g.length-1));
+  $("#pvp").innerHTML=`<div class="azh"><span class="tag2">Listing preview</span><input placeholder="Search" disabled aria-label="Search"><span class="bk">Basket <b id="bkc">${pv.bk}</b></span></div>
+  <div class="azn">This is a private mockup of your own listing. Nothing here is live.</div>
+  <div class="azb"><div class="crumb">‹ Back to results</div>
+  <div class="azm">
+   <div class="gal"><div class="th">${pv.g.map((u,i)=>`<i data-pi="${i}" class="${i===cur?"on":""}" style="background-image:url('${esc(u)}')"></i>`).join("")}</div><div class="mainimg" id="lpmain" style="${pv.g[cur]?`background-image:url('${esc(pv.g[cur])}')`:""}">${pv.g[0]?"":"Your main picture will show here"}</div></div>
+   <div style="min-width:0"><h1 class="azt${title?"":" ghost"}">${title?esc(title):"Your title will show here"}</h1>
+    ${brand?`<div style="margin-top:4px"><a class="lnk">Visit the ${esc(brand)} Store</a></div>`:""}
+    <div class="rt">${rate?`<span>4.6</span><span class="stars">★★★★★</span><a class="lnk">128 ratings</a><span class="ghost" style="font-size:12px">(sample)</span>`:`<span class="ghost">No ratings yet</span>`}</div><hr>
+    <div>${money(price)}</div><div style="font-size:12px;color:#565959;margin:2px 0 10px">Includes VAT · FREE Returns</div>
+    ${ovr.length?`<table class="ovt">${ovr.map(r=>`<tr><td>${esc(r[0])}</td><td>${esc(r[1])}</td></tr>`).join("")}</table><hr>`:""}
+    <h3>About this item</h3>${bl.length?`<ul>${bl.map(b=>`<li>${esc(b)}</li>`).join("")}</ul>`:`<span class="ghost">Your bullet points will show here</span>`}</div>
+   <div class="buy"><div>${money(price)}</div><div style="font-size:14px"><a class="lnk">FREE delivery</a> <b>${del}</b></div><div class="stock">In stock</div>
+    <label style="font-size:13px">Quantity: <select id="qty">${[1,2,3,4,5,6,7,8,9,10].map(n=>`<option>${n}</option>`).join("")}</select></label>
+    <button class="b1" type="button">Add to Basket</button><button class="b2" type="button">Buy Now</button><div id="azmsg"></div>
+    <div class="ft"><span>Dispatches from</span><span>Fulfilment centre</span><span>Sold by</span><span>${esc(brand||"Your store")}</span><span>Returns</span><span>30-day returns</span></div>
+    <button class="b3" type="button">Add to List</button></div>
+  </div>
+  <hr><div class="sect"><h2>Product description</h2>${desc?`<p class="desc">${esc(desc)}</p>`:`<span class="ghost">Your description will show here</span>`}</div>
+  <div class="sect"><h2>From the brand</h2><div class="apw">${mods.map(m=>m.u?`<div class="apm f" style="background-image:url('${esc(m.u)}')"></div>`:`<div class="apm">${esc(m.n||"Module")} · no design yet</div>`).join("")}</div></div>
+  <div class="sect"><h2>Product information</h2><div class="pit"><div><h3>Technical details</h3><table>${tech.map(r=>`<tr><td>${esc(r[0])}</td><td>${esc(r[1])}</td></tr>`).join("")}</table></div>
+   <div><h3>Additional information</h3><table><tr><td>ASIN</td><td>${esc(p.asin||"—")}</td></tr><tr><td>Date first available</td><td>${today}</td></tr>${brand?`<tr><td>Manufacturer</td><td>${esc(brand)}</td></tr>`:""}</table></div></div></div>
+  </div>`;
+  $("#ov").hidden=false; if(!keep) $("#ov").scrollTop=0; document.body.style.overflow="hidden";
+}
+function closePreview(){$("#ov").hidden=true;$("#lb").hidden=true;document.body.style.overflow=""}
+function showLb(n){const N=pv.g.length;if(!N)return;n=(n%N+N)%N;pv.cur=n;$("#lbi").style.backgroundImage=`url('${pv.g[n]}')`;$("#lbc").textContent=`${n+1} / ${N}`;document.querySelectorAll("#lb .lbn").forEach(b=>b.hidden=N<2);const m=$("#lpmain");if(m)m.style.backgroundImage=`url('${pv.g[n]}')`;document.querySelectorAll("#pvp .th i").forEach((x,j)=>x.classList.toggle("on",j===n))}
+document.addEventListener("click",e=>{
+  if(e.target.closest("#ovx")){closePreview();return}
+  const nb=e.target.closest("[data-lb]");if(nb){showLb(pv.cur+ +nb.dataset.lb);return}
+  if(e.target.closest("#lb")){$("#lb").hidden=true;return}
+  const th=e.target.closest("#pvp .th i");if(th){showLb(+th.dataset.pi);$("#lb").hidden=true;return}
+  if(e.target.closest("#lpmain")&&pv.g.length){showLb(pv.cur);$("#lb").hidden=false;return}
+  if(e.target.closest("#pvp .b1")){pv.bk+=+$("#qty").value;$("#bkc").textContent=pv.bk;$("#azmsg").textContent="Added to basket (preview only)";return}
+  if(e.target.closest("#pvp .b2")){$("#azmsg").textContent="Preview only. Nothing is bought.";return}
+});
+document.addEventListener("mouseover",e=>{const t=e.target.closest("#pvp .th i");if(t){const n=+t.dataset.pi;pv.cur=n;const m=$("#lpmain");if(m)m.style.backgroundImage=`url('${pv.g[n]}')`;document.querySelectorAll("#pvp .th i").forEach((x,j)=>x.classList.toggle("on",j===n))}});
+document.addEventListener("change",e=>{if(e.target.id==="srate")openPreview(null,true)});
+document.addEventListener("keydown",e=>{
+  if(!$("#lb").hidden&&(e.key==="ArrowRight"||e.key==="ArrowLeft"))showLb(pv.cur+(e.key==="ArrowRight"?1:-1));
+  if(e.key==="Escape"){if(!$("#lb").hidden)$("#lb").hidden=true;else if(!$("#ov").hidden)closePreview()}
+});
 
 /* ----- Competitor helpers ----- */
 const numv = v => {if(v==null||v==="")return null;const n=parseFloat(String(v).replace(/[£$,\s]/g,""));return isNaN(n)?null:n};
@@ -799,11 +1087,13 @@ function compCard(p,c,i){
   const A=f=>`data-arr="competitors" data-id="${p.id}" data-i="${i}" data-f="${f}"`;
   const N=(f,l)=>`<label><span>${l}</span><input inputmode="decimal" value="${esc(f==="sell"&&(c.sell==null||c.sell==="")?(c.price||""):c[f])}" placeholder="—" ${A(f)}></label>`;
   const q=c.imgq&&c.imgq!=="—"?c.imgq:"none";
+  const ld=asin&&ui.loading.has(`c:${p.id}:${asin}`);
   return `<article class="cc">
     <div class="cctop">
-      <label class="cimg drop" data-drop="cimg" data-id="${p.id}" data-i="${i}">${c.image?`<img src="${imgUrl(c.image)}" alt="">`:`<span>Drop their main image</span>`}<input type="file" accept="image/*" class="sr" data-upload="cimg" data-id="${p.id}" data-i="${i}"></label>
+      <label class="cimg drop${ld&&!c.image?" sh":""}" data-drop="cimg" data-id="${p.id}" data-i="${i}"><span>${ld&&!c.image?"Fetching…":"Drop their main image"}</span>${c.image?`<img src="${imgUrl(c.image)}" alt="">`:""}<input type="file" accept="image/*" class="sr" data-upload="cimg" data-id="${p.id}" data-i="${i}"></label>
       <div class="ccinfo"><small>#${i+1}${asin?" · "+esc(asin):""}</small>
-        <label class="sr" for="ct-${i}">Competitor name</label><input id="ct-${i}" class="ctitle" value="${esc(c.title)}" placeholder="Competitor name" ${A("title")}>
+        <label class="sr" for="ct-${i}">Competitor name</label><input id="ct-${i}" class="ctitle" value="${esc(c.title)}" placeholder="${ld&&!c.title?"Fetching title…":"Competitor name"}" ${A("title")}>
+        <label class="sr" for="cb-${i}">Competitor brand</label><input id="cb-${i}" class="cbrand" value="${esc(c.brand||"")}" placeholder="Brand" ${A("brand")}>
         <button type="button" class="iq iq-${q}" data-act="iq" data-id="${p.id}" data-v="${i}" title="Tap to change">Images: ${q==="none"?"not rated":q}</button>
       </div>
     </div>
@@ -817,12 +1107,12 @@ function compCard(p,c,i){
 }
 function compTable(p,cs){
   const n=v=>v==null||v===""?"—":esc(v);
-  return `<div class="ctable"><table><thead><tr><th>#</th><th>Competitor</th><th>ASIN</th><th>List price</th><th>Selling price</th><th>Average</th><th>Rating</th><th>Reviews</th><th>Images</th><th>Weak spots</th><th>How I beat them</th></tr></thead><tbody>
-    ${cs.map((c,i)=>{const asin=c.asin||parseAsin(c.link);const href=c.link&&isUrl(c.link)?c.link:(asin?amz(asin):"");return `<tr><td class="num">${i+1}</td><td>${href?`<a href="${esc(href)}" target="_blank" rel="noopener">${esc(c.title||asin||"Competitor")}</a>`:esc(c.title||"—")}</td><td class="num">${esc(asin||"—")}</td>
+  return `<div class="ctable"><table><thead><tr><th>#</th><th>Competitor</th><th>Brand</th><th>ASIN</th><th>List price</th><th>Selling price</th><th>Average</th><th>Rating</th><th>Reviews</th><th>Images</th><th>Weak spots</th><th>How I beat them</th></tr></thead><tbody>
+    ${cs.map((c,i)=>{const asin=c.asin||parseAsin(c.link);const href=c.link&&isUrl(c.link)?c.link:(asin?amz(asin):"");return `<tr><td class="num">${i+1}</td><td>${href?`<a href="${esc(href)}" target="_blank" rel="noopener">${esc(c.title||asin||"Competitor")}</a>`:esc(c.title||"—")}</td><td>${esc(c.brand||"—")}</td><td class="num">${esc(asin||"—")}</td>
       <td class="num">${numv(c.list)!=null?gbp(numv(c.list)):"—"}</td><td class="num">${numv(c.sell||c.price)!=null?gbp(numv(c.sell||c.price)):"—"}</td><td class="num"><b>${avgText(c)}</b></td>
       <td class="num">${n(c.rating)}</td><td class="num">${numv(c.reviews)!=null?numv(c.reviews).toLocaleString("en-GB"):"—"}</td><td><span class="iq iq-${c.imgq&&c.imgq!=="—"?c.imgq:"none"}" style="cursor:default">${c.imgq&&c.imgq!=="—"?c.imgq:"—"}</span></td>
       <td class="pl">${n(c.weak||c.notes)}</td><td class="pl">${n(c.beat)}</td></tr>`}).join("")}
-    <tr class="me"><td></td><td>${esc(pname(p))} (me)</td><td class="num">${esc(p.asin||"—")}</td><td class="num">—</td><td class="num">${gbp(p.price)}</td><td class="num">${gbp(p.price)}</td><td>—</td><td>—</td><td>—</td><td colspan="2">Target</td></tr>
+    <tr class="me"><td></td><td>${esc(pname(p))} (me)</td><td>${esc(p.brand||"—")}</td><td class="num">${esc(p.asin||"—")}</td><td class="num">—</td><td class="num">${gbp(p.price)}</td><td class="num">${gbp(p.price)}</td><td>—</td><td>—</td><td>—</td><td colspan="2">Target</td></tr>
   </tbody></table></div>`;
 }
 
@@ -962,7 +1252,9 @@ async function productFromText(text,category_id){
   text=(text||"").trim(); const asin=parseAsin(text); const urlM=text.match(/https?:\/\/\S+/i);
   let name=text.replace(/https?:\/\/\S+/ig,"").trim(); if(asin&&name.toUpperCase()===asin) name="";
   name=name.split("\n")[0].slice(0,90);
-  return ins("products",{name,asin,url:urlM?urlM[0]:"",category_id:category_id||null});
+  const p=await ins("products",{name,asin,url:urlM?urlM[0]:"",category_id:category_id||null});
+  if(p&&p.asin) pullProduct(p.id);
+  return p;
 }
 async function setStatus(id,v){
   const s=byId("samples",id); if(!s) return;
@@ -975,12 +1267,14 @@ async function setStatus(id,v){
 async function doDelete(key){
   const [t,id,i]=key.split(":");
   if(t==="prod"){const p=byId("products",id);if(!p)return;const ss=D.samples.filter(s=>s.product_id===id);
-    removeFiles([p.image_path,...(p.mockups||[]).map(m=>m.path),...ss.flatMap(s=>s.photos||[])]);
+    const PL=p.listing||{};
+    removeFiles([p.image_path,...(p.mockups||[]).map(m=>m.path),...ss.flatMap(s=>s.photos||[]),...(PL.pics||[]),...(PL.box||[]),...(PL.aplus||[]).map(m=>m&&m.path)]);
     D.samples=D.samples.filter(s=>s.product_id!==id); await del("products",id); location.hash="products"; toast("Product deleted"); return}
   if(t==="cat"){D.products.forEach(p=>{if(p.category_id===id)p.category_id=null});D.thoughts.forEach(x=>{if(x.category_id===id)x.category_id=null});if(ui.cat===id)ui.cat="";await del("categories",id);toast("Category deleted. Its products are now Uncategorised.")}
   if(t==="sup"){D.samples.forEach(s=>{if(s.supplier_id===id)s.supplier_id=null});ui.openSup=null;await del("suppliers",id);toast("Supplier deleted")}
   if(t==="th"){await del("thoughts",id)}
   if(t==="samp"){const s=byId("samples",id);if(s)removeFiles(s.photos);ui.editSample=null;await del("samples",id);toast("Sample deleted")}
+  if(t==="lap"){const p=byId("products",id);if(!p)return;const L=clone(p.listing);if(!L.aplus)L.aplus=DEFAULT_AP.map(x=>({...x}));const [gone]=L.aplus.splice(+i,1);await upd("products",id,{listing:L});if(gone)removeFiles([gone.path])}
   if(t==="comp"||t==="mock"){const p=byId("products",id);if(!p)return;const f=t==="comp"?"competitors":"mockups";const arr=[...(p[f]||[])];const [gone]=arr.splice(+i,1);await upd("products",id,{[f]:arr});if(t==="mock"&&gone)removeFiles([gone.path])}
   if(t==="sph"){const s=byId("samples",id);if(!s)return;const arr=[...(s.photos||[])];const [gone]=arr.splice(+i,1);await upd("samples",id,{photos:arr});removeFiles([gone])}
   render();
@@ -995,6 +1289,14 @@ async function saveField(el){
     if(el.dataset.t==="categories"&&f==="name"&&!String(v).trim()){toast("A category needs a name.");return false}
     if(el.dataset.t==="suppliers"&&f==="name"&&!String(v).trim()){toast("A supplier needs a name.");return false}
     await upd(el.dataset.t,el.dataset.id,{[f]:v}); return true;
+  }
+  if(el.dataset.lst){
+    const p=byId("products",el.dataset.id); if(!p) return false;
+    const L=clone(p.listing), path=el.dataset.lst.split("."), k=x=>isNaN(x)?x:+x;
+    if(path[0]==="aplus"&&!L.aplus) L.aplus=DEFAULT_AP.map(x=>({...x}));
+    let o=L; for(let n=0;n<path.length-1;n++){const key=k(path[n]); if(o[key]==null) o[key]=isNaN(path[n+1])?{}:[]; o=o[key]}
+    const last=k(path[path.length-1]); if((o[last]||"")===v) return false; o[last]=v;
+    await upd("products",p.id,{listing:L}); return true;
   }
   if(el.dataset.arr){
     const p=byId("products",el.dataset.id); if(!p) return false;
@@ -1022,19 +1324,20 @@ document.addEventListener("submit",async e=>{
       const parts=splitLinks(d.q); if(!parts.length) return; const add=[], skipped=[];
       parts.forEach(q=>{const a=parseAsin(q);if(a&&have.has(a)){skipped.push(a);return}if(a)have.add(a);add.push(newComp(q))});
       if(add.length) await upd("products",p.id,{competitors:[...(p.competitors||[]),...add]});
-      toast(skipped.length?`${add.length} added. Already listed: ${skipped.join(", ")}`:`${add.length} competitor${add.length>1?"s":""} added`); render()}
+      toast(skipped.length?`${add.length} added. Already listed: ${skipped.join(", ")}`:`${add.length} competitor${add.length>1?"s":""} added`); render(); if(add.length) pullComps(p.id)}
     if(k==="quickadd"){
-      const a=ui.add, name=a.name.trim();
-      if(!name){toast("Add a product name first.");const n=$("#addname");if(n)n.focus();return}
-      const asin=parseAsin(a.asin)||a.asin.trim().toUpperCase();
+      const a=ui.add, name=a.name.trim(), raw=a.asin.trim(), asin=parseAsin(raw)||raw.toUpperCase();
+      if(!asin&&!name){toast("Add an ASIN or a product name.");const n=$("#addasin");if(n)n.focus();return}
       const seen=new Set(); const comps=a.rows.map(r=>r.trim()).filter(Boolean).filter(r=>{const x=parseAsin(r);if(!x)return true;if(seen.has(x))return false;seen.add(x);return true}).map(newComp);
       const photo=a.files.length?(await uploadFiles(a.files))[0]:null;
       const cat=a.cat||((ui.cat&&ui.cat!=="none")?ui.cat:"");
-      const p=await ins("products",{name,asin,category_id:cat||null,competitors:comps,image_path:photo||null});
+      const row={name,asin,category_id:cat||null,competitors:comps,image_path:photo||null}; if(isUrl(raw)) row.url=raw;
+      const p=await ins("products",row);
       if(!p) return;
       ui.add={name:"",asin:"",cat:a.cat,rows:["",""],files:[]};
-      if(as==="again"){render();toast(`${name} added. Ready for the next one.`);const n=$("#addname");if(n)n.focus()}
-      else{ui.addOpen=false;ui.tab="competitors";location.hash="p/"+p.id;toast(`${name} added with ${comps.length} competitor${comps.length===1?"":"s"}`)}
+      render(); toast(`Added ✓ ${name||asin}`);
+      const n=$("#addasin"); if(n) n.focus();
+      (async()=>{await pullProduct(p.id);await pullComps(p.id)})();
     }
     if(k==="addsup"){const name=(d.name||"").trim();if(!name)return;const s=await ins("suppliers",{name,source:d.source,wechat:d.wechat||"",alibaba:d.alibaba||"",contact:d.contact||""});if(s){ui.openSup=s.id;toast("Supplier added");render()}}
     if(k==="logsample"){
@@ -1064,7 +1367,15 @@ document.addEventListener("click",e=>{
   const sameHash = h => (location.hash||"#dashboard")==="#"+h;
   switch(act){
     case "tab": ui.tab=v; render(); break;
-    case "openadd": ui.addOpen=true; render(); {const n=$("#addname"); if(n) n.focus();} break;
+    case "openadd": ui.addOpen=true; render(); {const n=$("#addasin"); if(n) n.focus();} break;
+    case "pullasin": pullProduct(id).then(()=>pullComps(id)); toast("Checking the ASIN…"); break;
+    case "pullcomps": pullComps(id); break;
+    case "preview": openPreview(id); break;
+    case "addmod": {const p=byId("products",id); if(!p) break; const L=clone(p.listing); L.aplus=[...(L.aplus||DEFAULT_AP.map(x=>({...x}))),{type:"Brand story"}]; upd("products",id,{listing:L}); render(); break;}
+    case "lclear": {const [kind,ix]=v.split(":"), p=byId("products",id); if(!p) break; const L=clone(p.listing); let old;
+      if(kind==="lap"){if(!L.aplus)L.aplus=DEFAULT_AP.map(x=>({...x}));const m=L.aplus[+ix];if(m){old=m.path;delete m.path}}
+      else{const key=kind==="lpic"?"pics":"box";const arr=Array.from({length:kind==="lpic"?7:6},(_,i)=>(L[key]||[])[i]||null);old=arr[+ix];arr[+ix]=null;L[key]=arr}
+      upd("products",id,{listing:L}); removeFiles([old]); render(); break;}
     case "closeadd": ui.addOpen=false; render(); break;
     case "addrow": ui.add.rows.push(""); refreshRows(); {const n=$("#ar"+(ui.add.rows.length-1)); if(n) n.focus();} break;
     case "rmrow": ui.add.rows.splice(+v,1); if(!ui.add.rows.length) ui.add.rows=[""]; refreshRows(); break;
@@ -1093,7 +1404,7 @@ document.addEventListener("click",e=>{
 
 function refreshRows(){const r=$("#addrows");if(r)r.innerHTML=rowsHtml();const w=$("#dupwarn");if(w)w.innerHTML=dupHtml()}
 function grow(t){t.style.height="auto";t.style.height=(t.scrollHeight+2)+"px"}
-function growAll(){document.querySelectorAll("textarea.bul").forEach(grow)}
+function growAll(){document.querySelectorAll("textarea.bul,textarea.agrow").forEach(grow)}
 const timers=new WeakMap(), pendingEls=new Set();
 function flushSaves(){pendingEls.forEach(el=>{clearTimeout(timers.get(el));if(document.contains(el))saveField(el)});pendingEls.clear()}
 document.addEventListener("input",e=>{
@@ -1104,12 +1415,13 @@ document.addEventListener("input",e=>{
     if(el.dataset.add==="asin"||el.dataset.add==="row"){const w=$("#dupwarn");if(w)w.innerHTML=dupHtml()}
     return;
   }
-  if(el.classList.contains("bul")) grow(el);
+  if(el.classList.contains("bul")||el.classList.contains("agrow")) grow(el);
+  if(el.dataset.max) updCount(el);
   if(el.dataset.arr==="competitors"&&(el.dataset.f==="list"||el.dataset.f==="sell")){
     const card=el.closest(".cc"); if(card){const L=card.querySelector('[data-f="list"]').value,S2=card.querySelector('[data-f="sell"]').value;const b=card.querySelector("[data-avg]");if(b)b.textContent=avgText({list:L,sell:S2})}
   }
-  if(el.matches("[data-t],[data-arr]")&&el.matches("input:not([type=date]):not([type=file]),textarea")){
-    clearTimeout(timers.get(el)); pendingEls.add(el); timers.set(el,setTimeout(()=>{pendingEls.delete(el);saveField(el)},800));
+  if(el.matches("[data-t],[data-arr],[data-lst]")&&el.matches("input:not([type=date]):not([type=file]),textarea")){
+    clearTimeout(timers.get(el)); pendingEls.add(el); timers.set(el,setTimeout(()=>{pendingEls.delete(el);saveField(el).then(refreshListingMeta)},800));
   }
 });
 document.addEventListener("change",e=>{
@@ -1119,10 +1431,10 @@ document.addEventListener("change",e=>{
   if(el.dataset.add==="cat"){ui.add.cat=el.value;return}
   if(el.dataset.role==="supsel"){ui.newSup=el.value==="__new";const g=el.closest("form").querySelector('[data-role="newsup"]');if(g)g.hidden=!ui.newSup;return}
   if(el.matches("[data-upload]")){const files=[...el.files];el.value="";handleFiles(el.dataset.upload,el.dataset.id,files,el.dataset.i);return}
-  if(el.matches("[data-t],[data-arr]")){
+  if(el.matches("[data-t],[data-arr],[data-lst]")){
     clearTimeout(timers.get(el)); pendingEls.delete(el);
-    saveField(el).then(ch=>{ if(ch && el.dataset.arr==="competitors") refreshSummarySoon(); else if(ch && (el.tagName==="SELECT"||el.dataset.num||el.type==="date")) requestRender();
-      if(ch && el.dataset.f==="asin" && el.dataset.t==="products"){const dup=D.products.find(x=>x.id!==el.dataset.id&&x.asin&&x.asin===el.value.trim().toUpperCase());if(dup)toast(`Heads up: ${pname(dup)} already uses this ASIN.`)} });
+    saveField(el).then(ch=>{ refreshListingMeta(); if(ch && el.dataset.arr==="competitors") refreshSummarySoon(); else if(ch && (el.tagName==="SELECT"||el.dataset.num||el.type==="date")) requestRender();
+      if(ch && el.dataset.f==="asin" && el.dataset.t==="products"){const dup=D.products.find(x=>x.id!==el.dataset.id&&x.asin&&x.asin===el.value.trim().toUpperCase());if(dup)toast(`Heads up: ${pname(dup)} already uses this ASIN.`); pullProduct(el.dataset.id)} });
   }
 });
 /* bullet-point boxes: start with a bullet, Enter adds the next one */
@@ -1135,6 +1447,9 @@ document.addEventListener("paste",e=>{const el=e.target;if(!(el.dataset&&el.data
   const t=(e.clipboardData&&e.clipboardData.getData("text"))||"";const parts=splitLinks(t);if(parts.length<2)return;
   e.preventDefault();const i=+el.dataset.i;const cur=ui.add.rows[i].trim();ui.add.rows.splice(i,1,...(cur?[cur]:[]),...parts);refreshRows();toast(`${parts.length} competitors added as separate rows`)},true);
 
+/* a picture that fails to load just hides, so the placeholder text underneath shows */
+document.addEventListener("error",e=>{const t=e.target;if(t&&t.tagName==="IMG"&&t.closest(".pimg,.hero,.cimg,.lslot,.thumb,.sphoto"))t.style.display="none"},true);
+
 /* drag & drop + paste */
 const hasFiles = e => e.dataTransfer && [...(e.dataTransfer.types||[])].includes("Files");
 document.addEventListener("dragover",e=>{if(!hasFiles(e))return;e.preventDefault();const z=e.target.closest("[data-drop]");document.querySelectorAll(".drop.over").forEach(x=>{if(x!==z)x.classList.remove("over")});if(z)z.classList.add("over")});
@@ -1143,7 +1458,9 @@ document.addEventListener("drop",e=>{if(!hasFiles(e))return;e.preventDefault();c
 document.addEventListener("paste",e=>{
   if(!user||editing()) return;
   const files=[...((e.clipboardData&&e.clipboardData.files)||[])].filter(f=>/^image\//.test(f.type)); if(!files.length) return;
-  if(ui.route==="product"){e.preventDefault();const p=byId("products",ui.id);if(!p)return;handleFiles(!p.image_path?"pmain":"pmock",p.id,files);return}
+  if(ui.route==="product"){e.preventDefault();const p=byId("products",ui.id);if(!p)return;
+    if(ui.tab==="listing"){const pics=(p.listing||{}).pics||[];let i=0;while(i<6&&pics[i])i++;handleFiles("lpic",p.id,files,i);return}
+    handleFiles(!p.image_path?"pmain":"pmock",p.id,files);return}
   if(ui.route==="products"){e.preventDefault();handleFiles("newprod",null,files)}
 });
 
@@ -1152,10 +1469,10 @@ function exportXlsx(){
   if(!window.XLSX){toast("Export is still loading. Try again in a second.");return}
   const X=window.XLSX, cat=catName, sup=id=>(supOf(id)||{}).name||"";
   const sheet=(rows)=>X.utils.json_to_sheet(rows.length?rows:[{"":"(empty)"}]);
-  const products=S.products().map(p=>({"Product":pname(p),"Category":cat(p.category_id),"Stage":p.status,"ASIN":p.asin,"Link":p.url,"Sell price £":p.price,"Unit cost £":p.cost,"Amazon fees £":p.fees,"Est. sales / month":p.sales,
+  const products=S.products().map(p=>({"Product":pname(p),"Brand":p.brand||"","Category":cat(p.category_id),"Stage":p.status,"ASIN":p.asin,"Link":p.url,"Sell price £":p.price,"Unit cost £":p.cost,"Amazon fees £":p.fees,"Est. sales / month":p.sales,
     "Stand out":p.standout,"Competitor weak spots":p.weaknesses,"Title":p.title,"Bullet 1":p.bullet1,"Bullet 2":p.bullet2,"Bullet 3":p.bullet3,"Bullet 4":p.bullet4,"Bullet 5":p.bullet5,"Description":p.description,"Keywords":p.keywords,"Notes":p.notes,
-    "Main photo":imgUrl(p.image_path),"Mockups":(p.mockups||[]).map(m=>imgUrl(m.path)).join("\n"),"Added":dmy(p.created_at)}));
-  const comps=S.products().flatMap(p=>(p.competitors||[]).map(c=>({"Product":pname(p),"Competitor":c.title,"ASIN":c.asin||parseAsin(c.link),"Link":c.link,"List price £":numv(c.list),"Selling price £":numv(c.sell||c.price),"Average £":cAvg(c)==null?null:Number(cAvg(c).toFixed(2)),"Rating":numv(c.rating),"Reviews":numv(c.reviews),"Their images":c.imgq,"Weak spots":c.weak||c.notes||"","How I beat them":c.beat||"","Image":imgUrl(c.image)})));
+    "Main photo":imgUrl(p.image_path),"Listing pictures":((p.listing||{}).pics||[]).filter(Boolean).map(imgUrl).join("\n"),"Box images":((p.listing||{}).box||[]).filter(Boolean).map(imgUrl).join("\n"),"A+ designs":((p.listing||{}).aplus||[]).filter(m=>m&&m.path).map(m=>(m.type||"")+": "+imgUrl(m.path)).join("\n"),"Mockups":(p.mockups||[]).map(m=>imgUrl(m.path)).join("\n"),"Added":fmtAdded(p.created_at)}));
+  const comps=S.products().flatMap(p=>(p.competitors||[]).map(c=>({"Product":pname(p),"Competitor":c.title,"Brand":c.brand||"","ASIN":c.asin||parseAsin(c.link),"Link":c.link,"List price £":numv(c.list),"Selling price £":numv(c.sell||c.price),"Average £":cAvg(c)==null?null:Number(cAvg(c).toFixed(2)),"Rating":numv(c.rating),"Reviews":numv(c.reviews),"Their images":c.imgq,"Weak spots":c.weak||c.notes||"","How I beat them":c.beat||"","Image":imgUrl(c.image)})));
   const samples=S.samples().map(s=>({"Product":pname(byId("products",s.product_id)),"Supplier":sup(s.supplier_id),"Where found":(supOf(s.supplier_id)||{}).source||"","Status":s.status,"Sample cost":s.sample_cost,"Unit price":s.unit_price,"MOQ":s.moq,"Quality /5":s.quality,"Tracking":s.tracking,"ETA":dmy(s.eta),"Arrived":dmy(s.arrived_on),"Decided":dmy(s.decided_on),"Notes":s.notes,"Photos":(s.photos||[]).map(imgUrl).join("\n"),"Logged":dmy(s.created_at)}));
   const sups=S.suppliers().map(s=>({"Supplier":s.name,"Where found":s.source,"WeChat":s.wechat,"Alibaba":s.alibaba,"Contact":s.contact,"Phone / email":s.phone,"Notes":s.notes,"Added":dmy(s.created_at)}));
   const thoughts=S.thoughts().map(t=>({"Thought":t.text,"Category":t.category_id?cat(t.category_id):"","Added":dmy(t.created_at)}));
@@ -1173,7 +1490,7 @@ $("#exportbtn").addEventListener("click",exportXlsx);
 
 /* ===== auth ===== */
 function showLogin(){user=null;loaded=false;TABLES.forEach(t=>D[t]=[]);$("#app").hidden=true;$("#login").hidden=false;setTimeout(()=>$("#lu").focus(),50)}
-function start(u){user=u;$("#login").hidden=true;$("#app").hidden=false;route();loadAll()}
+function start(u){user=u;lookup.ok=null;lookup.warned=false;$("#login").hidden=true;$("#app").hidden=false;route();loadAll()}
 async function signOut(){await sb.auth.signOut().catch(()=>{});showLogin()}
 $("#signout").addEventListener("click",signOut);
 $("#loginform").addEventListener("submit",async e=>{
