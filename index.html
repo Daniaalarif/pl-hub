@@ -354,6 +354,55 @@ textarea.bul{min-height:44px;resize:none;overflow:hidden}
 .ccfoot{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
 .ccfoot .spacer{flex:1}
 .ctable{overflow-x:auto;border-radius:16px;border:1px solid var(--soft)}
+/* suppliers tab */
+.psadd select{min-height:50px;border:none;border-radius:999px;background:var(--bg);padding:0 16px;font-size:15px;flex:0 0 auto}
+.pscards{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(430px,100%),1fr));gap:14px}
+.psc{background:var(--bg);border-radius:22px;padding:16px;display:flex;flex-direction:column;gap:12px;min-width:0}
+.psc.dropped{opacity:.85}
+.psh{display:flex;gap:12px;align-items:center;min-width:0;flex-wrap:wrap}
+.psav{width:48px;height:48px;flex:0 0 48px;border-radius:15px;background:var(--blue);color:#fff;display:grid;place-items:center;font-weight:700;font-size:21px}
+.psc.dropped .psav{background:var(--muted)}
+.psid{display:flex;flex-direction:column;gap:4px;min-width:0;flex:1 1 180px}
+.psname{border:1px solid transparent;border-radius:8px;font-size:19px;font-weight:700;padding:1px 6px;margin-left:-7px;background:transparent;width:100%;min-width:0;font-family:inherit}
+.psname:hover,.psname:focus{border-color:var(--line);background:#fff;outline:none}
+.pstep{display:flex;gap:6px;flex-wrap:wrap}
+.pstep button{flex:1 0 auto;border:1px solid var(--line);background:#fff;color:var(--muted);border-radius:999px;min-height:36px;padding:0 10px;font-size:13px;font-weight:500;cursor:pointer;white-space:nowrap;font-family:inherit}
+.pstep button.done{background:var(--blue-soft);border-color:var(--blue-soft);color:var(--blue-d)}
+.pstep button.on{background:var(--blue);border-color:var(--blue);color:#fff;font-weight:700}
+.psc.dropped .pstep button{opacity:.55}
+.psdates{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.psnums{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
+@media (max-width:600px){.psnums,.psdates{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.psf,.psago{background:#fff;border-radius:12px;padding:8px 10px;font-size:12px;color:var(--muted);display:flex;flex-direction:column;min-width:0}
+.psf input::placeholder{color:#b9b7b0;font-weight:500}
+.psf input[type=date]{font-size:14px}
+.psf input{border:none;background:transparent;font-size:16px;font-weight:700;color:var(--ink);width:100%;padding:0;outline:none;min-height:26px;font-family:inherit}
+.psago b{font-size:16px;color:var(--ink);min-height:26px;display:flex;align-items:center}
+.psbox{background:#fff;border-radius:16px;padding:12px;display:flex;flex-direction:column;gap:10px}
+.psbox h4{margin:0;font-size:12px;color:var(--muted);font-weight:700;letter-spacing:.06em;text-transform:uppercase}
+.psbox .grid-f{grid-template-columns:repeat(auto-fit,minmax(150px,1fr))}
+.psbox .field input,.psbox .field select{min-height:40px;background:var(--bg);border-color:transparent}
+.psc>.field textarea{min-height:84px}
+.psimgs{background:#fff;border-radius:16px;padding:12px;display:flex;flex-direction:column;gap:10px}
+.psimgh{display:flex;gap:8px;align-items:baseline;flex-wrap:wrap}
+.psimgh h4{margin:0;font-size:12px;color:var(--muted);font-weight:700;letter-spacing:.06em;text-transform:uppercase}
+.psimgs .photos figure{width:104px}
+.psimgs .photos figure button{font-size:11px;padding:0 4px;white-space:nowrap;min-height:30px}
+.psadd-img{width:96px;aspect-ratio:1/1;border:2px dashed var(--line);border-radius:12px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;color:var(--blue);font-size:12px;font-weight:600;cursor:pointer;text-align:center;background:var(--bg)}
+.psadd-img .plus{font-size:24px;line-height:1}
+.psadd-img.over{background:var(--blue-soft);border-color:var(--blue)}
+.pssamples{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.psdropped{background:#fff;border-radius:12px;padding:8px 12px;display:flex;gap:10px;align-items:center;flex-wrap:wrap;font-size:14px}
+.lfnote{margin:0;font-size:12px;opacity:.9}
+.pst-found{background:var(--soft);color:var(--ink)}
+.pst-contacted,.pst-replied{background:var(--blue-soft);color:var(--blue-d)}
+.pst-quotein{background:var(--orange-soft);color:#7a3a0c}
+.pst-sampleasked{background:var(--orange);color:var(--ink)}
+.pst-sampling{background:var(--blue);color:#fff}
+.pst-chosen{background:var(--ink);color:#fff}
+.pst-dropped{background:var(--soft);color:var(--muted)}
+.pstable table{min-width:1100px}
+
 .ctable table{border-collapse:collapse;width:100%;min-width:1240px;font-size:14px}
 .ctable th{text-align:left;font-size:12px;color:var(--muted);font-weight:500;padding:12px;background:var(--soft)}
 .ctable td{padding:12px;border-top:1px solid var(--soft);vertical-align:top}
@@ -526,13 +575,15 @@ const STAGES = ["Idea","Researching","Shortlisted","Sampling","Ordered","Live","
 const SSTAGES = ["On the way","Arrived","Approved","Rejected"];
 const SOURCES = ["Alibaba","Canton Fair","WeChat","Internet","Other"];
 const IMGQ = ["—","Poor","Fair","Good"];
-const TABLES = ["categories","products","suppliers","samples","thoughts"];
+const PSTAGES = ["Found","Contacted","Replied","Quote in","Sample asked","Sampling","Chosen"];   /* plus "Dropped" */
+const psClass = s => "pst-"+String(s||"").toLowerCase().replace(/\s+/g,"");
+const TABLES = ["categories","products","suppliers","samples","thoughts","product_suppliers"];
 
 const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-const D = {categories:[],products:[],suppliers:[],samples:[],thoughts:[]};
+const D = {categories:[],products:[],suppliers:[],samples:[],thoughts:[],product_suppliers:[]};
 const ui = {route:"dashboard",id:null,tab:"competitors",q:"",cat:"",stage:"",sstatus:"",sprod:"",ssrc:"",tcat:"",
             openSup:null,editSample:null,confirm:null,manageCats:false,pending:[],newSup:null,busy:false,
-            addOpen:false,add:{name:"",asin:"",cat:"",rows:["",""],files:[]},cmode:"cards",loading:new Set(),titleOpen:new Set(),combine:false,srate:true};
+            addOpen:false,add:{name:"",asin:"",cat:"",rows:["",""],files:[]},cmode:"cards",smode:"cards",logSup:null,psMissing:false,loading:new Set(),titleOpen:new Set(),combine:false,srate:true};
 const lookup={ok:null,warned:false};
 let user=null, loaded=false, lastLoad=0, pendingRender=false;
 const $ = s => document.querySelector(s);
@@ -545,6 +596,9 @@ const imgUrl = p => !p ? "" : /^https?:\/\//i.test(p) ? p : `${SUPABASE_URL}/sto
 const pname = p => p ? (p.name || (p.asin ? "ASIN "+p.asin : "Untitled product")) : "Deleted product";
 const catName = id => (byId("categories",id)||{}).name || "Uncategorised";
 const supOf = id => byId("suppliers",id);
+const findSup = n => {n=String(n||"").trim().toLowerCase();return n?D.suppliers.find(x=>[x.name,x.company].some(v=>String(v||"").trim().toLowerCase()===n)):null};
+const daysSince = d => {if(!d)return null;const t=new Date(String(d).slice(0,10)+"T00:00:00");if(isNaN(t))return null;const n=new Date();n.setHours(0,0,0,0);return Math.round((n-t)/864e5)};
+const agoTxt = d => {const n=daysSince(d);return n==null?"—":n<=0?"Today":n===1?"Yesterday":n+" days ago"};
 const today = () => {const d=new Date();return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`};
 const MON=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
 const fmtAdded = ts => {if(!ts)return "";const d=new Date(ts);if(isNaN(d))return "";return `${d.getDate()} ${MON[d.getMonth()]} ${d.getFullYear()}, ${String(d.getHours()).padStart(2,"0")}:${String(d.getMinutes()).padStart(2,"0")}`};
@@ -561,6 +615,7 @@ const S = {
   products:   () => [...D.products].sort((a,b)=>a.created_at<b.created_at?1:-1),
   suppliers:  () => [...D.suppliers].sort((a,b)=>a.name.localeCompare(b.name)),
   samples:    () => [...D.samples].sort((a,b)=>a.created_at<b.created_at?1:-1),
+  pls:        pid => D.product_suppliers.filter(l=>l.product_id===pid).sort((a,b)=>{const r=l=>l.stage==="Dropped"?-1:PSTAGES.indexOf(l.stage);return (r(b)-r(a))||(a.created_at<b.created_at?-1:1)}),
   thoughts:   () => [...D.thoughts].sort((a,b)=>a.created_at<b.created_at?1:-1)
 };
 let toastT; function toast(m){const t=$("#toast");t.textContent=m;t.hidden=false;clearTimeout(toastT);toastT=setTimeout(()=>t.hidden=true,3000)}
@@ -570,9 +625,10 @@ function fail(err){console.error(err);const m=(err&&err.message)||"";if(/JWT|tok
 /* ===== data ===== */
 async function loadAll(){
   const res = await Promise.all(TABLES.map(t=>sb.from(t).select("*").limit(5000)));
-  const bad = res.find(r=>r.error);
+  const bad = res.find((r,i)=>r.error && TABLES[i]!=="product_suppliers");
   if(bad){fail(bad.error);return}
-  TABLES.forEach((t,i)=>D[t]=res[i].data||[]);
+  TABLES.forEach((t,i)=>D[t]=res[i].error?[]:(res[i].data||[]));
+  ui.psMissing = !!res[TABLES.indexOf("product_suppliers")].error;
   loaded=true; lastLoad=Date.now(); requestRender();
 }
 async function ins(t,row){
@@ -649,6 +705,7 @@ async function handleFiles(kind,id,files,idx){
   const asMocks = arr => arr.map(path=>({path,caption:""}));
   if(kind==="pmain"){const p=byId("products",id);if(!p)return;const old=p.image_path;await upd("products",id,{image_path:paths[0]});if(paths.length>1)await upd("products",id,{mockups:[...(p.mockups||[]),...asMocks(paths.slice(1))]});removeFiles([old])}
   if(kind==="pmock"){const p=byId("products",id);if(!p)return;await upd("products",id,{mockups:[...(p.mockups||[]),...asMocks(paths)]})}
+  if(kind==="psphoto"){const l=byId("product_suppliers",id);if(!l)return;await upd("product_suppliers",id,{photos:[...(l.photos||[]),...paths],last_update:today()})}
   if(kind==="sphoto"){const s=byId("samples",id);if(!s)return;await upd("samples",id,{photos:[...(s.photos||[]),...paths]})}
   if(kind==="newprod"){const p=await ins("products",{image_path:paths[0],category_id:(ui.cat&&ui.cat!=="none")?ui.cat:null,mockups:asMocks(paths.slice(1))});if(p){location.hash="p/"+p.id;toast("Product created. Give it a name.")}return}
   toast(paths.length>1?`${paths.length} photos added`:"Photo added"); render();
@@ -876,7 +933,7 @@ function vProduct(){
   const link=p.url||(p.asin?amz(p.asin):"");
   const mocks=p.mockups||[];
   const nf=(f,label)=>`<label class="numbox"><span>${label}</span><input inputmode="decimal" value="${p[f]==null?"":esc(p[f])}" placeholder="—" data-t="products" data-id="${p.id}" data-f="${f}" data-num="1"></label>`;
-  const tabs=[["competitors","Competitors",(p.competitors||[]).length],["standout","Stand out",null],["listing","My listing",null],["samples","Samples",samples.length],["notes","Notes",null]];
+  const tabs=[["competitors","Competitors",(p.competitors||[]).length],["standout","Stand out",null],["listing","My listing",null],["suppliers","Suppliers",D.product_suppliers.filter(l=>l.product_id===p.id).length],["samples","Samples",samples.length],["notes","Notes",null]];
   const pulling=ui.loading.has("p:"+p.id)&&!p.image_path;
   return `
   <div class="crumbs"><a class="pill outline sm" href="#products">← Products</a><span>${esc(catName(p.category_id))}</span></div>
@@ -942,6 +999,7 @@ function tabBody(p,samples){
       :`<div class="empty">No competitors yet. Paste the top listings you're up against in the bar above.</div>`}`;}
   case "standout":
     return `<div class="grid-f">${TA("standout","What I'll do to stand out","Better photos, infographics, bundle, size guide, gift box…",12)}${TA("weaknesses","What competitors get wrong","Common complaints in reviews, weak images, missing info…",12)}</div>`;
+  case "suppliers": return supTab(p);
   case "samples":
     return `${samples.length?`<div class="slist" style="flex:none">${samples.map(s=>sampleCard(s,false)).join("")}</div>`:`<div class="empty">No samples logged for this product yet.</div>`}
       ${logForm(p.id,true)}`;
@@ -1167,6 +1225,79 @@ function compTable(p,cs){
   </tbody></table></div>`;
 }
 
+/* ----- Suppliers for one product ----- */
+function supTab(p){
+  if(ui.psMissing) return `<div class="empty"><b>One quick setup step first.</b><br>Run the new SQL in Supabase (SQL Editor → New query → paste → Run), then refresh this page.</div>`;
+  const links=S.pls(p.id), sups=S.suppliers(), active=links.filter(l=>l.stage!=="Dropped");
+  const at=(l,st)=>PSTAGES.indexOf(l.stage)>=PSTAGES.indexOf(st);
+  const chase=active.filter(l=>{const i=PSTAGES.indexOf(l.stage);return i>=1&&i<=4&&(daysSince(l.last_update||l.created_at)||0)>=7}).length;
+  return `<form class="caddbar psadd" data-form="addpsup" data-id="${p.id}" autocomplete="off">
+      <label><span class="sr">Supplier or trading company name</span><input name="name" list="suplist-ps" required placeholder="Type a supplier or trading company name"></label>
+      <select name="source" aria-label="Where found">${SOURCES.map(x=>`<option>${x}</option>`).join("")}</select>
+      <button class="pill blue" type="submit">+ Add supplier</button>
+      <datalist id="suplist-ps">${sups.filter(x=>!links.some(l=>l.supplier_id===x.id)).map(x=>`<option value="${esc(x.name)}"></option>`).join("")}</datalist>
+    </form>
+    ${links.length?`<div class="cstats">
+        <div class="cstat"><span>Suppliers</span><b>${active.length}</b></div>
+        <div class="cstat"><span>Contacted</span><b>${active.filter(l=>at(l,"Contacted")).length}</b></div>
+        <div class="cstat"><span>Quotes in</span><b>${active.filter(l=>at(l,"Quote in")||l.unit_price).length}</b></div>
+        <div class="cstat"><span>Samples asked or in</span><b>${active.filter(l=>at(l,"Sample asked")).length}</b></div>
+        <div class="cstat or"><span>Needs chasing</span><b>${chase}</b></div>
+      </div>
+      <div class="sectionhead"><h2 style="font-size:20px">All suppliers</h2><div class="row gap8">
+        <button type="button" class="pill sm ${ui.smode==="cards"?"":"outline"}" data-act="smode" data-v="cards">Cards</button>
+        <button type="button" class="pill sm ${ui.smode==="table"?"":"outline"}" data-act="smode" data-v="table">Compare</button></div></div>
+      ${ui.smode==="table"?psTable(links):`<div class="pscards">${links.map(psCard).join("")}</div>`}`
+    :`<div class="empty">No suppliers on this product yet. Type a supplier or trading company name in the bar above and press Add.</div>`}`;
+}
+function psCard(l){
+  const s=supOf(l.supplier_id)||{id:"",name:"Unknown supplier",source:"Other"};
+  const dropped=l.stage==="Dropped", idx=PSTAGES.indexOf(l.stage);
+  const ss=S.samples().filter(x=>x.product_id===l.product_id&&x.supplier_id===l.supplier_id);
+  const L=(f,label,ph)=>`<label class="psf"><span>${label}</span><input value="${esc(l[f])}" placeholder="${esc(ph||"")}" data-t="product_suppliers" data-id="${l.id}" data-f="${f}"></label>`;
+  const DT=(f,label)=>`<label class="psf"><span>${label}</span><input type="date" value="${esc(l[f]||"")}" data-t="product_suppliers" data-id="${l.id}" data-f="${f}" data-null="1"></label>`;
+  const SF=(f,label,ph)=>`<label class="field"><span>${label}</span><input value="${esc(s[f]||"")}" placeholder="${esc(ph||"")}" data-t="suppliers" data-id="${s.id}" data-f="${f}"></label>`;
+  return `<article class="psc${dropped?" dropped":""}">
+    <header class="psh">
+      <span class="psav" aria-hidden="true">${esc((s.name||"?").trim().charAt(0).toUpperCase())}</span>
+      <div class="psid"><input class="psname" value="${esc(s.name)}" aria-label="Supplier name" data-t="suppliers" data-id="${s.id}" data-f="name">
+        <div class="row gap8 wrapflex"><span class="tag ${srcClass(s.source)}">${esc(s.source)}</span>${s.company&&s.company!==s.name?`<span class="meta">${esc(s.company)}</span>`:""}${isUrl(s.alibaba)?`<a class="meta" style="color:var(--blue);font-weight:600" href="${esc(s.alibaba)}" target="_blank" rel="noopener">Open store ↗</a>`:""}</div></div>
+    </header>
+    ${dropped?`<div class="psdropped"><b>Dropped</b><span class="meta">Not taking this supplier forward.</span><button type="button" class="pill sm outline" data-act="psrestore" data-id="${l.id}">Restore</button></div>`:""}
+    <div class="pstep" role="group" aria-label="Where this supplier is up to">${PSTAGES.map((st,i)=>`<button type="button" class="${dropped?"":i<idx?"done":i===idx?"on":""}" data-act="psstage" data-id="${l.id}" data-v="${st}" aria-pressed="${!dropped&&i===idx}">${!dropped&&i<idx?"✓ ":""}${st}</button>`).join("")}</div>
+    <div class="psdates">${DT("contacted_on","Contacted")}${DT("last_update","Last update")}<div class="psago"><span>Last touched</span><b>${agoTxt(l.last_update||l.created_at)}</b></div></div>
+    <div class="psnums">${L("unit_price","Quoted unit price","$0.06")}${L("moq","MOQ","5,000")}${L("sample_price","Sample price","£18 / Free")}${L("lead_time","Lead time","25 days")}</div>
+    <label class="field"><span>Next step</span><input value="${esc(l.next_step)}" placeholder="e.g. Ask for sample photos" data-t="product_suppliers" data-id="${l.id}" data-f="next_step"></label>
+    <div class="psbox"><h4>Contact details</h4><div class="grid-f">
+      ${SF("company","Company / trading name","Registered or trading name")}${SF("contact","Contact person")}${SF("wechat","WeChat ID")}${SF("phone","Phone / email")}${SF("alibaba","Alibaba store / link","https://…")}
+      <label class="field"><span>Where found</span><select data-t="suppliers" data-id="${s.id}" data-f="source">${SOURCES.map(x=>`<option${s.source===x?" selected":""}>${x}</option>`).join("")}</select></label></div></div>
+    <label class="field"><span>Extra info</span><textarea rows="3" placeholder="Prices discussed, what they can customise, how fast they reply…" data-t="product_suppliers" data-id="${l.id}" data-f="notes">${esc(l.notes)}</textarea></label>
+    <div class="psimgs"><div class="psimgh"><h4>Images</h4><span class="meta">Product photos, screenshots of their chat or quote</span></div>
+      <div class="photos">${(l.photos||[]).map((ph,i)=>`<figure><a href="${imgUrl(ph)}" target="_blank" rel="noopener"><img src="${imgUrl(ph)}" alt="Supplier image ${i+1}" loading="lazy"></a>${delBtn(`psph:${l.id}:${i}`,"Remove")}</figure>`).join("")}
+        <label class="psadd-img drop" data-drop="psphoto" data-id="${l.id}"><span class="plus">+</span><span>Add images</span><input type="file" accept="image/*" multiple class="sr" data-upload="psphoto" data-id="${l.id}"></label></div></div>
+    <div class="pssamples">${ss.map(x=>`<span class="tag ${ssClass(x.status)}">Sample · ${esc(x.status)}${x.status==="On the way"&&x.eta?" · ETA "+dmy(x.eta):""}</span>`).join("")}<button type="button" class="pill sm blue-outline" data-act="logsup" data-id="${l.product_id}" data-v="${s.id}">Log a sample →</button></div>
+    <div class="row gap8 wrapflex">${dropped?"":`<button type="button" class="pill sm ghost" data-act="psdrop" data-id="${l.id}">Drop this supplier</button>`}<span class="spacer"></span>${delBtn("ps:"+l.id,"Remove from product")}</div>
+  </article>`;
+}
+function psTable(links){
+  const n=v=>v==null||v===""?"—":esc(v);
+  return `<div class="ctable pstable"><table><thead><tr><th>Supplier</th><th>Where found</th><th>Stage</th><th>Contacted</th><th>Last update</th><th>Unit price</th><th>MOQ</th><th>Sample price</th><th>Lead time</th><th>Next step</th><th>Contact</th></tr></thead><tbody>
+    ${links.map(l=>{const s=supOf(l.supplier_id)||{};const ct=[s.contact,s.wechat?"WeChat "+s.wechat:"",s.phone].filter(Boolean).join(" · ");
+      return `<tr><td class="tt"><b>${esc(s.name||"Unknown")}</b>${s.company&&s.company!==s.name?`<br><span class="meta">${esc(s.company)}</span>`:""}</td><td><span class="tag ${srcClass(s.source)}">${esc(s.source||"")}</span></td><td><span class="tag ${psClass(l.stage)}">${esc(l.stage)}</span></td>
+      <td class="num">${l.contacted_on?dmy(l.contacted_on):"—"}</td><td class="num">${l.last_update?dmy(l.last_update):"—"}<br><span class="meta">${agoTxt(l.last_update||l.created_at)}</span></td><td class="num"><b>${n(l.unit_price)}</b></td><td class="num">${n(l.moq)}</td><td class="num">${n(l.sample_price)}</td><td>${n(l.lead_time)}</td><td class="pl">${n(l.next_step)}</td><td class="pl">${n(ct)}</td></tr>`}).join("")}
+  </tbody></table></div>`;
+}
+/* when a sample is logged, make sure that supplier is on the product and moved to "Sampling" */
+async function ensureLink(pid,sid){
+  if(ui.psMissing||!pid||!sid) return;
+  const l=D.product_suppliers.find(x=>x.product_id===pid&&x.supplier_id===sid);
+  if(!l){await ins("product_suppliers",{product_id:pid,supplier_id:sid,stage:"Sampling",contacted_on:today(),last_update:today()});return}
+  const patch={last_update:today()};
+  if(l.stage==="Dropped"||PSTAGES.indexOf(l.stage)<PSTAGES.indexOf("Sampling")) patch.stage="Sampling";
+  if(!l.contacted_on) patch.contacted_on=today();
+  await upd("product_suppliers",l.id,patch);
+}
+
 /* ----- Samples ----- */
 function sampleCard(s,showProd){
   const p=byId("products",s.product_id), sup=supOf(s.supplier_id), photos=s.photos||[], open=ui.editSample===s.id;
@@ -1213,14 +1344,15 @@ function sampleEdit(s){
 function logForm(pid,inline){
   const prods=S.products(), sups=S.suppliers();
   if(!prods.length) return `<aside class="logform"><h2>Log a sample</h2><p>Add a product first, then log samples against it.</p><a class="pill white" href="#products">Go to products</a></aside>`;
-  const newSup = ui.newSup==null ? !sups.length : ui.newSup;
+  const pre = ui.logSup ? ((supOf(ui.logSup)||{}).name||"") : "";
   return `<form class="logform${inline?" inline":""}" data-form="logsample" autocomplete="off">
     <h2>Log a sample</h2>
     <label class="lf">Product<select name="product_id" required>${prods.map(p=>`<option value="${p.id}"${p.id===pid?" selected":""}>${esc(pname(p))}</option>`).join("")}</select></label>
-    <label class="lf">Supplier<select name="supplier_id" data-role="supsel">${sups.map(s=>`<option value="${s.id}">${esc(s.name)} · ${esc(s.source)}</option>`).join("")}<option value="__new"${newSup?" selected":""}>+ New supplier</option></select></label>
-    <div class="lfgroup" data-role="newsup" ${newSup?"":"hidden"}>
-      <label class="lf">Supplier name<input name="sup_name" placeholder="e.g. Ningbo Homeware Co."></label>
-      <div class="lf2"><label class="lf">Where found<select name="sup_source">${SOURCES.map(s=>`<option>${s}</option>`).join("")}</select></label>
+    <label class="lf">Supplier<input name="sup_name" list="suplist-ls" data-role="supin" value="${esc(pre)}" required placeholder="Type the supplier or trading company name"></label>
+    <datalist id="suplist-ls">${sups.map(x=>`<option value="${esc(x.name)}" label="${esc(x.source)}"></option>`).join("")}</datalist>
+    <div class="lfgroup" data-role="newsup" hidden>
+      <p class="lfnote">New supplier. It gets saved to your Suppliers list.</p>
+      <div class="lf2"><label class="lf">Where found<select name="sup_source">${SOURCES.map(x=>`<option>${x}</option>`).join("")}</select></label>
       <label class="lf">WeChat / link / contact<input name="sup_contact"></label></div>
     </div>
     <div class="lf3"><label class="lf">Sample cost<input name="sample_cost" placeholder="£18 / Free"></label><label class="lf">Unit price<input name="unit_price" placeholder="$0.06"></label><label class="lf">MOQ<input name="moq" placeholder="5,000"></label></div>
@@ -1257,6 +1389,7 @@ function vSuppliers(){
       <label class="field"><span>Where found</span><select name="source">${SOURCES.map(s=>`<option>${s}</option>`).join("")}</select></label>
       <label class="field"><span>WeChat ID</span><input name="wechat"></label>
       <label class="field"><span>Alibaba store / link</span><input name="alibaba"></label>
+      <label class="field"><span>Company / trading name</span><input name="company"></label>
       <label class="field"><span>Contact person</span><input name="contact"></label>
     </div>
     <div><button class="pill blue" type="submit">Add supplier</button></div>
@@ -1275,8 +1408,9 @@ function supCard(s){
     ${open?`<div class="sup-b">
       <div class="grid-f">${I("name","Name")}
         <label class="field"><span>Where found</span><select data-t="suppliers" data-id="${s.id}" data-f="source">${SOURCES.map(x=>`<option${s.source===x?" selected":""}>${x}</option>`).join("")}</select></label>
-        ${I("wechat","WeChat ID")}${I("alibaba","Alibaba store / link")}${I("contact","Contact person")}${I("phone","Phone / email")}</div>
+        ${I("company","Company / trading name")}${I("wechat","WeChat ID")}${I("alibaba","Alibaba store / link")}${I("contact","Contact person")}${I("phone","Phone / email")}</div>
       <label class="field"><span>Notes</span><textarea rows="4" data-t="suppliers" data-id="${s.id}" data-f="notes" placeholder="Prices, lead times, how quickly they reply…" style="min-height:90px">${esc(s.notes)}</textarea></label>
+      ${D.product_suppliers.filter(x=>x.supplier_id===s.id).length?`<div class="srclist">${D.product_suppliers.filter(x=>x.supplier_id===s.id).map(x=>`<a href="#p/${x.product_id}"><span><b>${esc(pname(byId("products",x.product_id)))}</b> · quoted ${esc(x.unit_price||"—")} · MOQ ${esc(x.moq||"—")}</span><span class="tag ${psClass(x.stage)}">${esc(x.stage)}</span></a>`).join("")}</div>`:""}
       ${ss.length?`<div class="srclist">${ss.map(x=>`<a href="#p/${x.product_id}"><span><b>${esc(pname(byId("products",x.product_id)))}</b> · unit ${esc(x.unit_price||"—")} · MOQ ${esc(x.moq||"—")}</span><span class="tag ${ssClass(x.status)}">${esc(x.status)}</span></a>`).join("")}</div>`:`<p class="hint">No samples from this supplier yet.</p>`}
       <div class="row gap8 wrapflex">${isUrl(s.alibaba)?`<a class="pill outline sm" href="${esc(s.alibaba)}" target="_blank" rel="noopener">Open Alibaba ↗</a>`:""}<span class="spacer"></span>${delBtn("sup:"+s.id,"Delete supplier")}</div>
     </div>`:""}
@@ -1319,10 +1453,12 @@ async function doDelete(key){
   const [t,id,i]=key.split(":");
   if(t==="prod"){const p=byId("products",id);if(!p)return;const ss=D.samples.filter(s=>s.product_id===id);
     const PL=p.listing||{};
-    removeFiles([p.image_path,...(p.mockups||[]).map(m=>m.path),...ss.flatMap(s=>s.photos||[]),...(PL.pics||[]),...(PL.box||[]),...(PL.aplus||[]).map(m=>m&&m.path)]);
-    D.samples=D.samples.filter(s=>s.product_id!==id); await del("products",id); location.hash="products"; toast("Product deleted"); return}
+    removeFiles([p.image_path,...(p.mockups||[]).map(m=>m.path),...ss.flatMap(s=>s.photos||[]),...D.product_suppliers.filter(l=>l.product_id===id).flatMap(l=>l.photos||[]),...(PL.pics||[]),...(PL.box||[]),...(PL.aplus||[]).map(m=>m&&m.path)]);
+    D.samples=D.samples.filter(s=>s.product_id!==id); D.product_suppliers=D.product_suppliers.filter(l=>l.product_id!==id); await del("products",id); location.hash="products"; toast("Product deleted"); return}
   if(t==="cat"){D.products.forEach(p=>{if(p.category_id===id)p.category_id=null});D.thoughts.forEach(x=>{if(x.category_id===id)x.category_id=null});if(ui.cat===id)ui.cat="";await del("categories",id);toast("Category deleted. Its products are now Uncategorised.")}
-  if(t==="sup"){D.samples.forEach(s=>{if(s.supplier_id===id)s.supplier_id=null});ui.openSup=null;await del("suppliers",id);toast("Supplier deleted")}
+  if(t==="psph"){const l=byId("product_suppliers",id);if(!l)return;const arr=[...(l.photos||[])];const [gone]=arr.splice(+i,1);await upd("product_suppliers",id,{photos:arr});removeFiles([gone])}
+  if(t==="ps"){const l=byId("product_suppliers",id);if(l)removeFiles(l.photos);await del("product_suppliers",id);toast("Removed from this product")}
+  if(t==="sup"){removeFiles(D.product_suppliers.filter(l=>l.supplier_id===id).flatMap(l=>l.photos||[]));D.product_suppliers=D.product_suppliers.filter(l=>l.supplier_id!==id);D.samples.forEach(s=>{if(s.supplier_id===id)s.supplier_id=null});ui.openSup=null;await del("suppliers",id);toast("Supplier deleted")}
   if(t==="th"){await del("thoughts",id)}
   if(t==="samp"){const s=byId("samples",id);if(s)removeFiles(s.photos);ui.editSample=null;await del("samples",id);toast("Sample deleted")}
   if(t==="lap"){const p=byId("products",id);if(!p)return;const L=clone(p.listing);if(!L.aplus)L.aplus=DEFAULT_AP.map(x=>({...x}));const [gone]=L.aplus.splice(+i,1);await upd("products",id,{listing:L});if(gone)removeFiles([gone.path])}
@@ -1339,7 +1475,12 @@ async function saveField(el){
     const row=byId(el.dataset.t,el.dataset.id); if(!row||row[f]===v) return false;
     if(el.dataset.t==="categories"&&f==="name"&&!String(v).trim()){toast("A category needs a name.");return false}
     if(el.dataset.t==="suppliers"&&f==="name"&&!String(v).trim()){toast("A supplier needs a name.");return false}
-    await upd(el.dataset.t,el.dataset.id,{[f]:v}); return true;
+    await upd(el.dataset.t,el.dataset.id,{[f]:v});
+    if(el.dataset.t==="product_suppliers"&&f!=="last_update"&&row.last_update!==today()){
+      await upd("product_suppliers",row.id,{last_update:today()});
+      const di=document.querySelector(`input[data-t="product_suppliers"][data-id="${row.id}"][data-f="last_update"]`); if(di) di.value=today();
+    }
+    return true;
   }
   if(el.dataset.lst){
     const p=byId("products",el.dataset.id); if(!p) return false;
@@ -1390,12 +1531,19 @@ document.addEventListener("submit",async e=>{
       const n=$("#addasin"); if(n) n.focus();
       (async()=>{await pullProduct(p.id);await pullComps(p.id)})();
     }
-    if(k==="addsup"){const name=(d.name||"").trim();if(!name)return;const s=await ins("suppliers",{name,source:d.source,wechat:d.wechat||"",alibaba:d.alibaba||"",contact:d.contact||""});if(s){ui.openSup=s.id;toast("Supplier added");render()}}
+    if(k==="addpsup"){const p=byId("products",f.dataset.id); const name=(d.name||"").trim(); if(!p||!name) return;
+      let sp=findSup(name);
+      if(!sp){sp=await ins("suppliers",{name,source:d.source||"Alibaba"}); if(!sp) return}
+      if(D.product_suppliers.some(x=>x.product_id===p.id&&x.supplier_id===sp.id)){toast(`${sp.name} is already on this product`);return}
+      const l=await ins("product_suppliers",{product_id:p.id,supplier_id:sp.id,stage:"Found",last_update:today()});
+      if(l){toast(`Added ✓ ${sp.name}`);render();const n=$('input[list="suplist-ps"]');if(n)n.focus()}}
+    if(k==="addsup"){const name=(d.name||"").trim();if(!name)return;const row={name,source:d.source,wechat:d.wechat||"",alibaba:d.alibaba||"",contact:d.contact||""};if(!ui.psMissing)row.company=(d.company||"").trim();const s=await ins("suppliers",row);if(s){ui.openSup=s.id;toast("Supplier added");render()}}
     if(k==="logsample"){
-      let supplier_id=d.supplier_id;
-      if(supplier_id==="__new"){
-        const name=(d.sup_name||"").trim(); if(!name){toast("Add the supplier's name.");return}
-        const c=(d.sup_contact||"").trim(); const row={name,source:d.sup_source||"Alibaba"};
+      const typed=(d.sup_name||"").trim(); if(!typed){toast("Type the supplier's name.");return}
+      let supplier_id; const known=findSup(typed);
+      if(known) supplier_id=known.id;
+      else{
+        const c=(d.sup_contact||"").trim(); const row={name:typed,source:d.sup_source||"Alibaba"};
         if(isUrl(c)) row.alibaba=c; else if(row.source==="WeChat") row.wechat=c; else row.contact=c;
         const s=await ins("suppliers",row); if(!s) return; supplier_id=s.id;
       }
@@ -1404,7 +1552,7 @@ document.addEventListener("submit",async e=>{
       const row={product_id:d.product_id,supplier_id,status:st,sample_cost:d.sample_cost||"",unit_price:d.unit_price||"",moq:d.moq||"",tracking:d.tracking||"",eta:d.eta||null,notes:d.notes||"",photos,
                  arrived_on:st==="On the way"?null:today(),decided_on:(st==="Approved"||st==="Rejected")?today():null};
       const s=await ins("samples",row);
-      if(s){ui.pending=[];ui.newSup=false;const p=byId("products",d.product_id);if(p&&["Idea","Researching","Shortlisted"].includes(p.status))await upd("products",p.id,{status:"Sampling"});toast("Sample logged");render()}
+      if(s){ui.pending=[];ui.logSup=null;await ensureLink(d.product_id,supplier_id);const p=byId("products",d.product_id);if(p&&["Idea","Researching","Shortlisted"].includes(p.status))await upd("products",p.id,{status:"Sampling"});toast("Sample logged");render()}
     }
   } finally { ui.busy=false; btns.forEach(b=>b.disabled=false); }
 });
@@ -1417,7 +1565,13 @@ document.addEventListener("click",e=>{
   if(act!=="del"&&ui.confirm) ui.confirm=null;
   const sameHash = h => (location.hash||"#dashboard")==="#"+h;
   switch(act){
-    case "tab": ui.tab=v; render(); break;
+    case "tab": ui.tab=v; ui.logSup=null; render(); break;
+    case "smode": ui.smode=v; render(); break;
+    case "psstage": {const l=byId("product_suppliers",id); if(!l) break; const patch={stage:v,last_update:today()}; if(PSTAGES.indexOf(v)>=1&&!l.contacted_on) patch.contacted_on=today(); upd("product_suppliers",id,patch); render(); break;}
+    case "psdrop": upd("product_suppliers",id,{stage:"Dropped",last_update:today()}); render(); break;
+    case "psrestore": {const l=byId("product_suppliers",id); if(!l) break; const has=D.samples.some(x=>x.product_id===l.product_id&&x.supplier_id===l.supplier_id);
+      upd("product_suppliers",id,{stage:has?"Sampling":(l.unit_price||l.sample_price)?"Quote in":l.contacted_on?"Contacted":"Found",last_update:today()}); render(); break;}
+    case "logsup": ui.logSup=v; ui.tab="samples"; render(); {const f=$("form.logform"); if(f) f.scrollIntoView({behavior:"smooth",block:"start"})} break;
     case "openadd": ui.addOpen=true; render(); {const n=$("#addasin"); if(n) n.focus();} break;
     case "pullasin": pullProduct(id).then(()=>pullComps(id)); toast("Checking the ASIN…"); break;
     case "pullcomps": pullComps(id); break;
@@ -1463,6 +1617,7 @@ const timers=new WeakMap(), pendingEls=new Set();
 function flushSaves(){pendingEls.forEach(el=>{clearTimeout(timers.get(el));if(document.contains(el))saveField(el)});pendingEls.clear()}
 document.addEventListener("input",e=>{
   const el=e.target;
+  if(el.dataset&&el.dataset.role==="supin"){const t=el.value.trim(),g=el.closest("form").querySelector('[data-role="newsup"]');if(g)g.hidden=!t||!!findSup(t);return}
   if(el.id==="psearch"){ui.q=el.value;const g=$("#pgrid");if(g)g.innerHTML=gridHtml();return}
   if(el.dataset.add){
     if(el.dataset.add==="row") ui.add.rows[+el.dataset.i]=el.value; else ui.add[el.dataset.add]=el.value;
@@ -1483,7 +1638,6 @@ document.addEventListener("change",e=>{
   if(el.id==="sprodfilter"){ui.sprod=el.value;render();return}
   if(el.id==="stagefilter"){ui.stage=el.value;render();return}
   if(el.dataset.add==="cat"){ui.add.cat=el.value;return}
-  if(el.dataset.role==="supsel"){ui.newSup=el.value==="__new";const g=el.closest("form").querySelector('[data-role="newsup"]');if(g)g.hidden=!ui.newSup;return}
   if(el.matches("[data-upload]")){const files=[...el.files];el.value="";handleFiles(el.dataset.upload,el.dataset.id,files,el.dataset.i);return}
   if(el.matches("[data-t],[data-arr],[data-lst]")){
     clearTimeout(timers.get(el)); pendingEls.delete(el);
@@ -1531,7 +1685,8 @@ function exportXlsx(){
     "Main photo":imgUrl(p.image_path),"Listing pictures":((p.listing||{}).pics||[]).filter(Boolean).map(imgUrl).join("\n"),"Box images":((p.listing||{}).box||[]).filter(Boolean).map(imgUrl).join("\n"),"A+ designs":((p.listing||{}).aplus||[]).filter(m=>m&&m.path).map(m=>(m.type||"")+": "+imgUrl(m.path)).join("\n"),"Mockups":(p.mockups||[]).map(m=>imgUrl(m.path)).join("\n"),"Added":fmtAdded(p.created_at)}));
   const comps=S.products().flatMap(p=>(p.competitors||[]).map(c=>({"Product":pname(p),"Competitor":c.title,"Brand":c.brand||"","ASIN":c.asin||parseAsin(c.link),"Link":c.link,"List price £":numv(c.list),"Selling price £":numv(c.sell||c.price),"Average £":cAvg(c)==null?null:Number(cAvg(c).toFixed(2)),"Rating":numv(c.rating),"Reviews":numv(c.reviews),"Their images":c.imgq,"What they do well":c.good||"","Weak spots":c.weak||c.notes||"","How I beat them":c.beat||"","Image":imgUrl(c.image)})));
   const samples=S.samples().map(s=>({"Product":pname(byId("products",s.product_id)),"Supplier":sup(s.supplier_id),"Where found":(supOf(s.supplier_id)||{}).source||"","Status":s.status,"Sample cost":s.sample_cost,"Unit price":s.unit_price,"MOQ":s.moq,"Quality /5":s.quality,"Tracking":s.tracking,"ETA":dmy(s.eta),"Arrived":dmy(s.arrived_on),"Decided":dmy(s.decided_on),"Notes":s.notes,"Photos":(s.photos||[]).map(imgUrl).join("\n"),"Logged":dmy(s.created_at)}));
-  const sups=S.suppliers().map(s=>({"Supplier":s.name,"Where found":s.source,"WeChat":s.wechat,"Alibaba":s.alibaba,"Contact":s.contact,"Phone / email":s.phone,"Notes":s.notes,"Added":dmy(s.created_at)}));
+  const psl=D.product_suppliers.map(l=>{const s=supOf(l.supplier_id)||{};return {"Product":pname(byId("products",l.product_id)),"Supplier":s.name||"","Company / trading name":s.company||"","Where found":s.source||"","Stage":l.stage,"Contacted":dmy(l.contacted_on),"Last update":dmy(l.last_update),"Quoted unit price":l.unit_price,"MOQ":l.moq,"Sample price":l.sample_price,"Lead time":l.lead_time,"Next step":l.next_step,"Extra info":l.notes,"Images":(l.photos||[]).length,"WeChat":s.wechat||"","Alibaba":s.alibaba||"","Contact":s.contact||"","Phone / email":s.phone||""}});
+  const sups=S.suppliers().map(s=>({"Supplier":s.name,"Company / trading name":s.company||"","Where found":s.source,"WeChat":s.wechat,"Alibaba":s.alibaba,"Contact":s.contact,"Phone / email":s.phone,"Notes":s.notes,"Added":dmy(s.created_at)}));
   const thoughts=S.thoughts().map(t=>({"Thought":t.text,"Category":t.category_id?cat(t.category_id):"","Added":dmy(t.created_at)}));
   const cats=S.categories().map(c=>({"Category":c.name,"Products":D.products.filter(p=>p.category_id===c.id).length}));
   const wb=X.utils.book_new();
@@ -1539,6 +1694,7 @@ function exportXlsx(){
   X.utils.book_append_sheet(wb,sheet(comps),"Competitors");
   X.utils.book_append_sheet(wb,sheet(samples),"Samples");
   X.utils.book_append_sheet(wb,sheet(sups),"Suppliers");
+  X.utils.book_append_sheet(wb,sheet(psl),"Product suppliers");
   X.utils.book_append_sheet(wb,sheet(thoughts),"Brain dump");
   X.utils.book_append_sheet(wb,sheet(cats),"Categories");
   X.writeFile(wb,`PL-Hub-backup-${dmy(today()).split("/").join("-")}.xlsx`);
