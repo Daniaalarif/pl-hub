@@ -402,6 +402,27 @@ textarea.bul{min-height:44px;resize:none;overflow:hidden}
 .pst-chosen{background:var(--ink);color:#fff}
 .pst-dropped{background:var(--soft);color:var(--muted)}
 .pstable table{min-width:1100px}
+/* brands */
+.brgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(440px,100%),1fr));gap:16px}
+.brc{background:#fff;border-radius:var(--r);padding:18px;display:flex;flex-direction:column;gap:12px;min-width:0}
+.brh{display:flex;gap:12px;align-items:center;min-width:0}
+.brthumb{width:56px;height:56px;flex:0 0 56px;border-radius:16px;background:var(--blue-soft);color:var(--blue);display:grid;place-items:center;font-weight:700;font-size:24px;overflow:hidden}
+.brthumb img{width:100%;height:100%;object-fit:cover}
+.brid{display:flex;flex-direction:column;gap:4px;min-width:0;flex:1}
+.brname{border:1px solid transparent;border-radius:8px;font-size:20px;font-weight:700;padding:1px 6px;margin-left:-7px;background:transparent;width:100%;min-width:0;font-family:inherit}
+.brname:hover,.brname:focus{border-color:var(--line);background:#fff;outline:none}
+.brcat{align-self:flex-start;border:1px solid var(--line);border-radius:999px;background:var(--bg);min-height:30px;padding:0 10px;font-size:13px;max-width:100%}
+.brfav{width:44px;height:44px;flex:0 0 44px;border-radius:50%;border:1px solid var(--line);background:#fff;color:#b9b7b0;font-size:20px;cursor:pointer}
+.brfav[aria-pressed="true"]{background:#fff3df;border-color:#f1c27d;color:#e08a00}
+.brlink{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.brlink input{flex:1 1 200px;min-width:0;border:1px solid var(--line);border-radius:999px;padding:0 14px;min-height:40px;font-size:14px;background:var(--bg)}
+.brtags{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+.btg{min-height:30px;padding:0 11px;border-radius:999px;border:1px solid var(--line);background:#fff;font-size:12px;cursor:pointer;color:var(--ink);font-family:inherit}
+.btg[aria-pressed="true"]{background:var(--blue-soft);border-color:var(--blue-soft);color:var(--blue-d);font-weight:700}
+.brc .psimgs{background:var(--bg)}
+.cmbcols.two{grid-template-columns:repeat(2,minmax(0,1fr))}
+@media (max-width:860px){.cmbcols.two{grid-template-columns:minmax(0,1fr)}}
+
 
 .ctable table{border-collapse:collapse;width:100%;min-width:1240px;font-size:14px}
 .ctable th{text-align:left;font-size:12px;color:var(--muted);font-weight:500;padding:12px;background:var(--soft)}
@@ -543,6 +564,7 @@ textarea.agrow:focus{border-color:var(--ink);outline:none}
       <nav class="nav" aria-label="Sections">
         <a href="#dashboard" data-nav="dashboard">Dashboard</a>
         <a href="#products" data-nav="products">Products</a>
+        <a href="#brands" data-nav="brands">Brands</a>
         <a href="#samples" data-nav="samples">Samples <span class="badge" id="navbadge" hidden></span></a>
         <a href="#suppliers" data-nav="suppliers">Suppliers</a>
         <a href="#thoughts" data-nav="thoughts">Brain dump</a>
@@ -575,15 +597,16 @@ const STAGES = ["Idea","Researching","Shortlisted","Sampling","Ordered","Live","
 const SSTAGES = ["On the way","Arrived","Approved","Rejected"];
 const SOURCES = ["Alibaba","Canton Fair","WeChat","Internet","Other"];
 const IMGQ = ["—","Poor","Fair","Good"];
+const BTAGS = ["Branding","Packaging","Images","Listing copy","Pricing","Product","Story","Reviews"];
 const PSTAGES = ["Found","Contacted","Replied","Quote in","Sample asked","Sampling","Chosen"];   /* plus "Dropped" */
 const psClass = s => "pst-"+String(s||"").toLowerCase().replace(/\s+/g,"");
-const TABLES = ["categories","products","suppliers","samples","thoughts","product_suppliers"];
+const TABLES = ["categories","products","suppliers","samples","thoughts","product_suppliers","brands"];
 
 const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-const D = {categories:[],products:[],suppliers:[],samples:[],thoughts:[],product_suppliers:[]};
+const D = {categories:[],products:[],suppliers:[],samples:[],thoughts:[],product_suppliers:[],brands:[]};
 const ui = {route:"dashboard",id:null,tab:"competitors",q:"",cat:"",stage:"",sstatus:"",sprod:"",ssrc:"",tcat:"",
             openSup:null,editSample:null,confirm:null,manageCats:false,pending:[],newSup:null,busy:false,
-            addOpen:false,add:{name:"",asin:"",cat:"",rows:["",""],files:[]},cmode:"cards",smode:"cards",logSup:null,psMissing:false,loading:new Set(),titleOpen:new Set(),combine:false,srate:true};
+            addOpen:false,add:{name:"",asin:"",cat:"",rows:["",""],files:[]},cmode:"cards",smode:"cards",logSup:null,psMissing:false,brMissing:false,bcat:"",bq:"",btag:"",bfav:false,bideas:false,brAdd:false,loading:new Set(),titleOpen:new Set(),combine:false,srate:true};
 const lookup={ok:null,warned:false};
 let user=null, loaded=false, lastLoad=0, pendingRender=false;
 const $ = s => document.querySelector(s);
@@ -625,10 +648,11 @@ function fail(err){console.error(err);const m=(err&&err.message)||"";if(/JWT|tok
 /* ===== data ===== */
 async function loadAll(){
   const res = await Promise.all(TABLES.map(t=>sb.from(t).select("*").limit(5000)));
-  const bad = res.find((r,i)=>r.error && TABLES[i]!=="product_suppliers");
+  const bad = res.find((r,i)=>r.error && !["product_suppliers","brands"].includes(TABLES[i]));
   if(bad){fail(bad.error);return}
   TABLES.forEach((t,i)=>D[t]=res[i].error?[]:(res[i].data||[]));
   ui.psMissing = !!res[TABLES.indexOf("product_suppliers")].error;
+  ui.brMissing = !!res[TABLES.indexOf("brands")].error;
   loaded=true; lastLoad=Date.now(); requestRender();
 }
 async function ins(t,row){
@@ -705,6 +729,7 @@ async function handleFiles(kind,id,files,idx){
   const asMocks = arr => arr.map(path=>({path,caption:""}));
   if(kind==="pmain"){const p=byId("products",id);if(!p)return;const old=p.image_path;await upd("products",id,{image_path:paths[0]});if(paths.length>1)await upd("products",id,{mockups:[...(p.mockups||[]),...asMocks(paths.slice(1))]});removeFiles([old])}
   if(kind==="pmock"){const p=byId("products",id);if(!p)return;await upd("products",id,{mockups:[...(p.mockups||[]),...asMocks(paths)]})}
+  if(kind==="brphoto"){const b=byId("brands",id);if(!b)return;await upd("brands",id,{photos:[...(b.photos||[]),...paths]})}
   if(kind==="psphoto"){const l=byId("product_suppliers",id);if(!l)return;await upd("product_suppliers",id,{photos:[...(l.photos||[]),...paths],last_update:today()})}
   if(kind==="sphoto"){const s=byId("samples",id);if(!s)return;await upd("samples",id,{photos:[...(s.photos||[]),...paths]})}
   if(kind==="newprod"){const p=await ins("products",{image_path:paths[0],category_id:(ui.cat&&ui.cat!=="none")?ui.cat:null,mockups:asMocks(paths.slice(1))});if(p){location.hash="p/"+p.id;toast("Product created. Give it a name.")}return}
@@ -782,7 +807,7 @@ document.addEventListener("pointercancel",()=>{pointerDown=false;tryPending()},t
 function route(){
   const h = decodeURIComponent((location.hash||"").slice(1)) || "dashboard";
   if(h.startsWith("p/")){const id=h.slice(2);if(ui.id!==id)ui.tab="competitors";ui.route="product";ui.id=id}
-  else{ui.route=["dashboard","products","samples","suppliers","thoughts"].includes(h)?h:"dashboard";ui.id=null}
+  else{ui.route=["dashboard","products","brands","samples","suppliers","thoughts"].includes(h)?h:"dashboard";ui.id=null}
   ui.confirm=null; ui.editSample=null; pendingRender=false; render(); window.scrollTo(0,0);
 }
 window.addEventListener("hashchange",route);
@@ -794,7 +819,7 @@ function render(){
   const arrived = D.samples.filter(s=>s.status==="Arrived").length;
   const b=$("#navbadge"); b.hidden=!arrived; b.textContent=arrived;
   if(!loaded){view.innerHTML=`<div class="loading">Loading your research…</div>`;return}
-  const fn={dashboard:vDashboard,products:vProducts,product:vProduct,samples:vSamples,suppliers:vSuppliers,thoughts:vThoughts}[ui.route];
+  const fn={dashboard:vDashboard,products:vProducts,brands:vBrands,product:vProduct,samples:vSamples,suppliers:vSuppliers,thoughts:vThoughts}[ui.route];
   view.innerHTML = fn();
   growAll();
 }
@@ -920,6 +945,82 @@ function manageCats(){
     ${S.categories().map(c=>`<div class="row gap8"><label class="sr" for="cn-${c.id}">Category name</label><input id="cn-${c.id}" class="inp" style="flex:1" value="${esc(c.name)}" data-t="categories" data-id="${c.id}" data-f="name">${delBtn("cat:"+c.id,"Delete")}</div>`).join("")}
     <p class="hint">Deleting a category keeps its products. They move to Uncategorised.</p>
   </section>`;
+}
+
+/* ----- Brands (inspiration) ----- */
+function brList(){
+  const q=ui.bq.trim().toLowerCase();
+  return [...D.brands].filter(b=>(ui.bcat===""||(ui.bcat==="none"?!b.category_id:b.category_id===ui.bcat))
+      &&(!ui.btag||(b.tags||[]).includes(ui.btag))&&(!ui.bfav||b.fav)
+      &&(!q||[b.name,b.url,b.likes,b.ideas,b.comments].some(v=>String(v||"").toLowerCase().includes(q))))
+    .sort((a,b)=>((b.fav?1:0)-(a.fav?1:0))||(a.created_at<b.created_at?1:-1));
+}
+function brGrid(){
+  const list=brList();
+  if(!list.length) return `<div class="empty" style="grid-column:1/-1">${D.brands.length?"Nothing matches these filters.":"No brands yet. Add the ones you love, then come back here for ideas."}</div>`;
+  return list.map(brCard).join("");
+}
+function brIdeasHtml(){
+  const list=brList();
+  const ln=t=>String(t||"").split("\n").map(x=>x.replace(/^[\s\-•*·]+/,"").trim()).filter(Boolean);
+  const spec=[["cg","What I like",b=>b.likes,"Things they do well that I want to learn from"],["ca","What we can do",b=>b.ideas,"Ideas and suggestions for our own brand"]]
+    .map(([k,h,get,sub])=>({k,h,sub,items:list.flatMap(b=>ln(get(b)).map(t=>({t,w:b.name||"Unnamed"})))}));
+  return `<div class="cmb"><button type="button" class="cmbhead" data-act="bideas" aria-expanded="${ui.bideas}"><b>All ideas in one list</b>
+      <span class="cmbcnt">${spec.map(x=>`<i class="${x.k}">${x.items.length}</i>`).join("")}</span><span class="cmbarrow">${ui.bideas?"Hide ▴":"Show ▾"}</span></button>
+    ${ui.bideas?`<div class="cmbcols two">${spec.map(x=>`<div class="cmbcol ${x.k}"><h4>${x.h}<em>${x.items.length}</em></h4><p>${x.sub}</p><ul>${x.items.length?x.items.map(y=>`<li><span class="who">${esc(y.w)}</span><span>${esc(y.t)}</span></li>`).join(""):`<li class="none">Nothing yet</li>`}</ul></div>`).join("")}</div>`:""}</div>`;
+}
+function brAddPanel(){
+  return `<form class="addpanel" data-form="addbrand" autocomplete="off">
+    <div class="row wrapflex gap8"><h2>Add a brand</h2><span class="spacer"></span><span class="sub">Just the basics. Add what you like and your ideas on its card after.</span></div>
+    <div class="ag3">
+      <label class="lf">Brand name<input id="addbrname" name="name" required placeholder="e.g. Nordic Pantry"></label>
+      <label class="lf">Category<select name="cat">${catOptions((ui.bcat&&ui.bcat!=="none")?ui.bcat:"")}</select></label>
+      <label class="lf">Website or Amazon store link<input name="url" placeholder="https://…"></label>
+    </div>
+    <div class="formfoot"><button type="submit" class="pill white big">Add brand</button></div>
+  </form>`;
+}
+function vBrands(){
+  if(ui.brMissing) return `<div class="headline"><h1>Brands</h1></div><div class="empty"><b>One quick setup step first.</b><br>Run the new SQL in Supabase (SQL Editor → New query → paste → Run), then refresh this page.</div>`;
+  const cats=S.categories(), unc=D.brands.filter(b=>!b.category_id).length;
+  return `
+  <div class="headline"><h1>Brands <span class="blue-t">${D.brands.length}</span></h1>${ui.brAdd?`<button type="button" class="pill" data-act="closebr">× Close</button>`:`<button type="button" class="pill blue big" data-act="openbr">+ Add brand</button>`}</div>
+  ${ui.brAdd?brAddPanel():""}
+  <div class="chips" role="group" aria-label="Category">
+    <button type="button" class="chip" data-act="bcat" data-v="" aria-pressed="${ui.bcat===""}">All · ${D.brands.length}</button>
+    ${cats.map(c=>`<button type="button" class="chip" data-act="bcat" data-v="${c.id}" aria-pressed="${ui.bcat===c.id}">${esc(c.name)} · ${D.brands.filter(b=>b.category_id===c.id).length}</button>`).join("")}
+    ${unc?`<button type="button" class="chip" data-act="bcat" data-v="none" aria-pressed="${ui.bcat==="none"}">Uncategorised · ${unc}</button>`:""}
+    <button type="button" class="chip dashed" data-act="managecats">${ui.manageCats?"Done editing":"+ Edit categories"}</button>
+  </div>
+  ${ui.manageCats?manageCats():""}
+  <div class="filters">
+    <label class="search"><span class="sr">Search brands</span><input id="bsearch" value="${esc(ui.bq)}" placeholder="Search name, link or notes…"></label>
+    <label class="inline-field">I like their <select id="btagfilter"><option value="">Anything</option>${BTAGS.map(t=>`<option${ui.btag===t?" selected":""}>${t}</option>`).join("")}</select></label>
+    <button type="button" class="chip" data-act="bfavf" aria-pressed="${ui.bfav}">★ Favourites</button>
+  </div>
+  ${D.brands.length?brIdeasHtml():""}
+  <div class="brgrid" id="brgrid">${brGrid()}</div>`;
+}
+function brCard(b){
+  const A=f=>`data-t="brands" data-id="${b.id}" data-f="${f}"`;
+  const tags=b.tags||[], ph=b.photos||[];
+  return `<article class="brc">
+    <header class="brh">
+      <span class="brthumb" aria-hidden="true">${ph[0]?`<img src="${imgUrl(ph[0])}" alt="" loading="lazy">`:esc((b.name||"?").trim().charAt(0).toUpperCase())}</span>
+      <div class="brid"><input class="brname" value="${esc(b.name)}" placeholder="Brand name" aria-label="Brand name" ${A("name")}>
+        <select class="brcat" aria-label="Category" ${A("category_id")} data-null="1">${catOptions(b.category_id)}</select></div>
+      <button type="button" class="brfav" data-act="brfav" data-id="${b.id}" aria-pressed="${!!b.fav}" aria-label="Favourite">★</button>
+    </header>
+    <div class="brlink"><input value="${esc(b.url)}" placeholder="Website, Amazon store or Instagram link" aria-label="Link" ${A("url")}>${isUrl(b.url)?`<a class="pill outline sm" href="${esc(b.url)}" target="_blank" rel="noopener">Visit ↗</a>`:""}</div>
+    <div class="brtags" role="group" aria-label="What I like about them"><span class="meta">I like their</span>${BTAGS.map(t=>`<button type="button" class="btg" data-act="btag" data-id="${b.id}" data-v="${t}" aria-pressed="${tags.includes(t)}">${t}</button>`).join("")}</div>
+    <label class="tf cg"><span><i class="cdot"></i>What I like about them</span><textarea class="bul" rows="1" placeholder="• Press Enter for a new point" ${A("likes")}>${esc(b.likes||"")}</textarea></label>
+    <label class="tf ca"><span><i class="cdot"></i>What can be done / ideas for us</span><textarea class="bul" rows="1" placeholder="• How could we use this in our own brand?" ${A("ideas")}>${esc(b.ideas||"")}</textarea></label>
+    <label class="tf"><span>Comments</span><textarea class="agrow" rows="2" placeholder="Anything else worth remembering…" ${A("comments")}>${esc(b.comments||"")}</textarea></label>
+    <div class="psimgs"><div class="psimgh"><h4>Images</h4><span class="meta">Logo, packaging, listing or social screenshots</span></div>
+      <div class="photos">${ph.map((x,i)=>`<figure><a href="${imgUrl(x)}" target="_blank" rel="noopener"><img src="${imgUrl(x)}" alt="Brand image ${i+1}" loading="lazy"></a>${delBtn(`brph:${b.id}:${i}`,"Remove")}</figure>`).join("")}
+        <label class="psadd-img drop" data-drop="brphoto" data-id="${b.id}"><span class="plus">+</span><span>Add images</span><input type="file" accept="image/*" multiple class="sr" data-upload="brphoto" data-id="${b.id}"></label></div></div>
+    <div class="row gap8 wrapflex"><span class="meta">Added ${dmy(b.created_at)}</span><span class="spacer"></span>${delBtn("br:"+b.id,"Delete brand")}</div>
+  </article>`;
 }
 
 /* ----- Product page ----- */
@@ -1455,7 +1556,9 @@ async function doDelete(key){
     const PL=p.listing||{};
     removeFiles([p.image_path,...(p.mockups||[]).map(m=>m.path),...ss.flatMap(s=>s.photos||[]),...D.product_suppliers.filter(l=>l.product_id===id).flatMap(l=>l.photos||[]),...(PL.pics||[]),...(PL.box||[]),...(PL.aplus||[]).map(m=>m&&m.path)]);
     D.samples=D.samples.filter(s=>s.product_id!==id); D.product_suppliers=D.product_suppliers.filter(l=>l.product_id!==id); await del("products",id); location.hash="products"; toast("Product deleted"); return}
-  if(t==="cat"){D.products.forEach(p=>{if(p.category_id===id)p.category_id=null});D.thoughts.forEach(x=>{if(x.category_id===id)x.category_id=null});if(ui.cat===id)ui.cat="";await del("categories",id);toast("Category deleted. Its products are now Uncategorised.")}
+  if(t==="cat"){D.products.forEach(p=>{if(p.category_id===id)p.category_id=null});D.thoughts.forEach(x=>{if(x.category_id===id)x.category_id=null});D.brands.forEach(x=>{if(x.category_id===id)x.category_id=null});if(ui.cat===id)ui.cat="";if(ui.bcat===id)ui.bcat="";await del("categories",id);toast("Category deleted. Its products are now Uncategorised.")}
+  if(t==="brph"){const b=byId("brands",id);if(!b)return;const arr=[...(b.photos||[])];const [gone]=arr.splice(+i,1);await upd("brands",id,{photos:arr});removeFiles([gone])}
+  if(t==="br"){const b=byId("brands",id);if(b)removeFiles(b.photos);await del("brands",id);toast("Brand deleted")}
   if(t==="psph"){const l=byId("product_suppliers",id);if(!l)return;const arr=[...(l.photos||[])];const [gone]=arr.splice(+i,1);await upd("product_suppliers",id,{photos:arr});removeFiles([gone])}
   if(t==="ps"){const l=byId("product_suppliers",id);if(l)removeFiles(l.photos);await del("product_suppliers",id);toast("Removed from this product")}
   if(t==="sup"){removeFiles(D.product_suppliers.filter(l=>l.supplier_id===id).flatMap(l=>l.photos||[]));D.product_suppliers=D.product_suppliers.filter(l=>l.supplier_id!==id);D.samples.forEach(s=>{if(s.supplier_id===id)s.supplier_id=null});ui.openSup=null;await del("suppliers",id);toast("Supplier deleted")}
@@ -1510,6 +1613,9 @@ document.addEventListener("submit",async e=>{
       if(as==="product"){const p=await productFromText(text,d.category_id);if(p){location.hash="p/"+p.id;toast("Product created")}}
       else{const t=await ins("thoughts",{text,category_id:d.category_id||null});if(t){f.reset();toast("Thought saved");render()}}}
     if(k==="addprod"){const q=(d.q||"").trim();const p=await productFromText(q,(ui.cat&&ui.cat!=="none")?ui.cat:null);if(p)location.hash="p/"+p.id}
+    if(k==="addbrand"){const name=(d.name||"").trim(); if(!name) return;
+      const b=await ins("brands",{name,category_id:d.cat||null,url:(d.url||"").trim()});
+      if(b){ui.brAdd=false;toast("Brand added ✓");render()}}
     if(k==="addcat"){const name=(d.name||"").trim();if(!name)return;const mx=Math.max(0,...D.categories.map(c=>c.sort||0));const c=await ins("categories",{name,sort:mx+1});if(c){toast("Category added");render()}}
     if(k==="addcomp"){const p=byId("products",f.dataset.id);if(!p)return;
       const have=new Set((p.competitors||[]).map(c=>c.asin||parseAsin(c.link)).filter(Boolean));
@@ -1567,6 +1673,13 @@ document.addEventListener("click",e=>{
   switch(act){
     case "tab": ui.tab=v; ui.logSup=null; render(); break;
     case "smode": ui.smode=v; render(); break;
+    case "bcat": ui.bcat=v; render(); break;
+    case "bfavf": ui.bfav=!ui.bfav; render(); break;
+    case "bideas": ui.bideas=!ui.bideas; render(); break;
+    case "openbr": ui.brAdd=true; render(); {const n=$("#addbrname"); if(n) n.focus();} break;
+    case "closebr": ui.brAdd=false; render(); break;
+    case "brfav": {const b=byId("brands",id); if(!b) break; upd("brands",id,{fav:!b.fav}); render(); break;}
+    case "btag": {const b=byId("brands",id); if(!b) break; const t=new Set(b.tags||[]); if(t.has(v)) t.delete(v); else t.add(v); upd("brands",id,{tags:BTAGS.filter(x=>t.has(x))}); render(); break;}
     case "psstage": {const l=byId("product_suppliers",id); if(!l) break; const patch={stage:v,last_update:today()}; if(PSTAGES.indexOf(v)>=1&&!l.contacted_on) patch.contacted_on=today(); upd("product_suppliers",id,patch); render(); break;}
     case "psdrop": upd("product_suppliers",id,{stage:"Dropped",last_update:today()}); render(); break;
     case "psrestore": {const l=byId("product_suppliers",id); if(!l) break; const has=D.samples.some(x=>x.product_id===l.product_id&&x.supplier_id===l.supplier_id);
@@ -1618,6 +1731,7 @@ function flushSaves(){pendingEls.forEach(el=>{clearTimeout(timers.get(el));if(do
 document.addEventListener("input",e=>{
   const el=e.target;
   if(el.dataset&&el.dataset.role==="supin"){const t=el.value.trim(),g=el.closest("form").querySelector('[data-role="newsup"]');if(g)g.hidden=!t||!!findSup(t);return}
+  if(el.id==="bsearch"){ui.bq=el.value;const g=$("#brgrid");if(g)g.innerHTML=brGrid();return}
   if(el.id==="psearch"){ui.q=el.value;const g=$("#pgrid");if(g)g.innerHTML=gridHtml();return}
   if(el.dataset.add){
     if(el.dataset.add==="row") ui.add.rows[+el.dataset.i]=el.value; else ui.add[el.dataset.add]=el.value;
@@ -1637,6 +1751,7 @@ document.addEventListener("change",e=>{
   const el=e.target;
   if(el.id==="sprodfilter"){ui.sprod=el.value;render();return}
   if(el.id==="stagefilter"){ui.stage=el.value;render();return}
+  if(el.id==="btagfilter"){ui.btag=el.value;render();return}
   if(el.dataset.add==="cat"){ui.add.cat=el.value;return}
   if(el.matches("[data-upload]")){const files=[...el.files];el.value="";handleFiles(el.dataset.upload,el.dataset.id,files,el.dataset.i);return}
   if(el.matches("[data-t],[data-arr],[data-lst]")){
@@ -1685,6 +1800,7 @@ function exportXlsx(){
     "Main photo":imgUrl(p.image_path),"Listing pictures":((p.listing||{}).pics||[]).filter(Boolean).map(imgUrl).join("\n"),"Box images":((p.listing||{}).box||[]).filter(Boolean).map(imgUrl).join("\n"),"A+ designs":((p.listing||{}).aplus||[]).filter(m=>m&&m.path).map(m=>(m.type||"")+": "+imgUrl(m.path)).join("\n"),"Mockups":(p.mockups||[]).map(m=>imgUrl(m.path)).join("\n"),"Added":fmtAdded(p.created_at)}));
   const comps=S.products().flatMap(p=>(p.competitors||[]).map(c=>({"Product":pname(p),"Competitor":c.title,"Brand":c.brand||"","ASIN":c.asin||parseAsin(c.link),"Link":c.link,"List price £":numv(c.list),"Selling price £":numv(c.sell||c.price),"Average £":cAvg(c)==null?null:Number(cAvg(c).toFixed(2)),"Rating":numv(c.rating),"Reviews":numv(c.reviews),"Their images":c.imgq,"What they do well":c.good||"","Weak spots":c.weak||c.notes||"","How I beat them":c.beat||"","Image":imgUrl(c.image)})));
   const samples=S.samples().map(s=>({"Product":pname(byId("products",s.product_id)),"Supplier":sup(s.supplier_id),"Where found":(supOf(s.supplier_id)||{}).source||"","Status":s.status,"Sample cost":s.sample_cost,"Unit price":s.unit_price,"MOQ":s.moq,"Quality /5":s.quality,"Tracking":s.tracking,"ETA":dmy(s.eta),"Arrived":dmy(s.arrived_on),"Decided":dmy(s.decided_on),"Notes":s.notes,"Photos":(s.photos||[]).map(imgUrl).join("\n"),"Logged":dmy(s.created_at)}));
+  const brs=D.brands.map(b=>({"Brand":b.name,"Category":catName(b.category_id),"Link":b.url,"Favourite":b.fav?"Yes":"","I like their":(b.tags||[]).join(", "),"What I like":b.likes,"What can be done / ideas":b.ideas,"Comments":b.comments,"Images":(b.photos||[]).length,"Added":dmy(b.created_at)}));
   const psl=D.product_suppliers.map(l=>{const s=supOf(l.supplier_id)||{};return {"Product":pname(byId("products",l.product_id)),"Supplier":s.name||"","Company / trading name":s.company||"","Where found":s.source||"","Stage":l.stage,"Contacted":dmy(l.contacted_on),"Last update":dmy(l.last_update),"Quoted unit price":l.unit_price,"MOQ":l.moq,"Sample price":l.sample_price,"Lead time":l.lead_time,"Next step":l.next_step,"Extra info":l.notes,"Images":(l.photos||[]).length,"WeChat":s.wechat||"","Alibaba":s.alibaba||"","Contact":s.contact||"","Phone / email":s.phone||""}});
   const sups=S.suppliers().map(s=>({"Supplier":s.name,"Company / trading name":s.company||"","Where found":s.source,"WeChat":s.wechat,"Alibaba":s.alibaba,"Contact":s.contact,"Phone / email":s.phone,"Notes":s.notes,"Added":dmy(s.created_at)}));
   const thoughts=S.thoughts().map(t=>({"Thought":t.text,"Category":t.category_id?cat(t.category_id):"","Added":dmy(t.created_at)}));
@@ -1695,6 +1811,7 @@ function exportXlsx(){
   X.utils.book_append_sheet(wb,sheet(samples),"Samples");
   X.utils.book_append_sheet(wb,sheet(sups),"Suppliers");
   X.utils.book_append_sheet(wb,sheet(psl),"Product suppliers");
+  X.utils.book_append_sheet(wb,sheet(brs),"Brands");
   X.utils.book_append_sheet(wb,sheet(thoughts),"Brain dump");
   X.utils.book_append_sheet(wb,sheet(cats),"Categories");
   X.writeFile(wb,`PL-Hub-backup-${dmy(today()).split("/").join("-")}.xlsx`);
