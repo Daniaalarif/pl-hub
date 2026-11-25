@@ -402,6 +402,26 @@ textarea.bul{min-height:44px;resize:none;overflow:hidden}
 .pst-chosen{background:var(--ink);color:#fff}
 .pst-dropped{background:var(--soft);color:var(--muted)}
 .pstable table{min-width:1100px}
+/* brand names */
+.nmgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(330px,100%),1fr));gap:16px}
+.nmc{background:#fff;border-radius:var(--r);padding:18px;display:flex;flex-direction:column;gap:12px;min-width:0;border:2px solid transparent}
+.nmc.rej{opacity:.7}
+.nmc.won{border-color:var(--green)}
+.nmname{font-size:22px}
+.nmwarn{margin:0;font-size:13px;color:var(--red);font-weight:600}
+.nmnote{margin:0;font-size:13px;color:var(--blue)}
+.nmst{display:flex;gap:6px;flex-wrap:wrap}
+.nst{min-height:32px;padding:0 12px;border-radius:999px;border:1px solid var(--line);background:#fff;font-size:13px;cursor:pointer;color:var(--muted);font-family:inherit}
+.nst[aria-pressed="true"]{font-weight:700;border-color:transparent}
+.nst-Idea[aria-pressed="true"]{background:var(--soft);color:var(--ink)}
+.nst-Shortlisted[aria-pressed="true"]{background:var(--blue);color:#fff}
+.nst-Checking[aria-pressed="true"]{background:var(--orange-soft);color:#7a3a0c}
+.nst-Chosen[aria-pressed="true"]{background:var(--green);color:#fff}
+.nst-Rejected[aria-pressed="true"]{background:var(--ink);color:#fff}
+.nmlinks{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+.nmadd{background:#fff;border-radius:999px;padding:6px}
+.nmadd select{min-height:50px;border:none;border-radius:999px;background:var(--bg);padding:0 16px;font-size:15px;flex:0 0 auto;max-width:200px}
+
 /* brands */
 .brgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(440px,100%),1fr));gap:16px}
 .brc{background:#fff;border-radius:var(--r);padding:18px;display:flex;flex-direction:column;gap:12px;min-width:0}
@@ -565,6 +585,7 @@ textarea.agrow:focus{border-color:var(--ink);outline:none}
         <a href="#dashboard" data-nav="dashboard">Dashboard</a>
         <a href="#products" data-nav="products">Products</a>
         <a href="#brands" data-nav="brands">Brands</a>
+        <a href="#names" data-nav="names">Brand names</a>
         <a href="#samples" data-nav="samples">Samples <span class="badge" id="navbadge" hidden></span></a>
         <a href="#suppliers" data-nav="suppliers">Suppliers</a>
         <a href="#thoughts" data-nav="thoughts">Brain dump</a>
@@ -598,15 +619,17 @@ const SSTAGES = ["On the way","Arrived","Approved","Rejected"];
 const SOURCES = ["Alibaba","Canton Fair","WeChat","Internet","Other"];
 const IMGQ = ["—","Poor","Fair","Good"];
 const BTAGS = ["Branding","Packaging","Images","Listing copy","Pricing","Product","Story","Reviews"];
+const NSTATUS = ["Idea","Shortlisted","Checking","Chosen","Rejected"];
+const NCHECKS = ["Trademark clear","Domain free","Instagram free","Not on Amazon","Easy to say & spell"];
 const PSTAGES = ["Found","Contacted","Replied","Quote in","Sample asked","Sampling","Chosen"];   /* plus "Dropped" */
 const psClass = s => "pst-"+String(s||"").toLowerCase().replace(/\s+/g,"");
-const TABLES = ["categories","products","suppliers","samples","thoughts","product_suppliers","brands"];
+const TABLES = ["categories","products","suppliers","samples","thoughts","product_suppliers","brands","brand_names"];
 
 const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-const D = {categories:[],products:[],suppliers:[],samples:[],thoughts:[],product_suppliers:[],brands:[]};
+const D = {categories:[],products:[],suppliers:[],samples:[],thoughts:[],product_suppliers:[],brands:[],brand_names:[]};
 const ui = {route:"dashboard",id:null,tab:"competitors",q:"",cat:"",stage:"",sstatus:"",sprod:"",ssrc:"",tcat:"",
             openSup:null,editSample:null,confirm:null,manageCats:false,pending:[],newSup:null,busy:false,
-            addOpen:false,add:{name:"",asin:"",cat:"",rows:["",""],files:[]},cmode:"cards",smode:"cards",logSup:null,psMissing:false,brMissing:false,bcat:"",bq:"",btag:"",bfav:false,bideas:false,brAdd:false,loading:new Set(),titleOpen:new Set(),combine:false,srate:true};
+            addOpen:false,add:{name:"",asin:"",cat:"",rows:["",""],files:[]},cmode:"cards",smode:"cards",logSup:null,psMissing:false,brMissing:false,nmMissing:false,ncat:"",nq:"",nstatus:"",nfav:false,bcat:"",bq:"",btag:"",bfav:false,bideas:false,brAdd:false,loading:new Set(),titleOpen:new Set(),combine:false,srate:true};
 const lookup={ok:null,warned:false};
 let user=null, loaded=false, lastLoad=0, pendingRender=false;
 const $ = s => document.querySelector(s);
@@ -648,11 +671,12 @@ function fail(err){console.error(err);const m=(err&&err.message)||"";if(/JWT|tok
 /* ===== data ===== */
 async function loadAll(){
   const res = await Promise.all(TABLES.map(t=>sb.from(t).select("*").limit(5000)));
-  const bad = res.find((r,i)=>r.error && !["product_suppliers","brands"].includes(TABLES[i]));
+  const bad = res.find((r,i)=>r.error && !["product_suppliers","brands","brand_names"].includes(TABLES[i]));
   if(bad){fail(bad.error);return}
   TABLES.forEach((t,i)=>D[t]=res[i].error?[]:(res[i].data||[]));
   ui.psMissing = !!res[TABLES.indexOf("product_suppliers")].error;
   ui.brMissing = !!res[TABLES.indexOf("brands")].error;
+  ui.nmMissing = !!res[TABLES.indexOf("brand_names")].error;
   loaded=true; lastLoad=Date.now(); requestRender();
 }
 async function ins(t,row){
@@ -807,7 +831,7 @@ document.addEventListener("pointercancel",()=>{pointerDown=false;tryPending()},t
 function route(){
   const h = decodeURIComponent((location.hash||"").slice(1)) || "dashboard";
   if(h.startsWith("p/")){const id=h.slice(2);if(ui.id!==id)ui.tab="competitors";ui.route="product";ui.id=id}
-  else{ui.route=["dashboard","products","brands","samples","suppliers","thoughts"].includes(h)?h:"dashboard";ui.id=null}
+  else{ui.route=["dashboard","products","brands","names","samples","suppliers","thoughts"].includes(h)?h:"dashboard";ui.id=null}
   ui.confirm=null; ui.editSample=null; pendingRender=false; render(); window.scrollTo(0,0);
 }
 window.addEventListener("hashchange",route);
@@ -819,7 +843,7 @@ function render(){
   const arrived = D.samples.filter(s=>s.status==="Arrived").length;
   const b=$("#navbadge"); b.hidden=!arrived; b.textContent=arrived;
   if(!loaded){view.innerHTML=`<div class="loading">Loading your research…</div>`;return}
-  const fn={dashboard:vDashboard,products:vProducts,brands:vBrands,product:vProduct,samples:vSamples,suppliers:vSuppliers,thoughts:vThoughts}[ui.route];
+  const fn={dashboard:vDashboard,products:vProducts,brands:vBrands,names:vNames,product:vProduct,samples:vSamples,suppliers:vSuppliers,thoughts:vThoughts}[ui.route];
   view.innerHTML = fn();
   growAll();
 }
@@ -1021,6 +1045,73 @@ function brCard(b){
         <label class="psadd-img drop" data-drop="brphoto" data-id="${b.id}"><span class="plus">+</span><span>Add images</span><input type="file" accept="image/*" multiple class="sr" data-upload="brphoto" data-id="${b.id}"></label></div></div>
     <div class="row gap8 wrapflex"><span class="meta">Added ${dmy(b.created_at)}</span><span class="spacer"></span>${delBtn("br:"+b.id,"Delete brand")}</div>
   </article>`;
+}
+
+/* ----- Brand names (candidates for my own brand) ----- */
+const nSlug = n => String(n||"").toLowerCase().replace(/[^a-z0-9]/g,"");
+const nRank = st => ({Chosen:0,Shortlisted:1,Checking:2,Idea:3,Rejected:4}[st]??3);
+function nmList(){
+  const q=ui.nq.trim().toLowerCase();
+  return [...D.brand_names].filter(n=>(ui.ncat===""||(ui.ncat==="none"?!n.category_id:n.category_id===ui.ncat))
+      &&(!ui.nstatus||n.status===ui.nstatus)&&(!ui.nfav||n.fav)
+      &&(!q||[n.name,n.why,n.notes].some(v=>String(v||"").toLowerCase().includes(q))))
+    .sort((a,b)=>(nRank(a.status)-nRank(b.status))||((b.fav?1:0)-(a.fav?1:0))||(a.created_at<b.created_at?1:-1));
+}
+function nmGrid(){
+  const list=nmList();
+  if(!list.length) return `<div class="empty" style="grid-column:1/-1">${D.brand_names.length?"Nothing matches these filters.":"No names yet. Type some ideas in the bar above. You can add several at once, separated by commas."}</div>`;
+  return list.map(nmCard).join("");
+}
+function nmCard(n){
+  const A=f=>`data-t="brand_names" data-id="${n.id}" data-f="${f}"`;
+  const sl=nSlug(n.name), ck=n.checks||[], enc=encodeURIComponent((n.name||"").trim());
+  const dup=sl&&D.brand_names.some(x=>x.id!==n.id&&nSlug(x.name)===sl);
+  const liked=sl&&D.brands.some(x=>nSlug(x.name)===sl);
+  const links=sl?`<div class="nmlinks"><span class="meta">Check it</span>
+      <a class="pill outline sm" target="_blank" rel="noopener" href="https://www.amazon.co.uk/s?k=${enc}">Amazon ↗</a>
+      <a class="pill outline sm" target="_blank" rel="noopener" href="https://www.google.com/search?q=%22${enc}%22">Google ↗</a>
+      <a class="pill outline sm" target="_blank" rel="noopener" href="https://trademarks.ipo.gov.uk/ipo-tmtext">UK trademark ↗</a>
+      <a class="pill outline sm" target="_blank" rel="noopener" href="https://www.namecheap.com/domains/registration/results/?domain=${sl}.com">Domain ↗</a>
+      <a class="pill outline sm" target="_blank" rel="noopener" href="https://www.instagram.com/${sl}/">Instagram ↗</a></div>`:"";
+  return `<article class="nmc${n.status==="Rejected"?" rej":""}${n.status==="Chosen"?" won":""}">
+    <header class="brh">
+      <div class="brid"><input class="brname nmname" value="${esc(n.name)}" placeholder="Brand name" aria-label="Brand name" ${A("name")}>
+        <div class="row gap8 wrapflex"><select class="brcat" aria-label="Category" ${A("category_id")} data-null="1">${catOptions(n.category_id)}</select><span class="meta">${sl.length} letters</span></div></div>
+      <button type="button" class="brfav" data-act="nfav" data-id="${n.id}" aria-pressed="${!!n.fav}" aria-label="Favourite">★</button>
+    </header>
+    ${dup?`<p class="nmwarn">Another name on this list is the same.</p>`:""}${liked?`<p class="nmnote">Also on your Brands page. Check you aren't copying them.</p>`:""}
+    <div class="nmst" role="group" aria-label="Status">${NSTATUS.map(st=>`<button type="button" class="nst nst-${st}" data-act="nset" data-id="${n.id}" data-v="${st}" aria-pressed="${n.status===st}">${st}</button>`).join("")}</div>
+    <div class="brtags" role="group" aria-label="Checks"><span class="meta">${ck.length}/${NCHECKS.length} checks</span>${NCHECKS.map(t=>`<button type="button" class="btg" data-act="ncheck" data-id="${n.id}" data-v="${t}" aria-pressed="${ck.includes(t)}">${ck.includes(t)?"✓ ":""}${t}</button>`).join("")}</div>
+    ${links}
+    <label class="tf"><span>Why this name</span><textarea class="agrow" rows="2" placeholder="What it means, how it sounds, why it fits…" ${A("why")}>${esc(n.why||"")}</textarea></label>
+    <label class="tf"><span>Notes</span><textarea class="agrow" rows="2" placeholder="Trademark classes, domain price, anything to chase…" ${A("notes")}>${esc(n.notes||"")}</textarea></label>
+    <div class="row gap8 wrapflex"><span class="meta">Added ${dmy(n.created_at)}</span><span class="spacer"></span>${delBtn("nm:"+n.id,"Delete name")}</div>
+  </article>`;
+}
+function vNames(){
+  if(ui.nmMissing) return `<div class="headline"><h1>Brand names</h1></div><div class="empty"><b>One quick setup step first.</b><br>Run the new SQL in Supabase (SQL Editor → New query → paste → Run), then refresh this page.</div>`;
+  const cats=S.categories(), unc=D.brand_names.filter(n=>!n.category_id).length, c=st=>D.brand_names.filter(n=>n.status===st).length;
+  return `
+  <div class="headline"><h1>Brand names <span class="blue-t">${D.brand_names.length}</span></h1></div>
+  <form class="caddbar nmadd" data-form="addnames" autocomplete="off">
+    <label><span class="sr">New brand names</span><input name="names" required placeholder="Type a name, or several separated by commas"></label>
+    <select name="cat" aria-label="Category">${catOptions((ui.ncat&&ui.ncat!=="none")?ui.ncat:"")}</select>
+    <button class="pill blue" type="submit">+ Add</button>
+  </form>
+  <div class="chips" role="group" aria-label="Category">
+    <button type="button" class="chip" data-act="ncat" data-v="" aria-pressed="${ui.ncat===""}">All · ${D.brand_names.length}</button>
+    ${cats.map(x=>`<button type="button" class="chip" data-act="ncat" data-v="${x.id}" aria-pressed="${ui.ncat===x.id}">${esc(x.name)} · ${D.brand_names.filter(n=>n.category_id===x.id).length}</button>`).join("")}
+    ${unc?`<button type="button" class="chip" data-act="ncat" data-v="none" aria-pressed="${ui.ncat==="none"}">Uncategorised · ${unc}</button>`:""}
+    <button type="button" class="chip dashed" data-act="managecats">${ui.manageCats?"Done editing":"+ Edit categories"}</button>
+  </div>
+  ${ui.manageCats?manageCats():""}
+  <div class="cstats"><div class="cstat"><span>Ideas</span><b>${c("Idea")}</b></div><div class="cstat"><span>Shortlisted</span><b>${c("Shortlisted")}</b></div><div class="cstat"><span>Checking</span><b>${c("Checking")}</b></div><div class="cstat"><span>Chosen</span><b>${c("Chosen")}</b></div></div>
+  <div class="filters">
+    <label class="search"><span class="sr">Search names</span><input id="nsearch" value="${esc(ui.nq)}" placeholder="Search names or notes…"></label>
+    <label class="inline-field">Status <select id="nstatusfilter"><option value="">All</option>${NSTATUS.map(t=>`<option${ui.nstatus===t?" selected":""}>${t}</option>`).join("")}</select></label>
+    <button type="button" class="chip" data-act="nfavf" aria-pressed="${ui.nfav}">★ Favourites</button>
+  </div>
+  <div class="nmgrid" id="nmgrid">${nmGrid()}</div>`;
 }
 
 /* ----- Product page ----- */
@@ -1556,7 +1647,8 @@ async function doDelete(key){
     const PL=p.listing||{};
     removeFiles([p.image_path,...(p.mockups||[]).map(m=>m.path),...ss.flatMap(s=>s.photos||[]),...D.product_suppliers.filter(l=>l.product_id===id).flatMap(l=>l.photos||[]),...(PL.pics||[]),...(PL.box||[]),...(PL.aplus||[]).map(m=>m&&m.path)]);
     D.samples=D.samples.filter(s=>s.product_id!==id); D.product_suppliers=D.product_suppliers.filter(l=>l.product_id!==id); await del("products",id); location.hash="products"; toast("Product deleted"); return}
-  if(t==="cat"){D.products.forEach(p=>{if(p.category_id===id)p.category_id=null});D.thoughts.forEach(x=>{if(x.category_id===id)x.category_id=null});D.brands.forEach(x=>{if(x.category_id===id)x.category_id=null});if(ui.cat===id)ui.cat="";if(ui.bcat===id)ui.bcat="";await del("categories",id);toast("Category deleted. Its products are now Uncategorised.")}
+  if(t==="cat"){D.products.forEach(p=>{if(p.category_id===id)p.category_id=null});D.thoughts.forEach(x=>{if(x.category_id===id)x.category_id=null});D.brands.forEach(x=>{if(x.category_id===id)x.category_id=null});D.brand_names.forEach(x=>{if(x.category_id===id)x.category_id=null});if(ui.cat===id)ui.cat="";if(ui.bcat===id)ui.bcat="";if(ui.ncat===id)ui.ncat="";await del("categories",id);toast("Category deleted. Its products are now Uncategorised.")}
+  if(t==="nm"){await del("brand_names",id);toast("Name deleted")}
   if(t==="brph"){const b=byId("brands",id);if(!b)return;const arr=[...(b.photos||[])];const [gone]=arr.splice(+i,1);await upd("brands",id,{photos:arr});removeFiles([gone])}
   if(t==="br"){const b=byId("brands",id);if(b)removeFiles(b.photos);await del("brands",id);toast("Brand deleted")}
   if(t==="psph"){const l=byId("product_suppliers",id);if(!l)return;const arr=[...(l.photos||[])];const [gone]=arr.splice(+i,1);await upd("product_suppliers",id,{photos:arr});removeFiles([gone])}
@@ -1613,6 +1705,12 @@ document.addEventListener("submit",async e=>{
       if(as==="product"){const p=await productFromText(text,d.category_id);if(p){location.hash="p/"+p.id;toast("Product created")}}
       else{const t=await ins("thoughts",{text,category_id:d.category_id||null});if(t){f.reset();toast("Thought saved");render()}}}
     if(k==="addprod"){const q=(d.q||"").trim();const p=await productFromText(q,(ui.cat&&ui.cat!=="none")?ui.cat:null);if(p)location.hash="p/"+p.id}
+    if(k==="addnames"){
+      const have=new Set(D.brand_names.map(x=>nSlug(x.name))); const seen=new Set(); let added=0, skipped=0;
+      for(const raw of String(d.names||"").split(/[,;\n]+/)){const name=raw.trim(); if(!name) continue; const sl=nSlug(name);
+        if(!sl||have.has(sl)||seen.has(sl)){skipped++;continue} seen.add(sl);
+        const r=await ins("brand_names",{name,category_id:d.cat||null,status:"Idea"}); if(r) added++;}
+      if(added||skipped){toast(added?`Added ${added} name${added>1?"s":""} ✓${skipped?` (${skipped} already on the list)`:""}`:`Already on the list`);render();const i=$('input[name="names"]');if(i)i.focus()}}
     if(k==="addbrand"){const name=(d.name||"").trim(); if(!name) return;
       const b=await ins("brands",{name,category_id:d.cat||null,url:(d.url||"").trim()});
       if(b){ui.brAdd=false;toast("Brand added ✓");render()}}
@@ -1674,6 +1772,11 @@ document.addEventListener("click",e=>{
     case "tab": ui.tab=v; ui.logSup=null; render(); break;
     case "smode": ui.smode=v; render(); break;
     case "bcat": ui.bcat=v; render(); break;
+    case "ncat": ui.ncat=v; render(); break;
+    case "nfavf": ui.nfav=!ui.nfav; render(); break;
+    case "nfav": {const n=byId("brand_names",id); if(!n) break; upd("brand_names",id,{fav:!n.fav}); render(); break;}
+    case "nset": upd("brand_names",id,{status:v}); render(); break;
+    case "ncheck": {const n=byId("brand_names",id); if(!n) break; const t=new Set(n.checks||[]); if(t.has(v)) t.delete(v); else t.add(v); upd("brand_names",id,{checks:NCHECKS.filter(x=>t.has(x))}); render(); break;}
     case "bfavf": ui.bfav=!ui.bfav; render(); break;
     case "bideas": ui.bideas=!ui.bideas; render(); break;
     case "openbr": ui.brAdd=true; render(); {const n=$("#addbrname"); if(n) n.focus();} break;
@@ -1731,6 +1834,7 @@ function flushSaves(){pendingEls.forEach(el=>{clearTimeout(timers.get(el));if(do
 document.addEventListener("input",e=>{
   const el=e.target;
   if(el.dataset&&el.dataset.role==="supin"){const t=el.value.trim(),g=el.closest("form").querySelector('[data-role="newsup"]');if(g)g.hidden=!t||!!findSup(t);return}
+  if(el.id==="nsearch"){ui.nq=el.value;const g=$("#nmgrid");if(g)g.innerHTML=nmGrid();return}
   if(el.id==="bsearch"){ui.bq=el.value;const g=$("#brgrid");if(g)g.innerHTML=brGrid();return}
   if(el.id==="psearch"){ui.q=el.value;const g=$("#pgrid");if(g)g.innerHTML=gridHtml();return}
   if(el.dataset.add){
@@ -1752,6 +1856,7 @@ document.addEventListener("change",e=>{
   if(el.id==="sprodfilter"){ui.sprod=el.value;render();return}
   if(el.id==="stagefilter"){ui.stage=el.value;render();return}
   if(el.id==="btagfilter"){ui.btag=el.value;render();return}
+  if(el.id==="nstatusfilter"){ui.nstatus=el.value;render();return}
   if(el.dataset.add==="cat"){ui.add.cat=el.value;return}
   if(el.matches("[data-upload]")){const files=[...el.files];el.value="";handleFiles(el.dataset.upload,el.dataset.id,files,el.dataset.i);return}
   if(el.matches("[data-t],[data-arr],[data-lst]")){
@@ -1801,6 +1906,7 @@ function exportXlsx(){
   const comps=S.products().flatMap(p=>(p.competitors||[]).map(c=>({"Product":pname(p),"Competitor":c.title,"Brand":c.brand||"","ASIN":c.asin||parseAsin(c.link),"Link":c.link,"List price £":numv(c.list),"Selling price £":numv(c.sell||c.price),"Average £":cAvg(c)==null?null:Number(cAvg(c).toFixed(2)),"Rating":numv(c.rating),"Reviews":numv(c.reviews),"Their images":c.imgq,"What they do well":c.good||"","Weak spots":c.weak||c.notes||"","How I beat them":c.beat||"","Image":imgUrl(c.image)})));
   const samples=S.samples().map(s=>({"Product":pname(byId("products",s.product_id)),"Supplier":sup(s.supplier_id),"Where found":(supOf(s.supplier_id)||{}).source||"","Status":s.status,"Sample cost":s.sample_cost,"Unit price":s.unit_price,"MOQ":s.moq,"Quality /5":s.quality,"Tracking":s.tracking,"ETA":dmy(s.eta),"Arrived":dmy(s.arrived_on),"Decided":dmy(s.decided_on),"Notes":s.notes,"Photos":(s.photos||[]).map(imgUrl).join("\n"),"Logged":dmy(s.created_at)}));
   const brs=D.brands.map(b=>({"Brand":b.name,"Category":catName(b.category_id),"Link":b.url,"Favourite":b.fav?"Yes":"","I like their":(b.tags||[]).join(", "),"What I like":b.likes,"What can be done / ideas":b.ideas,"Comments":b.comments,"Images":(b.photos||[]).length,"Added":dmy(b.created_at)}));
+  const nms=D.brand_names.map(n=>({"Name":n.name,"Category":catName(n.category_id),"Status":n.status,"Favourite":n.fav?"Yes":"","Checks passed":(n.checks||[]).join(", "),"Why this name":n.why,"Notes":n.notes,"Added":dmy(n.created_at)}));
   const psl=D.product_suppliers.map(l=>{const s=supOf(l.supplier_id)||{};return {"Product":pname(byId("products",l.product_id)),"Supplier":s.name||"","Company / trading name":s.company||"","Where found":s.source||"","Stage":l.stage,"Contacted":dmy(l.contacted_on),"Last update":dmy(l.last_update),"Quoted unit price":l.unit_price,"MOQ":l.moq,"Sample price":l.sample_price,"Lead time":l.lead_time,"Next step":l.next_step,"Extra info":l.notes,"Images":(l.photos||[]).length,"WeChat":s.wechat||"","Alibaba":s.alibaba||"","Contact":s.contact||"","Phone / email":s.phone||""}});
   const sups=S.suppliers().map(s=>({"Supplier":s.name,"Company / trading name":s.company||"","Where found":s.source,"WeChat":s.wechat,"Alibaba":s.alibaba,"Contact":s.contact,"Phone / email":s.phone,"Notes":s.notes,"Added":dmy(s.created_at)}));
   const thoughts=S.thoughts().map(t=>({"Thought":t.text,"Category":t.category_id?cat(t.category_id):"","Added":dmy(t.created_at)}));
@@ -1812,6 +1918,7 @@ function exportXlsx(){
   X.utils.book_append_sheet(wb,sheet(sups),"Suppliers");
   X.utils.book_append_sheet(wb,sheet(psl),"Product suppliers");
   X.utils.book_append_sheet(wb,sheet(brs),"Brands");
+  X.utils.book_append_sheet(wb,sheet(nms),"Brand names");
   X.utils.book_append_sheet(wb,sheet(thoughts),"Brain dump");
   X.utils.book_append_sheet(wb,sheet(cats),"Categories");
   X.writeFile(wb,`PL-Hub-backup-${dmy(today()).split("/").join("-")}.xlsx`);
